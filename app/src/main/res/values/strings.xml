@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RollToGo!</string>
+    <string name="bottom_navigation_forum">Foro</string>
+    <string name="bottom_navigation_friends">Amigos</string>
+    <string name="bottom_navigation_campaigns">Campañas</string>
+    <string name="bottom_navigation_account">Cuenta</string>
 </resources>

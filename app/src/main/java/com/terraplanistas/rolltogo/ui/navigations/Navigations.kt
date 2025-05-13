@@ -4,3 +4,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 object HomeScreenNavigation
+
+@Serializable
+object ForumNavigation
+
+@Serializable
+object FriendsNavigation
+
+@Serializable
+object CampaignsNavigation
+
+@Serializable
+object AccountNavigation
