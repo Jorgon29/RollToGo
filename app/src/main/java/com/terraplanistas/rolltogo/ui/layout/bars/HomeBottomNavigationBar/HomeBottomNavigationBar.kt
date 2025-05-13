@@ -1,14 +1,6 @@
-package com.terraplanistas.rolltogo.ui.layout.bars
+package com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
-import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -24,9 +16,10 @@ import com.composables.icons.lucide.BookOpenText
 import com.composables.icons.lucide.CircleUserRound
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.MessagesSquare
-import com.composables.icons.lucide.Plus
 import com.composables.icons.lucide.UserRoundPlus
 import com.terraplanistas.rolltogo.R
+import com.terraplanistas.rolltogo.ui.layout.bars.BarItem
+import com.terraplanistas.rolltogo.ui.layout.bars.BaseBottomBar
 import com.terraplanistas.rolltogo.ui.navigations.AccountNavigation
 import com.terraplanistas.rolltogo.ui.navigations.CampaignsNavigation
 import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
@@ -57,24 +50,7 @@ fun HomeBottomNavigationBar(navController: NavController, floatingAction: () -> 
         )
     )
 
-    val selected = rememberSaveable() { mutableStateOf(items[0].text) }
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.tertiary,
-        contentColor = MaterialTheme.colorScheme.surface
-    ) {
-        items.forEach { item ->
-            NavigationBarItem(
-                label = { Text(item.text)},
-                icon = { Icon(item.icon, item.text)},
-                selected = selected.value == item.text,
-                onClick = {
-                   selected.value = item.text
-                   // navController.navigate(item.navigation)
-                }
-
-            )
-        }
-    }
+    BaseBottomBar(navController = navController, items = items)
 }
 
 @Preview(showBackground = true)
