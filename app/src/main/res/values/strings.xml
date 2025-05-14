@@ -5,4 +5,7 @@
     <string name="bottom_navigation_campaigns">Campañas</string>
     <string name="bottom_navigation_account">Cuenta</string>
     <string name="plus_floating_button">Nuevo</string>
+    <string name="new_actor">Nuevo actor</string>
+    <string name="new_campaign">Nueva campaña</string>
+    <string name="placeholder_image">Imagen placeholder</string>
 </resources>

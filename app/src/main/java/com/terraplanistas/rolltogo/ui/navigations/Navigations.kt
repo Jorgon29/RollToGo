@@ -3,9 +3,6 @@ package com.terraplanistas.rolltogo.ui.navigations
 import kotlinx.serialization.Serializable
 
 @Serializable
-object HomeScreenNavigation
-
-@Serializable
 object ForumNavigation
 
 @Serializable
@@ -16,3 +13,9 @@ object CampaignsNavigation
 
 @Serializable
 object AccountNavigation
+
+@Serializable
+object NewActorNavigation
+
+@Serializable
+object NewCampaignNavigation

@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.activity.compose.v190)
+    implementation(libs.androidx.graphics)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment)
