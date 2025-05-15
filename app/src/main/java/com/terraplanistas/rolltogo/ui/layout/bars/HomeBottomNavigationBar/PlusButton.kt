@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
@@ -10,9 +11,11 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -48,17 +51,36 @@ fun PlusButton(
         Icon(imageVector = Lucide.Plus, contentDescription = stringResource(R.string.plus_floating_button))
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { hide() }
+            onDismissRequest = { hide() },
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.onSurfaceVariant)
         ) {
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.new_actor)) },
+                text = {
+                    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
+                        Text(stringResource(R.string.new_actor))
+                    }
+                },
                 onClick = { navigateToNewCharacter() },
-                leadingIcon = { Image(Lucide.Users, stringResource(R.string.new_actor)) }
+                leadingIcon = {
+                    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
+                        Icon(imageVector = Lucide.Users, contentDescription = stringResource(R.string.new_actor))
+                    }
+                }
             )
+
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.new_campaign)) },
-                onClick = { navigateNewCampaign },
-                leadingIcon = { Image(Lucide.BookOpenText, stringResource(R.string.new_campaign))}
+                text = {
+                    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
+                        Text(stringResource(R.string.new_campaign))
+                    }
+                },
+                onClick = { navigateToNewCharacter() },
+                leadingIcon = {
+                    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
+                        Icon(imageVector = Lucide.BookOpenText, contentDescription = stringResource(R.string.new_campaign))
+                    }
+                }
             )
         }
     }

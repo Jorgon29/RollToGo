@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,7 @@ fun BasicTitle(title: String, modifier: Modifier = Modifier){
     val border: Color = MaterialTheme.colorScheme.surface
     Box(
         modifier = modifier
+            .padding(24.dp)
             .size(width = if(title.length > 10) (title.length*12).dp else 180.dp, height = 60.dp) // Controls size of hex
             .drawWithCache {
                 val path = Path().apply {
