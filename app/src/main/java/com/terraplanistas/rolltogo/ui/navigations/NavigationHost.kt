@@ -6,6 +6,7 @@ import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
 
 @Composable
@@ -16,6 +17,10 @@ fun NavigationHost(){
         NavHost(navController = navController, startDestination = ForumNavigation){
             composable<ForumNavigation> {
                 ForumScreen(navController)
+            }
+
+            composable<NewActorNavigation> {
+                ActorCreationHomeScreen(navController)
             }
         }
     }

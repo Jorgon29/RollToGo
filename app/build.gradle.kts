@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.0.21"
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -41,7 +42,11 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.activity.compose.v190)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.graphics)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)

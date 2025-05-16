@@ -17,11 +17,10 @@ class PlaystyleStep() : ActorCreationStep {
     }
 
     @Composable
-    fun Sreen(){
+    fun Screen(){
         Text(text = stringResource(R.string.actor_creation_playstyle_title), fontSize = 32.sp)
         Spacer(Modifier.height(8.dp))
         Text(text = stringResource(R.string.actor_creation_playstyle_subtitle), fontSize = 8.sp)
-
 
     }
 }
