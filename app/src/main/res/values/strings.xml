@@ -1,4 +1,5 @@
 <resources>
+    <!-- General -->
     <string name="app_name">RollToGo!</string>
     <string name="bottom_navigation_forum">Foro</string>
     <string name="bottom_navigation_friends">Amigos</string>
@@ -8,4 +9,42 @@
     <string name="new_actor">Nuevo actor</string>
     <string name="new_campaign">Nueva campaña</string>
     <string name="placeholder_image">Imagen placeholder</string>
+    <string name="cancel">Cancelar</string>
+    <string name="next">Siguiente</string>
+
+    <!-- Actor creation -->
+    <string name="actor_creation_playstyle_title">Estilo de juego</string>
+    <string name="actor_creation_playstyle_subtitle">¿Qué estilo de juego prefieres?</string>
+    <string name="actor_creation_playstyle_melee">Luchar en combate cuerpo a cuerpo</string>
+    <string name="actor_creation_playstyle_magic">Usar magia ofensiva y poderosa</string>
+    <string name="actor_creation_playstyle_support">Apoyar y proteger a tus aliados</string>
+    <string name="actor_creation_playstyle_versatile">Ser táctico, versátil o sigiloso</string>
+    <string name="actor_creation_playstyle_balanced">Quiero algo equilibrado</string>
+
+    <string name="actor_creation_class_title"></string>
+    <string name="actor_creation_class_barbarian">Bárbaro</string>
+    <string name="actor_creation_class_barbarian_description">Um guerreiro feroz da natureza, impulsionado por uma fúria primal.</string>
+    <string name="actor_creation_class_bard">Bardo</string>
+    <string name="actor_creation_class_bard_description">Um mestre da música e magia, que inspira aliados e confunde inimigos.</string>
+    <string name="actor_creation_class_cleric">Clérigo</string>
+    <string name="actor_creation_class_cleric_description">Um servo devoto de uma divindade, canalizando magia divina para curar ou destruir.</string>
+    <string name="actor_creation_class_druid">Druida</string>
+    <string name="actor_creation_class_druid_description">Guardião da natureza com o poder de se transformar em animais e conjurar magias naturais.</string>
+    <string name="actor_creation_class_fighter">Guerreiro</string>
+    <string name="actor_creation_class_fighter_description">Um mestre em armas e combate, adaptável e resistente.</string>
+    <string name="actor_creation_class_monk">Monge</string>
+    <string name="actor_creation_class_monk_description">Um artista marcial que canaliza energia interior para feitos sobre-humanos.</string>
+    <string name="actor_creation_class_paladin">Paladino</string>
+    <string name="actor_creation_class_paladin_description">Um campeão sagrado com juramentos poderosos, combinando armas e magia divina.</string>
+    <string name="actor_creation_class_ranger">Patrulheiro</string>
+    <string name="actor_creation_class_ranger_description">Um caçador e rastreador habilidoso, mestre da sobrevivência e da magia natural.</string>
+    <string name="actor_creation_class_rogue">Ladino</string>
+    <string name="actor_creation_class_rogue_description">Especialista em furtividade, truques e ataques precisos e devastadores.</string>
+    <string name="actor_creation_class_sorcerer">Feiticeiro</string>
+    <string name="actor_creation_class_sorcerer_description">Um conjurador nato com magia fluindo de seu sangue ou alma.</string>
+    <string name="actor_creation_class_warlock">Bruxo</string>
+    <string name="actor_creation_class_warlock_description">Um mágico que fez um pacto com uma entidade sobrenatural para obter poder.</string>
+    <string name="actor_creation_class_wizard">Mago</string>
+    <string name="actor_creation_class_wizard_description">Um estudioso das artes arcanas com vasto conhecimento de magias.</string>
+
 </resources>

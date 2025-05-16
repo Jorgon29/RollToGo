@@ -31,7 +31,7 @@ import kotlin.math.exp
 
 @Composable
 
-fun BaseHomeScreen(navController: NavController, title: String, content: @Composable () -> Unit) {
+fun BaseHomeScreen(navController: NavController, title: String? = null, content: @Composable () -> Unit) {
     val showDropDown = rememberSaveable { mutableStateOf(false) }
     val floatingAction: () -> Unit = {
 
@@ -47,7 +47,7 @@ fun BaseHomeScreen(navController: NavController, title: String, content: @Compos
             },
             floatingActionButton = {
                 PlusButton(
-                    size = 64.dp,
+                    size = 88.dp,
                     expanded = showDropDown.value,
                     hide = { modifyDropDownState(false) },
                     navigateToNewCharacter = {navController.navigate(NewActorNavigation)},
@@ -68,8 +68,9 @@ fun BaseHomeScreen(navController: NavController, title: String, content: @Compos
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                BasicTitle(title)
-
+                title?.let{
+                    BasicTitle(title)
+                }
                 content()
             }
 

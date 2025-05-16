@@ -45,7 +45,7 @@ fun PlusButton(
         elevation = FloatingActionButtonDefaults.elevation(0.dp),
         modifier = modifier
             .size(size)
-            .offset(y = 42.dp)
+            .offset(y = 64.dp)
             .border(width = 6.dp, color = MaterialTheme.colorScheme.tertiary, shape = CircleShape)
     ) {
         Icon(imageVector = Lucide.Plus, contentDescription = stringResource(R.string.plus_floating_button))
