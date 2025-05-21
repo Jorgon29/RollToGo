@@ -2,11 +2,11 @@ package com.terraplanistas.rolltogo.ui.navigations
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScreen
+import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationViewModel
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
 
 @Composable

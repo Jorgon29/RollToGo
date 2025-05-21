@@ -1,4 +1,5 @@
-package com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.playstyleStep
+package com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.characteristicsStep
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -17,14 +18,16 @@ import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationViewMod
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.selectionList.SelectionList
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.selectionList.SelectionListItem
 
-class PlaystyleStep(
+class CharacteristicsStep(
     private val viewModel: ActorCreationViewModel,
     private val nextStep: ActorCreationStep? = null
 ) : ActorCreationStep(viewModel, nextStep) {
+
     override fun execute(
         context: ActorCreationContext,
         onNext: (ActorCreationContext) -> Unit
     ) {
+
     }
 
     @Composable
@@ -38,9 +41,8 @@ class PlaystyleStep(
         ) }
 
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(stringResource(R.string.actor_creation_playstyle_title), fontSize = 32.sp)
+            Text("characteristics", fontSize = 32.sp)
             Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.actor_creation_playstyle_subtitle), fontSize = 8.sp)
             SelectionList(selectionList)
         }
     }

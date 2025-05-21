@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.model
+package com.terraplanistas.rolltogo.data.database.repository.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
