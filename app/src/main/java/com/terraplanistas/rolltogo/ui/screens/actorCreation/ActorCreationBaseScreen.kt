@@ -38,7 +38,8 @@ fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreati
         navController = navController,
         content = {
                 currentStep?.let {
-                    currentStep!!.Screen(context) { }
+                    currentStep!!.Screen(context) {
+                    }
                 }
 
             Row {

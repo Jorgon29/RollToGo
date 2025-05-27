@@ -9,30 +9,33 @@ import com.terraplanistas.rolltogo.data.database.entities.PlaystyleEntity
 
 @Database(
     entities = [PlaystyleEntity::class],
-    version = 1,
+    version = 5,
     exportSchema = false
 )
-abstract class RollToGoDatabase: RoomDatabase() {
-    abstract fun PlaystyleDao(): PlaystyleDao
+abstract class RollToGoDatabase : RoomDatabase() {
+    abstract fun playstyleDao(): PlaystyleDao
 
     companion object {
         @Volatile
         private var instance: RollToGoDatabase? = null
+
         fun getDatabase(context: Context): RollToGoDatabase {
             return instance ?: synchronized(this) {
                 val database = Room.databaseBuilder(
-                    context = context.applicationContext,
-                    klass = RollToGoDatabase::class.java,
-                    name = "roll_to_go_database"
+                    context.applicationContext,
+                    RollToGoDatabase::class.java,
+                    "roll_to_go_database"
                 )
                     .fallbackToDestructiveMigration(false)
                     .build()
-                    .also {
-                        instance = it
-                    }
+
+                instance = database
                 database
             }
+        }
 
+        private fun getInstance(context: Context): RollToGoDatabase {
+            return instance ?: getDatabase(context)
         }
     }
 }

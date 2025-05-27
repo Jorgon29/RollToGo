@@ -15,11 +15,16 @@
     <!-- Actor creation -->
     <string name="actor_creation_playstyle_title">Estilo de juego</string>
     <string name="actor_creation_playstyle_subtitle">¿Qué estilo de juego prefieres?</string>
-    <string name="actor_creation_playstyle_melee">Luchar en combate cuerpo a cuerpo</string>
-    <string name="actor_creation_playstyle_magic">Usar magia ofensiva y poderosa</string>
-    <string name="actor_creation_playstyle_support">Apoyar y proteger a tus aliados</string>
-    <string name="actor_creation_playstyle_versatile">Ser táctico, versátil o sigiloso</string>
-    <string name="actor_creation_playstyle_balanced">Quiero algo equilibrado</string>
+    <string name="actor_creation_playstyle_melee">Cuerpo a cuerpo</string>
+    <string name="actor_creation_playstyle_melee_description">Luchar en combate cuerpo a cuerpo</string>
+    <string name="actor_creation_playstyle_magic">Magia</string>
+    <string name="actor_creation_playstyle_magic_description">Usar magia ofensiva y poderosa</string>
+    <string name="actor_creation_playstyle_support">Soporte</string>
+    <string name="actor_creation_playstyle_support_description">Apoyar y proteger a tus aliados</string>
+    <string name="actor_creation_playstyle_versatile">Versástil</string>
+    <string name="actor_creation_playstyle_versatile_description">Ser táctico, versátil o sigiloso</string>
+    <string name="actor_creation_playstyle_balanced">Equilibrado</string>
+    <string name="actor_creation_playstyle_balanced_description">Quiero algo equilibrado</string>
 
     <string name="actor_creation_class_title"></string>
     <string name="actor_creation_class_barbarian">Bárbaro</string>

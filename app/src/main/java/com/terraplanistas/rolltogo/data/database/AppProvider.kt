@@ -15,9 +15,9 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class AppProvider (context: Context){
     private val appDatabase: RollToGoDatabase = RollToGoDatabase.getDatabase(context)
 
-    private val playstyleDao: PlaystyleDao = appDatabase.PlaystyleDao()
+    private val playstyleDao: PlaystyleDao = appDatabase.playstyleDao()
 
-    private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(playstyleDao)
+    private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(playstyleDao, context)
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
 
     fun providePlaystyleRepository(): PlaystyleRepository {

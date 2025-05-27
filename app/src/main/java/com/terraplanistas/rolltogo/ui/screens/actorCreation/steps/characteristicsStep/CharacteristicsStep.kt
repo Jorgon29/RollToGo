@@ -32,18 +32,6 @@ class CharacteristicsStep(
 
     @Composable
     override fun Screen(context: ActorCreationContext, onNext: (ActorCreationContext) -> Unit) {
-        val playstyles = viewModel.getPlaystyles().collectAsState(emptyList())
-        val selectionList: List<SelectionListItem> = playstyles.value.map { SelectionListItem(
-            icon = it.icon,
-            name = it.title,
-            description = it.description,
-            id = it.id
-        ) }
 
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text("characteristics", fontSize = 32.sp)
-            Spacer(Modifier.height(8.dp))
-            SelectionList(selectionList)
-        }
     }
 }
