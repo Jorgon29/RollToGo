@@ -1,7 +1,6 @@
 package com.terraplanistas.rolltogo.data.defaults
 
 import android.content.Context
-import androidx.compose.ui.res.stringResource
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Scale
 import com.composables.icons.lucide.ShieldPlus

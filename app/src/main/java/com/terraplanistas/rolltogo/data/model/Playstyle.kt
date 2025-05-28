@@ -14,7 +14,8 @@ data class Playstyle(
     val id: Int,
     val title: String,
     val description: String,
-    val icon: ImageVector
+    val icon: ImageVector,
+    val recommendedClasses: List<Int>? = null
 )
 
 fun Playstyle.toEntity(): PlaystyleEntity{

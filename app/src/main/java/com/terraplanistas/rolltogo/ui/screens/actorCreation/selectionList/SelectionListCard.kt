@@ -1,7 +1,7 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation.selectionList
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,10 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SelectionListCard(item: SelectionListItem) {
-    val cardColor = Color(0xFF2E3A59)           // Deep blue card background
-    val iconTint = Color(0xFFE4B23C)            // Gold
-    val textColor = Color(0xFFE4B23C)           // Gold
+fun SelectionListCard(item: SelectionListItem, showSnackBar: (String) -> Unit, setSelected: (Int) -> Unit) {
+    val cardColor = Color(0xFF2E3A59)
+    val iconTint = Color(0xFFE4B23C)
+    val textColor = Color(0xFFE4B23C)
 
     Box(
         modifier = Modifier
@@ -58,6 +58,13 @@ fun SelectionListCard(item: SelectionListItem) {
                     blendMode = BlendMode.Multiply
                 )
             }
+            .clickable(
+                enabled = true,
+                onClick = {
+                    showSnackBar(item.name)
+                    setSelected(item.id)
+                }
+            )
     ) {
         Row(
             modifier = Modifier
@@ -65,23 +72,17 @@ fun SelectionListCard(item: SelectionListItem) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Icon with circle background
             Box(
                 modifier = Modifier
                     .size(48.dp)
                     .background(cardColor, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                /* Icon(
-                    painter = item.icon,
+                Icon(
+                    imageVector = item.icon,
                     contentDescription = item.name,
                     tint = iconTint,
                     modifier = Modifier.size(24.dp)
-                ) */
-                Image(
-                    item.icon,
-                    item.name,
-                    Modifier.size(24.dp),
                 )
             }
 

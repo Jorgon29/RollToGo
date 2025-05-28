@@ -11,6 +11,7 @@
     <string name="placeholder_image">Imagen placeholder</string>
     <string name="cancel">Cancelar</string>
     <string name="next">Siguiente</string>
+    <string name="selected">Seleccionado</string>
 
     <!-- Actor creation -->
     <string name="actor_creation_playstyle_title">Estilo de juego</string>
@@ -26,30 +27,30 @@
     <string name="actor_creation_playstyle_balanced">Equilibrado</string>
     <string name="actor_creation_playstyle_balanced_description">Quiero algo equilibrado</string>
 
-    <string name="actor_creation_class_title"></string>
+    <string name="actor_creation_class_title">Selección de clase</string>
     <string name="actor_creation_class_barbarian">Bárbaro</string>
-    <string name="actor_creation_class_barbarian_description">Um guerreiro feroz da natureza, impulsionado por uma fúria primal.</string>
+    <string name="actor_creation_class_barbarian_description">Un guerrero feroz impulsado por una furia primordial.</string>
     <string name="actor_creation_class_bard">Bardo</string>
-    <string name="actor_creation_class_bard_description">Um mestre da música e magia, que inspira aliados e confunde inimigos.</string>
+    <string name="actor_creation_class_bard_description">Un maestro de la música y la magia que inspira aliados y confunde enemigos.</string>
     <string name="actor_creation_class_cleric">Clérigo</string>
-    <string name="actor_creation_class_cleric_description">Um servo devoto de uma divindade, canalizando magia divina para curar ou destruir.</string>
+    <string name="actor_creation_class_cleric_description">Un devoto servidor de una deidad, canaliza magia divina para sanar o destruir.</string>
     <string name="actor_creation_class_druid">Druida</string>
-    <string name="actor_creation_class_druid_description">Guardião da natureza com o poder de se transformar em animais e conjurar magias naturais.</string>
-    <string name="actor_creation_class_fighter">Guerreiro</string>
-    <string name="actor_creation_class_fighter_description">Um mestre em armas e combate, adaptável e resistente.</string>
-    <string name="actor_creation_class_monk">Monge</string>
-    <string name="actor_creation_class_monk_description">Um artista marcial que canaliza energia interior para feitos sobre-humanos.</string>
-    <string name="actor_creation_class_paladin">Paladino</string>
-    <string name="actor_creation_class_paladin_description">Um campeão sagrado com juramentos poderosos, combinando armas e magia divina.</string>
-    <string name="actor_creation_class_ranger">Patrulheiro</string>
-    <string name="actor_creation_class_ranger_description">Um caçador e rastreador habilidoso, mestre da sobrevivência e da magia natural.</string>
-    <string name="actor_creation_class_rogue">Ladino</string>
-    <string name="actor_creation_class_rogue_description">Especialista em furtividade, truques e ataques precisos e devastadores.</string>
-    <string name="actor_creation_class_sorcerer">Feiticeiro</string>
-    <string name="actor_creation_class_sorcerer_description">Um conjurador nato com magia fluindo de seu sangue ou alma.</string>
-    <string name="actor_creation_class_warlock">Bruxo</string>
-    <string name="actor_creation_class_warlock_description">Um mágico que fez um pacto com uma entidade sobrenatural para obter poder.</string>
+    <string name="actor_creation_class_druid_description">Guardián de la naturaleza capaz de transformarse en animales y lanzar conjuros naturales.</string>
+    <string name="actor_creation_class_fighter">Guerrero</string>
+    <string name="actor_creation_class_fighter_description">Un experto en armas y combate, adaptable y resistente.</string>
+    <string name="actor_creation_class_monk">Monje</string>
+    <string name="actor_creation_class_monk_description">Un artista marcial que canaliza energía interior para hazañas sobrehumanas.</string>
+    <string name="actor_creation_class_paladin">Paladín</string>
+    <string name="actor_creation_class_paladin_description">Un campeón sagrado que combina armas con magia divina mediante juramentos poderosos.</string>
+    <string name="actor_creation_class_ranger">Explorador</string>
+    <string name="actor_creation_class_ranger_description">Un cazador y rastreador experto, maestro de la supervivencia y la magia natural.</string>
+    <string name="actor_creation_class_rogue">Pícaro</string>
+    <string name="actor_creation_class_rogue_description">Especialista en sigilo, engaño y ataques precisos y devastadores.</string>
+    <string name="actor_creation_class_sorcerer">Hechicero</string>
+    <string name="actor_creation_class_sorcerer_description">Un lanzador de conjuros innato con magia fluyendo por su sangre o alma.</string>
+    <string name="actor_creation_class_warlock">Brujo</string>
+    <string name="actor_creation_class_warlock_description">Un mago que ha hecho un pacto con una entidad sobrenatural para obtener poder.</string>
     <string name="actor_creation_class_wizard">Mago</string>
-    <string name="actor_creation_class_wizard_description">Um estudioso das artes arcanas com vasto conhecimento de magias.</string>
+    <string name="actor_creation_class_wizard_description">Un estudioso de las artes arcanas con vasto conocimiento de hechizos.</string>
 
 </resources>

@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.data.database.dao.PlaystyleDao
+import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
 
@@ -19,6 +21,7 @@ class AppProvider (context: Context){
 
     private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(playstyleDao, context)
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
+    private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
 
     fun providePlaystyleRepository(): PlaystyleRepository {
         return playstyleRepository
@@ -26,5 +29,9 @@ class AppProvider (context: Context){
 
     fun provideUserPreferenceRepository(): UserPreferencesRepository {
         return userPreferenceRepository
+    }
+
+    fun provideClassesRepository(): ClassesRepository {
+        return classesRepository
     }
 }

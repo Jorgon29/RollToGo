@@ -6,17 +6,24 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
+import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
+import com.terraplanistas.rolltogo.data.model.CharacterClass
 import com.terraplanistas.rolltogo.data.model.Playstyle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActorCreationViewModel(
-    private val playstyleRepository: PlaystyleRepository
+    private val playstyleRepository: PlaystyleRepository,
+    private val classesRepository: ClassesRepository
 ) : ViewModel() {
 
     fun getPlaystyles(): List<Playstyle> {
         return playstyleRepository.getPlaystyles()
+    }
+
+    fun getClasses(): List<CharacterClass> {
+        return classesRepository.getClasses()
     }
 
     companion object {
@@ -25,7 +32,10 @@ class ActorCreationViewModel(
                 val application = this[APPLICATION_KEY] as? RollToGoApp
                 ?: throw IllegalStateException("Application is not RollToGoApp")
 
-                ActorCreationViewModel(application.appProvider.providePlaystyleRepository())
+                ActorCreationViewModel(
+                    application.appProvider.providePlaystyleRepository(),
+                    application.appProvider.provideClassesRepository()
+                )
             }
         }
     }
