@@ -1,23 +1,19 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 
 abstract class ActorCreationStep(
     private val viewModel: ActorCreationViewModel,
-    private val nextStep: ActorCreationStep? = null
+    private val nextStep: ActorCreationStep? = null,
+    private val snackBarHostState: SnackbarHostState? = null
 ) {
-    abstract fun execute(
-        context: ActorCreationContext,
-        onNext: (ActorCreationContext) -> Unit
-    )
+    fun hasNext(): Boolean = nextStep != null
 
-    fun hasNext(): Boolean = nextStep == null
-    @Composable
-    abstract fun Screen(
-        context: ActorCreationContext,
-        onNext: (ActorCreationContext) -> Unit
-    )
     fun getNext(): ActorCreationStep? {
         return nextStep
     }
+
+    @Composable
+    abstract fun Screen(context: ActorCreationContext)
 }

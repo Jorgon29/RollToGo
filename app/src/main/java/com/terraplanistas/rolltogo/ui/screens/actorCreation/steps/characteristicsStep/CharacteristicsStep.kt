@@ -23,15 +23,8 @@ class CharacteristicsStep(
     private val nextStep: ActorCreationStep? = null
 ) : ActorCreationStep(viewModel, nextStep) {
 
-    override fun execute(
-        context: ActorCreationContext,
-        onNext: (ActorCreationContext) -> Unit
-    ) {
-
-    }
-
     @Composable
-    override fun Screen(context: ActorCreationContext, onNext: (ActorCreationContext) -> Unit) {
+    override fun Screen(context: ActorCreationContext) {
 
     }
 }

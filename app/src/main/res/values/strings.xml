@@ -12,6 +12,7 @@
     <string name="cancel">Cancelar</string>
     <string name="next">Siguiente</string>
     <string name="selected">Seleccionado</string>
+    <string name="extend_menu">Extender menú</string>
 
     <!-- Actor creation -->
     <string name="actor_creation_playstyle_title">Estilo de juego</string>
@@ -28,6 +29,8 @@
     <string name="actor_creation_playstyle_balanced_description">Quiero algo equilibrado</string>
 
     <string name="actor_creation_class_title">Selección de clase</string>
+    <string name="actor_creation_class_subtitle">Clases sugeridas</string>
+    <string name="actor_creation_class_more_classes">Ver todas las clases</string>
     <string name="actor_creation_class_barbarian">Bárbaro</string>
     <string name="actor_creation_class_barbarian_description">Un guerrero feroz impulsado por una furia primordial.</string>
     <string name="actor_creation_class_bard">Bardo</string>
@@ -52,5 +55,27 @@
     <string name="actor_creation_class_warlock_description">Un mago que ha hecho un pacto con una entidad sobrenatural para obtener poder.</string>
     <string name="actor_creation_class_wizard">Mago</string>
     <string name="actor_creation_class_wizard_description">Un estudioso de las artes arcanas con vasto conocimiento de hechizos.</string>
+
+    <string name="actor_creation_race_title">Selección de Especie</string>
+    <string name="actor_creation_race_subtitle">Especies sugeridas</string>
+    <string name="actor_creation_class_more_races">Ver todas las especies</string>
+    <string name="actor_creation_race_human">Humano</string>
+    <string name="actor_creation_race_human_description">Versátiles y adaptables, con un talento innato para cualquier camino.</string>
+    <string name="actor_creation_race_elf">Elfo</string>
+    <string name="actor_creation_race_elf_description">Gráciles y longevos, expertos en magia y arquería.</string>
+    <string name="actor_creation_race_dwarf">Enano</string>
+    <string name="actor_creation_race_dwarf_description">Fuertes y resistentes, conocidos por su lealtad y habilidades con la forja.</string>
+    <string name="actor_creation_race_halfling">Mediano</string>
+    <string name="actor_creation_race_halfling_description">Pequeños, valientes y con una gran dosis de suerte.</string>
+    <string name="actor_creation_race_dragonborn">Dracónico</string>
+    <string name="actor_creation_race_dragonborn_description">Descendientes de dragones, poderosos y orgullosos, con aliento elemental.</string>
+    <string name="actor_creation_race_gnome">Gnomo</string>
+    <string name="actor_creation_race_gnome_description">Ingeniosos y curiosos, expertos en magia y artilugios.</string>
+    <string name="actor_creation_race_halfelf">Semielfo</string>
+    <string name="actor_creation_race_halfelf_description">Híbridos de humanos y elfos, combinan lo mejor de ambos mundos.</string>
+    <string name="actor_creation_race_halforc">Semiorco</string>
+    <string name="actor_creation_race_halforc_description">Fieros y tenaces, canalizan su furia en el combate.</string>
+    <string name="actor_creation_race_tiefling">Tiflin</string>
+    <string name="actor_creation_race_tiefling_description">Con sangre infernal, misteriosos y poderosos en la magia oscura.</string>
 
 </resources>

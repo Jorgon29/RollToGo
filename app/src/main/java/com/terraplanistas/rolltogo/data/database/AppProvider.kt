@@ -10,6 +10,8 @@ import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepos
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
+import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepositoryImplementation
 
 private val USER_PREFERENCE_NAME = "user_preferences"
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_PREFERENCE_NAME)
@@ -22,6 +24,7 @@ class AppProvider (context: Context){
     private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(playstyleDao, context)
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
     private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
+    private val racesRepository: RaceRepository = RaceRepositoryImplementation(context)
 
     fun providePlaystyleRepository(): PlaystyleRepository {
         return playstyleRepository
@@ -33,5 +36,9 @@ class AppProvider (context: Context){
 
     fun provideClassesRepository(): ClassesRepository {
         return classesRepository
+    }
+
+    fun provideRacesRepository(): RaceRepository {
+        return racesRepository
     }
 }

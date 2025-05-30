@@ -8,15 +8,40 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
+import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.model.CharacterClass
+import com.terraplanistas.rolltogo.data.model.CharacterRace
 import com.terraplanistas.rolltogo.data.model.Playstyle
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 
 class ActorCreationViewModel(
     private val playstyleRepository: PlaystyleRepository,
-    private val classesRepository: ClassesRepository
+    private val classesRepository: ClassesRepository,
+    private val racesRepository: RaceRepository
 ) : ViewModel() {
+
+    private val playstyleToClassMap = mapOf(
+        1 to listOf(1, 5, 7),
+        2 to listOf(10, 11, 12),
+        3 to listOf(3, 2, 4),
+        4 to listOf(8, 6, 4),
+        5 to listOf(7, 2, 8)
+    )
+
+    private val classRaceAssociations = mapOf(
+        1 to listOf(2, 3, 8),
+        2 to listOf(4, 7, 2),
+        3 to listOf(3, 1, 7),
+        4 to listOf(2, 6, 4),
+        5 to listOf(1, 3, 8),
+        6 to listOf(8, 3, 1),
+        7 to listOf(1, 3, 7),
+        8 to listOf(4, 2, 1),
+        9 to listOf(4, 9, 2),
+        10 to listOf(9, 2, 1),
+        11 to listOf(9, 2, 7),
+        12 to listOf(6, 2, 1)
+    )
+
 
     fun getPlaystyles(): List<Playstyle> {
         return playstyleRepository.getPlaystyles()
@@ -24,6 +49,26 @@ class ActorCreationViewModel(
 
     fun getClasses(): List<CharacterClass> {
         return classesRepository.getClasses()
+    }
+
+    fun getAssociatedClasses(playstyleId: Int): List<CharacterClass> {
+        val associatedIds = playstyleToClassMap[playstyleId] ?: emptyList()
+        return getClasses().filter { it.id in associatedIds }
+    }
+
+    fun getUnassociatedClasses(playstyleId: Int): List<CharacterClass> {
+        val associatedIds = playstyleToClassMap[playstyleId] ?: emptyList()
+        return getClasses().filter { it.id !in associatedIds }
+    }
+
+    fun getAssociatedRaces(classId: Int): List<CharacterRace>{
+        val associatedIds = classRaceAssociations[classId] ?: return emptyList()
+        return racesRepository.getRaces().filter { it.id in associatedIds }
+    }
+
+    fun getUnassociatedRaces(classId: Int): List<CharacterRace>{
+        val associatedIds = classRaceAssociations[classId] ?: return emptyList()
+        return racesRepository.getRaces().filter { it.id !in associatedIds }
     }
 
     companion object {
@@ -34,7 +79,8 @@ class ActorCreationViewModel(
 
                 ActorCreationViewModel(
                     application.appProvider.providePlaystyleRepository(),
-                    application.appProvider.provideClassesRepository()
+                    application.appProvider.provideClassesRepository(),
+                    application.appProvider.provideRacesRepository()
                 )
             }
         }

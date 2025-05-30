@@ -5,6 +5,7 @@ import com.terraplanistas.rolltogo.data.database.repository.settings.UserPrefere
 import com.terraplanistas.rolltogo.data.database.AppProvider
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
+import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 
 class RollToGoApp: Application() {
 
@@ -14,11 +15,13 @@ class RollToGoApp: Application() {
     lateinit var playstyleRepository: PlaystyleRepository
     lateinit var userPreferencesRepository: UserPreferencesRepository
     lateinit var classesRepository: ClassesRepository
+    lateinit var racesRepository: RaceRepository
 
     override fun onCreate() {
         super.onCreate()
         userPreferencesRepository = appProvider.provideUserPreferenceRepository()
         playstyleRepository = appProvider.providePlaystyleRepository()
         classesRepository = appProvider.provideClassesRepository()
+        racesRepository = appProvider.provideRacesRepository()
     }
 }

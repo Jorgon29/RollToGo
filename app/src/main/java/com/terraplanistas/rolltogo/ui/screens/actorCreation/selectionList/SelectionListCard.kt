@@ -19,62 +19,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SelectionListCard(item: SelectionListItem, showSnackBar: (String) -> Unit, setSelected: (Int) -> Unit) {
-    val cardColor = Color(0xFF2E3A59)
+fun SelectionListCard(
+    item: SelectionListItem,
+    showSnackBar: (String) -> Unit,
+    setSelected: (Int) -> Unit,
+    isSelected: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val baseCardColor = Color(0xFF2E3A59)
+    val selectedCardColor = Color(0xFF5061A2)
+    val cardColor = if (isSelected) selectedCardColor else baseCardColor
+
     val iconTint = Color(0xFFE4B23C)
     val textColor = Color(0xFFE4B23C)
 
     Box(
-        modifier = Modifier
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-            .clip(RoundedCornerShape(16.dp))
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
             .background(cardColor)
-            .shadow(
-                elevation = 6.dp,
-                shape = RoundedCornerShape(16.dp),
-                ambientColor = Color.Black.copy(alpha = 0.4f),
-                spotColor = Color.Black.copy(alpha = 0.4f)
-            )
-            .drawBehind {
-                drawRect(
-                    brush = Brush.radialGradient(
-                        colors = listOf(
-                            Color.Black.copy(alpha = 0.2f),
-                            Color.Transparent
-                        ),
-                        center = center,
-                        radius = size.maxDimension * 0.75f
-                    ),
-                    blendMode = BlendMode.Multiply
-                )
+            .clickable {
+                showSnackBar(item.name)
+                setSelected(item.id)
             }
-            .clickable(
-                enabled = true,
-                onClick = {
-                    showSnackBar(item.name)
-                    setSelected(item.id)
-                }
-            )
+            .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(36.dp)
                     .background(cardColor, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
@@ -82,27 +63,31 @@ fun SelectionListCard(item: SelectionListItem, showSnackBar: (String) -> Unit, s
                     imageVector = item.icon,
                     contentDescription = item.name,
                     tint = iconTint,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
 
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(12.dp))
 
             Column {
                 Text(
                     text = item.name,
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = textColor
                 )
                 item.description?.let {
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(4.dp))
                     Text(
                         text = it,
-                        color = Color.White.copy(alpha = 0.85f)
+                        color = Color.White.copy(alpha = 0.85f),
+                        fontSize = 12.sp
                     )
                 }
             }
         }
     }
 }
+
+
+
