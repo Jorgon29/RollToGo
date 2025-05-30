@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.data.database.dao.PlaystyleDao
+import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
@@ -25,6 +27,7 @@ class AppProvider (context: Context){
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
     private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
     private val racesRepository: RaceRepository = RaceRepositoryImplementation(context)
+    private val alignmentsRepository: AlignmentsRepository = AlignmentRepositoryImplementation(context)
 
     fun providePlaystyleRepository(): PlaystyleRepository {
         return playstyleRepository
@@ -40,5 +43,9 @@ class AppProvider (context: Context){
 
     fun provideRacesRepository(): RaceRepository {
         return racesRepository
+    }
+
+    fun provideAlignmentRepository(): AlignmentsRepository {
+        return alignmentsRepository
     }
 }

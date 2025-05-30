@@ -3,6 +3,7 @@ package com.terraplanistas.rolltogo
 import android.app.Application
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.data.database.AppProvider
+import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
@@ -16,6 +17,7 @@ class RollToGoApp: Application() {
     lateinit var userPreferencesRepository: UserPreferencesRepository
     lateinit var classesRepository: ClassesRepository
     lateinit var racesRepository: RaceRepository
+    lateinit var alignmentsRepository: AlignmentsRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -23,5 +25,6 @@ class RollToGoApp: Application() {
         playstyleRepository = appProvider.providePlaystyleRepository()
         classesRepository = appProvider.provideClassesRepository()
         racesRepository = appProvider.provideRacesRepository()
+        alignmentsRepository = appProvider.provideAlignmentRepository()
     }
 }

@@ -78,4 +78,17 @@
     <string name="actor_creation_race_tiefling">Tiflin</string>
     <string name="actor_creation_race_tiefling_description">Con sangre infernal, misteriosos y poderosos en la magia oscura.</string>
 
+    <string name="actor_creation_biography_title">Biografía</string>
+    <string name="actor_creation_biography_subtitle">Datos sobre tu personaje (Si tienes dudas puedes preguntarle a tu DM)</string>
+    <string name="actor_creation_biography_name">Nombre</string>
+    <string name="actor_creation_biography_age">Edad (Años)</string>
+    <string name="actor_creation_biography_alignment">Alineamiento</string>
+    <string name="actor_creation_biography_gender">Género</string>
+    <string name="actor_creation_biography_ideals">Ideales</string>
+    <string name="actor_creation_biography_personality">Personalidad</string>
+    <string name="actor_creation_biography_flaws">Defectos</string>
+    <string name="actor_creation_biography_biography">Biografía</string>
+    <string name="actor_creation_biography_appearance">Apariencia</string>
+
+
 </resources>
