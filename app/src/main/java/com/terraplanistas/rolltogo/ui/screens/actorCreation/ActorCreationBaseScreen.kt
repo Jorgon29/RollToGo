@@ -42,8 +42,8 @@ fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreati
     var currentStep by remember { mutableStateOf<ActorCreationStep?>(null) }
 
     LaunchedEffect(Unit) {
-        val step5 = BiographyStep(viewModel)
-        val step4 = CharacteristicsStep(viewModel, step5)
+        val step5 = CharacteristicsStep(viewModel)
+        val step4 =  BiographyStep(viewModel, step5)
         val step3 = RaceStep(viewModel, step4, snackbarHostState)
         val step2 = ClassStep(viewModel, step3, snackbarHostState)
         val step1 = PlaystyleStep(viewModel, step2, snackbarHostState)
