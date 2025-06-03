@@ -81,7 +81,13 @@ fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreati
                         }
                         Spacer(Modifier.width(16.dp))
                         Button(
-                            onClick = { currentStep = currentStep?.getNext() },
+                            onClick = {
+                                currentStep?.let {
+                                    if(currentStep!!.isDone()){
+                                        currentStep = currentStep!!.getNext()
+                                    }
+                                }
+                                      },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Transparent,
                                 contentColor = Color.White

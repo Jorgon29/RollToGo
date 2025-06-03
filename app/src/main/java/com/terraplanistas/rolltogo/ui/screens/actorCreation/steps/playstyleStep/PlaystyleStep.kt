@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,6 +46,11 @@ class PlaystyleStep(
             name = it.description,
             id = it.id
         ) }
+
+        LaunchedEffect(selected.intValue) {
+            markReady(selected.intValue != -1)
+        }
+
         Column(modifier = Modifier.padding(16.dp)) {
             Text(stringResource(R.string.actor_creation_playstyle_title), fontSize = 32.sp)
             Spacer(Modifier.height(8.dp))

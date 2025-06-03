@@ -62,6 +62,10 @@ class ClassStep(
             }
         }
 
+        LaunchedEffect(selectedClass.intValue) {
+                markReady(selectedClass.intValue != -1)
+        }
+
         fun selectClass(selectedClassNew: Int){
             selectedClass.intValue = selectedClassNew
             context.characterClass = selectedClass.intValue

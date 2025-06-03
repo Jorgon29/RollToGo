@@ -21,7 +21,7 @@ import com.terraplanistas.rolltogo.R
 @Composable
 fun BiographyComboBox(
     items: List<BiographyComboBoxItem>,
-    selectedItem: BiographyComboBoxItem?,
+    selectedItem: String,
     changeSelected: (Int) -> Unit
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -33,7 +33,7 @@ fun BiographyComboBox(
         TextField(
             modifier = Modifier.menuAnchor(),
             readOnly = true,
-            value = selectedItem?.text ?: "",
+            value = selectedItem,
             onValueChange = {},
             label = { Text(stringResource(R.string.actor_creation_biography_alignment)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },

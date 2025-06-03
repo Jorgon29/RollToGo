@@ -90,5 +90,13 @@
     <string name="actor_creation_biography_biography">Biografía</string>
     <string name="actor_creation_biography_appearance">Apariencia</string>
 
+    <string name="actor_creation_characteristics_title">Rasgos</string>
+    <string name="actor_creation_characteristics_subtitle">Rasgos físicos comunes de la especie (Si tienes dudas puedes preguntar a tu DM)</string>
+    <string name="actor_creation_characteristics_height">Altura</string>
+    <string name="actor_creation_characteristics_weight">Peso</string>
+    <string name="actor_creation_characteristics_skin">Piel</string>
+    <string name="actor_creation_characteristics_hair">Cabello</string>
+    <string name="actor_creation_characteristics_faith">Fe</string>
+    <string name="actor_creation_characteristics_eyes">Ojos</string>
 
 </resources>

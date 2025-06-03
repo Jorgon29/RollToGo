@@ -65,6 +65,10 @@ class RaceStep(
             }
         }
 
+        LaunchedEffect(selectedRace.intValue) {
+                markReady(selectedRace.intValue != -1)
+        }
+
         fun selectRace(raceId: Int){
             selectedRace.intValue = raceId
             context.race = raceId
