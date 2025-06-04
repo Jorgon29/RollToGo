@@ -15,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.terraplanistas.rolltogo.R
@@ -67,6 +68,10 @@ class CharacteristicsStep(
             modifier = Modifier.padding(horizontal = 16.dp).verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.Start
         ) {
+
+            Text(stringResource(R.string.actor_creation_characteristics_title), fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.actor_creation_characteristics_subtitle))
+
             Text(stringResource(R.string.actor_creation_characteristics_height)+"*")
             BiographyInputBox(
                 placeholder = stringResource(R.string.actor_creation_characteristics_height),

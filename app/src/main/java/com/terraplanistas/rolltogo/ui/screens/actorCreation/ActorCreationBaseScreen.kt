@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +34,15 @@ import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.classStep.Clas
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.playstyleStep.PlaystyleStep
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.raceStep.RaceStep
 import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreationViewModel = viewModel( factory = ActorCreationViewModel.Factory)) {
     val context = remember { ActorCreationContext() }
     val snackbarHostState = remember { SnackbarHostState() }
+    val incompleteData: String = stringResource(R.string.actor_creation_incomplete_fields)
+    val coroutineScope = rememberCoroutineScope()
 
     var currentStep by remember { mutableStateOf<ActorCreationStep?>(null) }
 
@@ -85,6 +90,10 @@ fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreati
                                 currentStep?.let {
                                     if(currentStep!!.isDone()){
                                         currentStep = currentStep!!.getNext()
+                                    } else {
+                                        coroutineScope.launch {
+                                            snackbarHostState.showSnackbar(incompleteData)
+                                        }
                                     }
                                 }
                                       },

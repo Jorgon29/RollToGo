@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.biographyStep
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.R
 import com.terraplanistas.rolltogo.data.model.CharacterAlignment
+import com.terraplanistas.rolltogo.data.model.CharacterGender
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationContext
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationStep
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationViewModel
@@ -30,11 +33,13 @@ class BiographyStep(
     override fun Screen(context: ActorCreationContext) {
 
         val alignments = viewModel.getAlignments()
+        val genders = viewModel.getGenders()
         var name = rememberSaveable { mutableStateOf("") }
         var age = rememberSaveable { mutableIntStateOf(0) }
         var alignment = rememberSaveable { mutableIntStateOf(0) }
         var alignmentDisplay = rememberSaveable { mutableStateOf("") }
         var gender = rememberSaveable { mutableIntStateOf(0) }
+        var genderDisplay = rememberSaveable { mutableStateOf("") }
         var ideals = rememberSaveable { mutableStateOf("") }
         var personality = rememberSaveable { mutableStateOf("") }
         var flaws = rememberSaveable { mutableStateOf("") }
@@ -55,6 +60,17 @@ class BiographyStep(
             biography.value,
             appearance.value
         ) {
+/*
+           Log.d("Biography", "Name: "+name.value + " Valid? " + name.value.isNotBlank())
+           Log.d("Biography", "Age: "+age.intValue + " Valid? " + (age.intValue != -1))
+            Log.d("Biography", "Alignment: "+alignment.intValue + " Valid? " + (alignment.intValue != -1))
+            Log.d("Biography", "Gender: "+gender.intValue + " Valid? " + (age.intValue != -1))
+            Log.d("Biography", "Ideals: "+ideals.value)
+            Log.d("Biography", "Personality: "+personality.value)
+            Log.d("Biography", "Flaws: "+biography.value)
+            Log.d("Biography", "Appearance: "+appearance.value)
+*/
+
             context.name = name.value
             context.age = age.intValue
             context.alignment = alignment.intValue
@@ -103,7 +119,24 @@ class BiographyStep(
                     alignment.intValue = it
                     alignmentDisplay.value = alignments[it-1].name
                 },
-                selectedItem = alignmentDisplay.value
+                selectedItem = alignmentDisplay.value,
+                label = stringResource(R.string.actor_creation_biography_alignment)
+            )
+
+            Text(stringResource(R.string.actor_creation_biography_gender)+"*")
+            BiographyComboBox(
+                items = genders.map { gender: CharacterGender ->
+                    BiographyComboBoxItem(
+                        text = gender.name,
+                        id = gender.id
+                    )
+                },
+                selectedItem = genderDisplay.value,
+                changeSelected = {
+                    gender.intValue = it
+                    genderDisplay.value = genders[it -1].name
+                },
+                label = stringResource(R.string.actor_creation_biography_gender)
             )
 
             Text(stringResource(R.string.actor_creation_biography_ideals)+"*")

@@ -13,8 +13,13 @@
     <string name="next">Siguiente</string>
     <string name="selected">Seleccionado</string>
     <string name="extend_menu">Extender menú</string>
+    <string name="gender_masculine">Masculino</string>
+    <string name="gender_feminine">Femenino</string>
+    <string name="gender_other">Otro</string>
+
 
     <!-- Actor creation -->
+    <string name="actor_creation_incomplete_fields">Por favor provea toda la información solicitada</string>
     <string name="actor_creation_playstyle_title">Estilo de juego</string>
     <string name="actor_creation_playstyle_subtitle">¿Qué estilo de juego prefieres?</string>
     <string name="actor_creation_playstyle_melee">Cuerpo a cuerpo</string>

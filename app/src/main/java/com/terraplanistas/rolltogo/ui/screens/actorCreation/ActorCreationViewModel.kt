@@ -8,10 +8,12 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.model.CharacterAlignment
 import com.terraplanistas.rolltogo.data.model.CharacterClass
+import com.terraplanistas.rolltogo.data.model.CharacterGender
 import com.terraplanistas.rolltogo.data.model.CharacterRace
 import com.terraplanistas.rolltogo.data.model.Playstyle
 
@@ -19,7 +21,8 @@ class ActorCreationViewModel(
     private val playstyleRepository: PlaystyleRepository,
     private val classesRepository: ClassesRepository,
     private val racesRepository: RaceRepository,
-    private val alignmentsRepository: AlignmentsRepository
+    private val alignmentsRepository: AlignmentsRepository,
+    private val gendersRepository: GendersRepository
 ) : ViewModel() {
 
     private val playstyleToClassMap = mapOf(
@@ -78,6 +81,10 @@ class ActorCreationViewModel(
         return alignmentsRepository.getAlignments()
     }
 
+    fun getGenders(): List<CharacterGender>{
+        return gendersRepository.getGenders()
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -88,7 +95,8 @@ class ActorCreationViewModel(
                     application.appProvider.providePlaystyleRepository(),
                     application.appProvider.provideClassesRepository(),
                     application.appProvider.provideRacesRepository(),
-                    application.appProvider.provideAlignmentRepository()
+                    application.appProvider.provideAlignmentRepository(),
+                    application.appProvider.provideGendersRepository()
                 )
             }
         }

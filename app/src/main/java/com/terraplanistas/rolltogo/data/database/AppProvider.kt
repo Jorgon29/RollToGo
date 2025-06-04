@@ -10,6 +10,8 @@ import com.terraplanistas.rolltogo.data.database.repository.alignments.Alignment
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
+import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
@@ -28,6 +30,7 @@ class AppProvider (context: Context){
     private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
     private val racesRepository: RaceRepository = RaceRepositoryImplementation(context)
     private val alignmentsRepository: AlignmentsRepository = AlignmentRepositoryImplementation(context)
+    private val gendersRepository: GendersRepository = GendersRepositoryImplementation(context)
 
     fun providePlaystyleRepository(): PlaystyleRepository {
         return playstyleRepository
@@ -47,5 +50,9 @@ class AppProvider (context: Context){
 
     fun provideAlignmentRepository(): AlignmentsRepository {
         return alignmentsRepository
+    }
+
+    fun provideGendersRepository(): GendersRepository {
+        return gendersRepository
     }
 }

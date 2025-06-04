@@ -5,6 +5,7 @@ import com.terraplanistas.rolltogo.data.database.repository.settings.UserPrefere
 import com.terraplanistas.rolltogo.data.database.AppProvider
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 
@@ -18,6 +19,7 @@ class RollToGoApp: Application() {
     lateinit var classesRepository: ClassesRepository
     lateinit var racesRepository: RaceRepository
     lateinit var alignmentsRepository: AlignmentsRepository
+    lateinit var gendersRepository: GendersRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -26,5 +28,6 @@ class RollToGoApp: Application() {
         classesRepository = appProvider.provideClassesRepository()
         racesRepository = appProvider.provideRacesRepository()
         alignmentsRepository = appProvider.provideAlignmentRepository()
+        gendersRepository = appProvider.provideGendersRepository()
     }
 }

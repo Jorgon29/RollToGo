@@ -22,7 +22,8 @@ import com.terraplanistas.rolltogo.R
 fun BiographyComboBox(
     items: List<BiographyComboBoxItem>,
     selectedItem: String,
-    changeSelected: (Int) -> Unit
+    changeSelected: (Int) -> Unit,
+    label: String
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val backgroundColor = MaterialTheme.colorScheme.secondary
@@ -35,7 +36,7 @@ fun BiographyComboBox(
             readOnly = true,
             value = selectedItem,
             onValueChange = {},
-            label = { Text(stringResource(R.string.actor_creation_biography_alignment)) },
+            label = { Text(label) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = backgroundColor,
