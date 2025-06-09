@@ -8,7 +8,6 @@ import com.composables.icons.lucide.ShieldPlus
 import com.composables.icons.lucide.Sparkles
 import com.composables.icons.lucide.Spline
 import com.composables.icons.lucide.Swords
-import com.terraplanistas.rolltogo.data.database.entities.PlaystyleEntity
 
 data class Playstyle(
     val id: Int,
@@ -17,14 +16,6 @@ data class Playstyle(
     val icon: ImageVector,
     val recommendedClasses: List<Int>? = null
 )
-
-fun Playstyle.toEntity(): PlaystyleEntity{
-    return PlaystyleEntity(
-        id = this.id,
-        title = this.title,
-        description = this.description,
-        icon = iconNameFor(this.icon))
-}
 
 fun iconNameFor(icon: ImageVector): String = when (icon) {
     Lucide.Swords -> "swords"

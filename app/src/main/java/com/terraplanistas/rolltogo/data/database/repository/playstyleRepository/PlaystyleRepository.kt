@@ -6,6 +6,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface PlaystyleRepository {
     fun getPlaystyles(): List<Playstyle>
-
-    fun addPlaystyle(playstyle: Playstyle)
 }

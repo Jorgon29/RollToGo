@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
-import com.terraplanistas.rolltogo.data.database.dao.PlaystyleDao
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
@@ -23,9 +22,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class AppProvider (context: Context){
     private val appDatabase: RollToGoDatabase = RollToGoDatabase.getDatabase(context)
 
-    private val playstyleDao: PlaystyleDao = appDatabase.playstyleDao()
-
-    private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(playstyleDao, context)
+    private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(context)
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
     private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
     private val racesRepository: RaceRepository = RaceRepositoryImplementation(context)

@@ -89,7 +89,11 @@ fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreati
                             onClick = {
                                 currentStep?.let {
                                     if(currentStep!!.isDone()){
-                                        currentStep = currentStep!!.getNext()
+                                        if(currentStep!!.hasNext()){
+                                            currentStep = currentStep!!.getNext()
+                                        } else {
+
+                                        }
                                     } else {
                                         coroutineScope.launch {
                                             snackbarHostState.showSnackbar(incompleteData)
