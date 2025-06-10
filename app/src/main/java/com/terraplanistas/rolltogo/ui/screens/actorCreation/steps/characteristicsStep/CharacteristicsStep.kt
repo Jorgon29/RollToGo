@@ -113,6 +113,7 @@ class CharacteristicsStep(
                 text = eyes.value,
                 changeText = {eyes.value = it}
             )
+            Spacer(Modifier.height(128.dp))
         }
 
     }

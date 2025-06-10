@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.terraplanistas.rolltogo.data.database.dao.FriendDao
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.friends.FriendsRepository
+import com.terraplanistas.rolltogo.data.database.repository.friends.FriendsRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
@@ -22,12 +25,15 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class AppProvider (context: Context){
     private val appDatabase: RollToGoDatabase = RollToGoDatabase.getDatabase(context)
 
+    private val friendDao: FriendDao = appDatabase.friendDao()
+
     private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(context)
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
     private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
     private val racesRepository: RaceRepository = RaceRepositoryImplementation(context)
     private val alignmentsRepository: AlignmentsRepository = AlignmentRepositoryImplementation(context)
     private val gendersRepository: GendersRepository = GendersRepositoryImplementation(context)
+    private val friendsRepository: FriendsRepository = FriendsRepositoryImplementation(friendDao)
 
     fun providePlaystyleRepository(): PlaystyleRepository {
         return playstyleRepository
@@ -51,5 +57,9 @@ class AppProvider (context: Context){
 
     fun provideGendersRepository(): GendersRepository {
         return gendersRepository
+    }
+
+    fun provideFriendsRepository(): FriendsRepository {
+        return friendsRepository
     }
 }

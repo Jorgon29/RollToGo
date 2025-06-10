@@ -5,16 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.terraplanistas.rolltogo.data.database.dao.AlignmentDao
+import com.terraplanistas.rolltogo.data.database.dao.FriendDao
 import com.terraplanistas.rolltogo.data.database.entities.AlignmentEntity
 import com.terraplanistas.rolltogo.data.database.entities.CharacterEntity
+import com.terraplanistas.rolltogo.data.database.entities.FriendEntity
 
 @Database(
-    entities = [AlignmentEntity::class, CharacterEntity::class],
-    version = 7,
+    entities = [AlignmentEntity::class, CharacterEntity::class, FriendEntity::class],
+    version = 8,
     exportSchema = false
 )
 abstract class RollToGoDatabase : RoomDatabase() {
     abstract fun alignmentDao(): AlignmentDao
+    abstract fun friendDao(): FriendDao
 
     companion object {
         @Volatile

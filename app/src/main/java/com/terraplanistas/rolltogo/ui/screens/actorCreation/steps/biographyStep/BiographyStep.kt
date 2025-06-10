@@ -2,6 +2,8 @@ package com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.biographyStep
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -173,6 +175,8 @@ class BiographyStep(
                 text = appearance.value,
                 changeText = {appearance.value = it}
             )
+
+            Spacer(Modifier.height(128.dp))
         }
     }
 }

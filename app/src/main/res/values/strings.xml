@@ -16,6 +16,12 @@
     <string name="gender_masculine">Masculino</string>
     <string name="gender_feminine">Femenino</string>
     <string name="gender_other">Otro</string>
+    <string name="friends">Amigos</string>
+    <string name="add_friend">Agregar amigo</string>
+    <string name="block">Bloquear</string>
+    <string name="delete">Eliminar</string>
+    <string name="send_friend_request">Enviar solicitud</string>
+    <string name="username">Nombre de usuario</string>
 
 
     <!-- Actor creation -->

@@ -25,7 +25,7 @@ fun BaseBottomBar(items: List<BarItem>, navController: NavController){
                 selected = selected.value == item.text,
                 onClick = {
                     selected.value = item.text
-                    // navController.navigate(item.navigation)
+                    navController.navigate(item.navigation)
                 }
 
             )

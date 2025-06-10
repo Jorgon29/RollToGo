@@ -3,6 +3,7 @@ package com.terraplanistas.rolltogo.ui.layout.boxes.cateogoryBox
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,7 +31,13 @@ import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.R
 
 @Composable
-fun CategoryBox(title: String, content: String? = null){
+fun CategoryBox(
+    title: String,
+    content: String? = null,
+    imageDesc: String = stringResource(R.string.placeholder_image),
+    image: Painter = painterResource(R.drawable.placeholder),
+    onClick: () -> Unit = {}
+    ){
     Box(
         modifier = Modifier
             .shadow(
@@ -40,8 +48,7 @@ fun CategoryBox(title: String, content: String? = null){
             .border(width = 2.dp, color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(8.dp))
             .widthIn(max = (LocalConfiguration. current. screenWidthDp*0.9).dp)
             .heightIn(max = 150.dp)
-
-
+            .clickable(enabled = true, onClick = {onClick()})
     ) {
         Row(
            horizontalArrangement = Arrangement.Start,
@@ -49,9 +56,8 @@ fun CategoryBox(title: String, content: String? = null){
             modifier = Modifier
                 .padding(14.dp),
         ) {
-
             Image(
-                painter = painterResource(R.drawable.placeholder), stringResource(R.string.placeholder_image),
+                painter = image, imageDesc,
                 modifier = Modifier
                     .size(56.dp)
                     .border(2.dp, color = MaterialTheme.colorScheme.onPrimaryContainer)
