@@ -8,7 +8,7 @@ data class ActorCreationContext(
     var name: String? = null,
     var playstyle: Int? = null,
     var alignment: Int? = null,
-    var age: Int? = null,
+    var age: String? = null,
     var ideals: String? = null,
     var personality: String? = null,
     var flaws: String? = null,
