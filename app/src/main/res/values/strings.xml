@@ -16,13 +16,19 @@
     <string name="gender_masculine">Masculino</string>
     <string name="gender_feminine">Femenino</string>
     <string name="gender_other">Otro</string>
+    <string name="create">Crear</string>
+    <string name="characters">Personajes</string>
+    <string name="monsters">Monstruos</string>
+    <string name="add">Agregar</string>
+    <string name="see">Ver</string>
+
+        <!-- Friends -->
     <string name="friends">Amigos</string>
     <string name="add_friend">Agregar amigo</string>
     <string name="block">Bloquear</string>
     <string name="delete">Eliminar</string>
     <string name="send_friend_request">Enviar solicitud</string>
     <string name="username">Nombre de usuario</string>
-
 
     <!-- Actor creation -->
     <string name="actor_creation_incomplete_fields">Por favor provea toda la información solicitada</string>

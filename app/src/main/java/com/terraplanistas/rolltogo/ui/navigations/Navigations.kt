@@ -18,7 +18,7 @@ object AccountNavigation
 object NewActorNavigation
 
 @Serializable
-object NewCampaignNavigation
+data class ActorScreenNavigation(val id: Int)
 
 @Serializable
-data class ActorScreenNavigation(val id: Int)
+object SearchCharactersNavigation

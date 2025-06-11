@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScreen
 import com.terraplanistas.rolltogo.ui.screens.actorScreen.ActorScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
+import com.terraplanistas.rolltogo.ui.screens.forumScreen.forumSearchScreens.ForumCharacterSearchScreen
 import com.terraplanistas.rolltogo.ui.screens.friendsScreen.FriendsScreen
 
 @Composable
@@ -30,6 +31,10 @@ fun NavigationHost(){
 
             composable<FriendsNavigation> {
                 FriendsScreen(navController)
+            }
+
+            composable<SearchCharactersNavigation> {
+                ForumCharacterSearchScreen(navController)
             }
         }
     }

@@ -74,7 +74,7 @@ fun PlusButton(
                         Text(stringResource(R.string.new_campaign))
                     }
                 },
-                onClick = { navigateToNewCharacter() },
+                onClick = { navigateNewCampaign() },
                 leadingIcon = {
                     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
                         Icon(imageVector = Lucide.BookOpenText, contentDescription = stringResource(R.string.new_campaign))

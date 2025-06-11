@@ -7,19 +7,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
-import com.terraplanistas.rolltogo.data.database.repository.friends.FriendsRepository
+import com.terraplanistas.rolltogo.data.database.repository.BaseRepository
 import com.terraplanistas.rolltogo.data.model.Friend
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 class FriendsScreenViewModel(
-    private val friendsRepository: FriendsRepository
+    private val friendsRepository: BaseRepository<Friend>
 ): ViewModel() {
 
     fun getFriends(): StateFlow<List<Friend>>{
-        return friendsRepository.getFriends().stateIn(
+        return friendsRepository.getElements().stateIn(
             scope = viewModelScope,
             initialValue = emptyList<Friend>(),
             started = SharingStarted.WhileSubscribed(5000)
@@ -27,19 +26,19 @@ class FriendsScreenViewModel(
     }
 
     suspend fun addFriend(friend: Friend){
-        friendsRepository.addFriend(friend)
+        friendsRepository.addElement(friend)
     }
 
     suspend fun removeFriend(friend: Friend){
-        friendsRepository.removeFriend(friend)
+        friendsRepository.removeElement(friend)
     }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val aplication = this[APPLICATION_KEY] as RollToGoApp
+                val application = this[APPLICATION_KEY] as RollToGoApp
                 FriendsScreenViewModel(
-                    aplication.appProvider.provideFriendsRepository()
+                    application.appProvider.provideFriendsRepository()
                 )
             }
         }

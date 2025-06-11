@@ -1,12 +1,9 @@
-package com.terraplanistas.rolltogo.data.database.entities
+package com.terraplanistas.rolltogo.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.terraplanistas.rolltogo.data.model.DomainCharacter
+import com.terraplanistas.rolltogo.data.database.entities.CharacterEntity
 
-@Entity(tableName = "characters")
-data class CharacterEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+data class DomainCharacter(
+    val id: Int,
     val name: String,
     val race: String,
     val characterClass: String,
@@ -42,23 +39,10 @@ data class CharacterEntity(
     val createdAt: Long = System.currentTimeMillis(),
     val lastUpdated: Long = System.currentTimeMillis(),
     val image: String
-) {
-    fun getAbilityModifier(ability: String): Int {
-        val score = when(ability.toString().lowercase()) {
-            "str" -> strength
-            "dex" -> dexterity
-            "con" -> constitution
-            "int" -> intelligence
-            "wis" -> wisdom
-            "cha" -> charisma
-            else -> 10
-        }
-        return (score - 10) / 2
-    }
-}
+)
 
-fun CharacterEntity.toDomain(): DomainCharacter {
-    return DomainCharacter(
+fun DomainCharacter.toEntity(): CharacterEntity {
+    return CharacterEntity(
         id = id,
         name = name,
         race = race,

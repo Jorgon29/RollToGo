@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.terraplanistas.rolltogo.ui.screens.baseHomeScreen
 
 import androidx.compose.foundation.background
@@ -7,11 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,7 +40,9 @@ fun BaseHomeScreen(navController: NavController, title: String? = null, content:
     val modifyDropDownState = { newState: Boolean ->
         showDropDown.value = newState
     }
-
+    var showCampaignModal = rememberSaveable { mutableStateOf(false) }
+    var campaignSheetState = rememberModalBottomSheetState()
+    var newCampaignName = rememberSaveable { mutableStateOf("") }
     Box {
         Scaffold(
             snackbarHost = {
@@ -53,7 +59,7 @@ fun BaseHomeScreen(navController: NavController, title: String? = null, content:
                     expanded = showDropDown.value,
                     hide = { modifyDropDownState(false) },
                     navigateToNewCharacter = {navController.navigate(NewActorNavigation)},
-                    navigateNewCampaign = {navController.navigate(NewActorNavigation)},
+                    navigateNewCampaign = {showCampaignModal.value = true},
                     showDropDown = {modifyDropDownState(true)}
                 )
             },
@@ -75,6 +81,15 @@ fun BaseHomeScreen(navController: NavController, title: String? = null, content:
                     BasicTitle(title)
                 }
                 content()
+
+                if(showCampaignModal.value){
+                    NewCampaignModal(
+                        hideModal = {showCampaignModal.value = false},
+                        sheetState = campaignSheetState,
+                        newCampaignName = newCampaignName.value,
+                        changeNewCampaingName = { newCampaignName.value = it}
+                    )
+                }
             }
 
         }

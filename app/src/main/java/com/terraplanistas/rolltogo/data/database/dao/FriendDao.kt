@@ -13,8 +13,11 @@ interface FriendDao{
     @Query("SELECT * FROM friend")
     fun getFriends(): Flow<List<FriendEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFriend(friendEntity: FriendEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addFriends(friends: List<FriendEntity>)
 
     @Delete
     suspend fun removeFriend(friendEntity: FriendEntity)
