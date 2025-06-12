@@ -1,7 +1,5 @@
 package com.terraplanistas.rolltogo.data.model
 
-import com.terraplanistas.rolltogo.data.database.entities.CharacterEntity
-
 data class DomainCharacter(
     val id: Int,
     val name: String,
@@ -40,44 +38,3 @@ data class DomainCharacter(
     val lastUpdated: Long = System.currentTimeMillis(),
     val image: String
 )
-
-fun DomainCharacter.toEntity(): CharacterEntity {
-    return CharacterEntity(
-        id = id,
-        name = name,
-        race = race,
-        characterClass = characterClass,
-        level = level,
-        background = background,
-        alignment = alignment,
-        strength = strength,
-        dexterity = dexterity,
-        constitution = constitution,
-        intelligence = intelligence,
-        wisdom = wisdom,
-        charisma = charisma,
-        maxHitPoints = maxHitPoints,
-        currentHitPoints = currentHitPoints,
-        temporaryHitPoints = temporaryHitPoints,
-        personalityTraits = personalityTraits,
-        ideals = ideals,
-        bonds = bonds,
-        flaws = flaws,
-        appearance = appearance,
-        backstory = backstory,
-        skills = skills,
-        savingThrows = savingThrows,
-        languages = languages,
-        inventory = inventory,
-        copperPieces = copperPieces,
-        silverPieces = silverPieces,
-        goldPieces = goldPieces,
-        platinumPieces = platinumPieces,
-        spellSlots = spellSlots,
-        spellsKnown = spellsKnown,
-        experiencePoints = experiencePoints,
-        createdAt = createdAt,
-        lastUpdated = lastUpdated,
-        image = image
-    )
-}

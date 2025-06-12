@@ -1,7 +1,5 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation
 
-import com.terraplanistas.rolltogo.data.database.entities.CharacterEntity
-
 data class ActorCreationContext(
     var race: Int? = null,
     var characterClass: Int? = null,

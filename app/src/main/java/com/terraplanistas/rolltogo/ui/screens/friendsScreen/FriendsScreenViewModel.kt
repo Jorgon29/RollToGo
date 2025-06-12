@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 class FriendsScreenViewModel(
-    private val friendsRepository: BaseRepository<Friend>
+    private val friendsRepository: Any
 ): ViewModel() {
-
+/*
     fun getFriends(): StateFlow<List<Friend>>{
-        return friendsRepository.getElements().stateIn(
+        return emptyList<Friend>().stateIn(
             scope = viewModelScope,
             initialValue = emptyList<Friend>(),
             started = SharingStarted.WhileSubscribed(5000)
@@ -31,14 +31,14 @@ class FriendsScreenViewModel(
 
     suspend fun removeFriend(friend: Friend){
         friendsRepository.removeElement(friend)
-    }
+    }*/
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as RollToGoApp
                 FriendsScreenViewModel(
-                    application.appProvider.provideFriendsRepository()
+                    ""
                 )
             }
         }

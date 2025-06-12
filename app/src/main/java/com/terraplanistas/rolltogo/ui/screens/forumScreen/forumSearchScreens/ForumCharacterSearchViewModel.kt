@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.database.repository.BaseRepository
-import com.terraplanistas.rolltogo.data.database.repository.character.CharactersRepository
 import com.terraplanistas.rolltogo.data.model.DomainCharacter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,18 +17,18 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class ForumCharacterSearchViewModel(
-    private val charactersRepository: CharactersRepository
+    private val charactersRepository: Any
 ): ViewModel() {
     private val _searchedItems = MutableStateFlow<List<DomainCharacter>>(emptyList())
     val searchedItems: StateFlow<List<DomainCharacter>> = _searchedItems
 
     fun searchByName(query: String) {
-        viewModelScope.launch {
+        /* viewModelScope.launch {
             charactersRepository.searchCharacter(query)
                 .collect { results ->
                     _searchedItems.value = results
                 }
-        }
+        } */
     }
 
     companion object {
@@ -37,7 +36,7 @@ class ForumCharacterSearchViewModel(
             initializer {
                 val application = this[APPLICATION_KEY] as RollToGoApp
                 ForumCharacterSearchViewModel(
-                    application.charactersRepository
+                    ""
                 )
             }
         }

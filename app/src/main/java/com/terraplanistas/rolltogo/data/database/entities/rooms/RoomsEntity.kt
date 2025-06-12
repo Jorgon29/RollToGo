@@ -1,0 +1,24 @@
+package com.terraplanistas.rolltogo.data.database.entities.rooms
+
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
+import androidx.room.PrimaryKey
+import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
+
+@Entity(
+    tableName = "rooms",
+    foreignKeys = [
+        ForeignKey(
+            entity = ContentEntity::class,
+            childColumns = ["id"],
+            parentColumns = ["id"],
+            onDelete = CASCADE
+        )
+    ]
+)
+data class RoomsEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val description: String
+)

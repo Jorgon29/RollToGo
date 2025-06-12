@@ -41,7 +41,7 @@ import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen
 @Composable
 fun FriendsScreen(navController: NavController, viewModel: FriendsScreenViewModel = viewModel(factory = FriendsScreenViewModel.Factory)){
 
-    val friends = viewModel.getFriends().collectAsState(emptyList())
+    val friends = emptyList<Friend>()
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showBottomSheetModal by rememberSaveable { mutableStateOf(false) }
@@ -55,7 +55,7 @@ fun FriendsScreen(navController: NavController, viewModel: FriendsScreenViewMode
         title = stringResource(R.string.friends),
         content = {
             LazyColumn { 
-                items(friends.value) { friend: Friend -> 
+                items(friends) { friend: Friend ->
                     CategoryBox(
                         title = friend.name,
                         onClick = {
