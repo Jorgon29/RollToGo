@@ -1,6 +1,9 @@
 package com.terraplanistas.rolltogo
 
 import android.app.Application
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.data.database.AppProvider
 import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
@@ -9,17 +12,22 @@ import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepos
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 
+
+
 class RollToGoApp: Application() {
 
     val appProvider: AppProvider by lazy {
         AppProvider(this)
     }
+
+
     lateinit var playstyleRepository: PlaystyleRepository
     lateinit var userPreferencesRepository: UserPreferencesRepository
     lateinit var classesRepository: ClassesRepository
     lateinit var racesRepository: RaceRepository
     lateinit var alignmentsRepository: AlignmentsRepository
     lateinit var gendersRepository: GendersRepository
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate() {
         super.onCreate()
@@ -29,5 +37,6 @@ class RollToGoApp: Application() {
         racesRepository = appProvider.provideRacesRepository()
         alignmentsRepository = appProvider.provideAlignmentRepository()
         gendersRepository = appProvider.provideGendersRepository()
+        auth = Firebase.auth
     }
 }

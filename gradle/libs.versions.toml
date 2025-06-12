@@ -25,6 +25,8 @@ graphics-shapes = "1.0.1"
 materialIcons = "1.7.8"
 room = "2.7.1"
 ksp = "2.1.20-2.0.1"
+firebaseBom = "33.15.0"
+firebaseAuth = "23.2.1"
 
 [libraries]
 androidx-activity-compose-v190 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -60,6 +62,8 @@ androidx-material = {group = "androidx.material", name = "material-icons-extende
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
