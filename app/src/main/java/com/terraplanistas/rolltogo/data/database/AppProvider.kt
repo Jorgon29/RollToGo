@@ -16,8 +16,6 @@ import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepositoryImplementation
-import com.terraplanistas.rolltogo.data.model.Campaign
-import com.terraplanistas.rolltogo.data.model.Friend
 
 private val USER_PREFERENCE_NAME = "user_preferences"
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_PREFERENCE_NAME)

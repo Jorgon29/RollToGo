@@ -9,8 +9,6 @@ import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepos
 import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
-import com.terraplanistas.rolltogo.data.model.Campaign
-import com.terraplanistas.rolltogo.data.model.Friend
 
 class RollToGoApp: Application() {
 
@@ -23,8 +21,6 @@ class RollToGoApp: Application() {
     lateinit var racesRepository: RaceRepository
     lateinit var alignmentsRepository: AlignmentsRepository
     lateinit var gendersRepository: GendersRepository
-    lateinit var friendsRepository: BaseRepository<Friend>
-    lateinit var campaignsRepository: BaseRepository<Campaign>
 
     override fun onCreate() {
         super.onCreate()

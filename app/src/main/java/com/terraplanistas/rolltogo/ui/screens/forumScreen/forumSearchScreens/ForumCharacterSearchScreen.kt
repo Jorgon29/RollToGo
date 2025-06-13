@@ -49,7 +49,7 @@ fun ForumCharacterSearchScreen(
             val sheetState = rememberModalBottomSheetState()
             var showModal = rememberSaveable { mutableStateOf(false) }
             var selectedCharacterName = rememberSaveable { mutableStateOf("") }
-            var selectedCharacterId = rememberSaveable { mutableIntStateOf(0) }
+            var selectedCharacterId = rememberSaveable { mutableStateOf("") }
 
             LaunchedEffect(searchInput.value) {
                 viewModel.searchByName(searchInput.value)
@@ -76,7 +76,7 @@ fun ForumCharacterSearchScreen(
                         title = character.name,
                         content = "${character.characterClass} - ${character.race} - lvl. + ${character.level}",
                         onClick = {
-                            selectedCharacterId.intValue = character.id
+                            selectedCharacterId.value = character.id
                             selectedCharacterName.value = character.name
                         }
                     )

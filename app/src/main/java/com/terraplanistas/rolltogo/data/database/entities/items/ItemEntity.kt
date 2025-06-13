@@ -25,8 +25,8 @@ data class ItemEntity(
     val item_type_enum: ItemTypeEnum,
     val rarity_enum: ItemRarityEnum,
     val weight: Int,
-    val cost_gp: Double,
+    val cost_value: Double,
+    val cost_unit: Double,
     val attunement_required: Boolean,
-    val attunement: String,
     val it_magical: Boolean
 )

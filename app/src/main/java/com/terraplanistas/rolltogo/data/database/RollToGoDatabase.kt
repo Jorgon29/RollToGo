@@ -127,7 +127,7 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
         ContentEntity::class,
         UserEntity::class
                ],
-    version = 12,
+    version = 13,
     exportSchema = false
 )
 abstract class RollToGoDatabase : RoomDatabase() {
