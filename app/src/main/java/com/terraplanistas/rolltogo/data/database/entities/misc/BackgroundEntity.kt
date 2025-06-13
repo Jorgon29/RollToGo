@@ -2,6 +2,7 @@ package com.terraplanistas.rolltogo.data.database.entities.misc
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 
@@ -12,7 +13,7 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
             entity = ContentEntity::class,
             childColumns = ["id"],
             parentColumns = ["id"],
-            onDelete = ForeignKey.Companion.CASCADE
+            onDelete = CASCADE
         )
     ]
 )

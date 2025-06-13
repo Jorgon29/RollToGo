@@ -2,6 +2,7 @@ package com.terraplanistas.rolltogo.data.database.entities.species
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.enums.SizeEnum
 
@@ -11,7 +12,8 @@ import com.terraplanistas.rolltogo.data.enums.SizeEnum
         ForeignKey(
             entity = SpeciesEntity::class,
             childColumns = ["species_id"],
-            parentColumns = ["id"]
+            parentColumns = ["id"],
+            onDelete = CASCADE
         )
     ]
 )

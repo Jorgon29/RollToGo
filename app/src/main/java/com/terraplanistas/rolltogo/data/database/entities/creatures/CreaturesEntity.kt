@@ -2,6 +2,7 @@ package com.terraplanistas.rolltogo.data.database.entities.creatures
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -10,12 +11,14 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = MonstersEntity::class,
             parentColumns = ["id"],
-            childColumns = ["id"]
+            childColumns = ["id"],
+            onDelete = CASCADE
         ),
         ForeignKey(
             entity = CharactersEntity::class,
             parentColumns = ["id"],
-            childColumns = ["id"]
+            childColumns = ["id"],
+            onDelete = CASCADE
         )
     ]
 )

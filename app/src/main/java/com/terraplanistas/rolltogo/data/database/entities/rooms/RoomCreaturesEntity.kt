@@ -18,7 +18,8 @@ import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
         ForeignKey(
             entity = RoomParticipantEntity::class,
             childColumns = ["owner_id"],
-            parentColumns = ["id"]
+            parentColumns = ["id"],
+            onDelete = CASCADE
         )
     ]
 )
