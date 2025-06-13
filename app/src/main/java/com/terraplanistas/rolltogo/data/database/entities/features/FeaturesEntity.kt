@@ -21,7 +21,6 @@ data class FeaturesEntity(
     @PrimaryKey val id: String,
     val name: String,
     val description: String,
-    val source_type_enum: String,
     val is_magilcal: Boolean,
     val is_passive: Boolean
 )

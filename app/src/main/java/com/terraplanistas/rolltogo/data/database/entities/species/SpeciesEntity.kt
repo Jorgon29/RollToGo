@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
 import com.terraplanistas.rolltogo.data.enums.SizeEnum
+import com.terraplanistas.rolltogo.data.model.character.DomainRace
 
 @Entity(
     tableName = "species",
@@ -27,3 +28,14 @@ data class SpeciesEntity(
     val languages: String,
     val size_enum: SizeEnum
 )
+
+
+fun SpeciesEntity.toDomainRace(): DomainRace {
+    return DomainRace(
+        id = this.id,
+        name = this.name,
+        description = this.description,
+        languages = this.languages,
+        size = this.size_enum
+    )
+}

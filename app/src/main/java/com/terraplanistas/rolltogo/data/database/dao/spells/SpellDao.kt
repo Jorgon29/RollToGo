@@ -33,9 +33,6 @@ interface SpellDao {
     @Query("SELECT * FROM spell WHERE spell_school_enum = :school")
     fun getSpellsBySchool(school: SpellSchoolEnum): Flow<List<SpellEntity>>
 
-    @Query("SELECT * FROM spell WHERE preparation_mode_enum = :mode")
-    fun getSpellsByPreparationMode(mode: String): Flow<List<SpellEntity>>
-
     @Query("SELECT * FROM spell")
     fun getAllSpells(): Flow<List<SpellEntity>>
 }

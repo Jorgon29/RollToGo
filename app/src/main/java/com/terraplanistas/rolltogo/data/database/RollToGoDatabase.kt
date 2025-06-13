@@ -21,7 +21,6 @@ import com.terraplanistas.rolltogo.data.database.dao.grants.GrantOptionItemsDao
 import com.terraplanistas.rolltogo.data.database.dao.grants.GrantOptionSetsDao
 import com.terraplanistas.rolltogo.data.database.dao.grants.GrantsDao
 import com.terraplanistas.rolltogo.data.database.dao.items.ItemDao
-import com.terraplanistas.rolltogo.data.database.dao.items.ItemModifierDao
 import com.terraplanistas.rolltogo.data.database.dao.items.ItemTagDao
 import com.terraplanistas.rolltogo.data.database.dao.items.VehiclesDao
 import com.terraplanistas.rolltogo.data.database.dao.misc.AbilitiesDao
@@ -62,7 +61,6 @@ import com.terraplanistas.rolltogo.data.database.entities.grants.GrantOptionItem
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantOptionSetsEntity
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantsEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.ItemEntity
-import com.terraplanistas.rolltogo.data.database.entities.items.ItemModifier
 import com.terraplanistas.rolltogo.data.database.entities.items.ItemTagEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.VehiclesEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.AbilitiesEntity
@@ -101,7 +99,6 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
         GrantOptionSetsEntity::class,
         GrantsEntity::class,
         ItemEntity::class,
-        ItemModifier::class,
         ItemTagEntity::class,
         VehiclesEntity::class,
         AbilitiesEntity::class,
@@ -127,7 +124,7 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
         ContentEntity::class,
         UserEntity::class
                ],
-    version = 13,
+    version = 16,
     exportSchema = false
 )
 abstract class RollToGoDatabase : RoomDatabase() {
@@ -155,7 +152,6 @@ abstract class RollToGoDatabase : RoomDatabase() {
     abstract fun sensesDao(): SensesDao
     abstract fun skillDao(): SkillDao
     abstract fun itemDao(): ItemDao
-    abstract fun itemModifierDao(): ItemModifierDao
     abstract fun itemTagDao(): ItemTagDao
     abstract fun vehiclesDao(): VehiclesDao
     abstract fun grantOptionItemsDao(): GrantOptionItemsDao

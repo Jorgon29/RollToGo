@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.R
-import com.terraplanistas.rolltogo.data.model.DomainCharacter
+import com.terraplanistas.rolltogo.data.model.character.DomainCharacter
 import com.terraplanistas.rolltogo.ui.layout.boxes.cateogoryBox.CategoryBox
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.biographyStep.BiographyInputBox
 import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen

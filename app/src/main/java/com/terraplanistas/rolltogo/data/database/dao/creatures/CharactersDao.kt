@@ -31,4 +31,12 @@ interface CharactersDao {
 
     @Query("SELECT * FROM characters")
     fun getAllCharacters(): Flow<List<CharactersEntity>>
+
+    @Query("""
+        SELECT C.*
+        FROM characters AS C
+        INNER JOIN creatures AS CR ON C.id = CR.id
+        WHERE CR.name LIKE '%' || :searchQuery || '%'
+    """)
+    fun searchCharactersByName(searchQuery: String): Flow<List<CharactersEntity>>
 }

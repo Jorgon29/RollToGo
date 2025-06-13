@@ -8,6 +8,8 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
 import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
 import com.terraplanistas.rolltogo.data.enums.SpellSchoolEnum
+import com.terraplanistas.rolltogo.data.model.character.DomainItem
+import com.terraplanistas.rolltogo.data.model.character.DomainSpell
 
 @Entity(
     tableName = "spell",
@@ -27,7 +29,6 @@ data class SpellEntity(
     val spell_components: String,
     val spell_level_enum: Int,
     val spell_school_enum: SpellSchoolEnum,
-    val preparation_mode_enum: String,
     val casting_time_value: String,
     val casting_time_unit_enum: String,
     val range_value: String,
@@ -35,3 +36,16 @@ data class SpellEntity(
     val duration_value: String,
     val duration_time_unit_enum: DurationUnitEnum
 )
+
+fun SpellEntity.toDomainSpell(materialItems: List<DomainItem>): DomainSpell {
+    return DomainSpell(
+        id = this.id,
+        name = this.name,
+        description = this.description,
+        spellComponents = materialItems,
+        spellSchoolEnum = this.spell_school_enum,
+        castingTime = "${this.casting_time_value} ${this.casting_time_unit_enum}", // Combinar valor y unidad
+        range = "${this.range_value} ${this.range_unit_enum.name}", // Combinar valor y unidad
+        duration = "${this.duration_value} ${this.duration_time_unit_enum.name}" // Combinar valor y unidad
+    )
+}

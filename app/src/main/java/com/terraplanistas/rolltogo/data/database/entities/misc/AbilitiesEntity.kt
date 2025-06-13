@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.database.entities.items.ItemModifier
 
 @Entity(
     tableName = "abilities",

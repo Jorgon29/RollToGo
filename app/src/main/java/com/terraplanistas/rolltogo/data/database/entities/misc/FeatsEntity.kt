@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
+import com.terraplanistas.rolltogo.data.model.character.DomainFeats
 
 @Entity(
     tableName = "feats",
@@ -20,3 +21,12 @@ data class FeatsEntity(
     val name: String,
     val description: String
 )
+
+
+fun FeatsEntity.toDomainFeats(): DomainFeats {
+    return DomainFeats(
+        id = this.id,
+        name = this.name,
+        description = this.description
+    )
+}

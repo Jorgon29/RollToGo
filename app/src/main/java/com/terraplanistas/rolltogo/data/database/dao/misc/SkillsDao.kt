@@ -22,7 +22,7 @@ interface SkillDao {
     suspend fun deleteSkill(skill: SkillEntity)
 
     @Query("SELECT * FROM skills WHERE id = :skillId")
-    fun getSkillById(skillId: Int): Flow<SkillEntity?>
+    fun getSkillById(skillId: String): Flow<SkillEntity?>
 
     @Query("SELECT * FROM skills WHERE skill_enum = :skillEnum")
     fun getSkillByEnum(skillEnum: SkillEnum): Flow<SkillEntity?>

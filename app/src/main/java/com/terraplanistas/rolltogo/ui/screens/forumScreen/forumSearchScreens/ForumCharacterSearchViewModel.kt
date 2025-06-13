@@ -8,7 +8,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.database.repository.BaseRepository
-import com.terraplanistas.rolltogo.data.model.DomainCharacter
+import com.terraplanistas.rolltogo.data.model.character.DomainCharacter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

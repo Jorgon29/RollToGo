@@ -28,6 +28,4 @@ data class SubclassEntity(
     val class_id: String,
     val name: String,
     val description: String,
-    val hit_points_first_level: Int,
-    val hit_points_per_level: Int
 )
