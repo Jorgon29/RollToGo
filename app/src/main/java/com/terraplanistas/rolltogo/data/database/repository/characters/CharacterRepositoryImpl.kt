@@ -19,8 +19,8 @@ import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainFeats
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainSkill
 import com.terraplanistas.rolltogo.data.database.entities.species.toDomainRace
 import com.terraplanistas.rolltogo.data.database.entities.spells.toDomainSpell
+import com.terraplanistas.rolltogo.data.enums.AbilityEnum
 import com.terraplanistas.rolltogo.data.enums.SizeEnum
-import com.terraplanistas.rolltogo.data.enums.SpellProgressionEnum
 import com.terraplanistas.rolltogo.data.model.character.DomainCharacter
 import com.terraplanistas.rolltogo.data.model.character.DomainFeats
 import com.terraplanistas.rolltogo.data.model.character.DomainItem
@@ -34,10 +34,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
-// Importa todos tus DAOs y clases de dominio
-// import com.yourpackage.data.dao.*
-// import com.yourpackage.domain.model.*
 
 class CharacterRepositoryImpl(
     private val charactersDao: CharactersDao,
@@ -215,4 +211,3 @@ class CharacterRepositoryImpl(
         }
     }
 }
-enum class AbilityEnum { NONE, STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA }

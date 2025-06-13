@@ -6,5 +6,6 @@ package com.terraplanistas.rolltogo.data.enums
         CONSTITUTION("CON"),
         INTELLIGENCE("INT"),
         WISDOM("WIS"),
-        CHARISMA("CHA");
+        CHARISMA("CHA"),
+        NONE("NONE")
     }
