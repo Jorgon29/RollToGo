@@ -4,6 +4,46 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.terraplanistas.rolltogo.data.database.dao.ContentDao
+import com.terraplanistas.rolltogo.data.database.dao.UserDao
+import com.terraplanistas.rolltogo.data.database.dao.classDao.ClassDao
+import com.terraplanistas.rolltogo.data.database.dao.classDao.SpellcastingDao
+import com.terraplanistas.rolltogo.data.database.dao.classDao.SubclassDao
+import com.terraplanistas.rolltogo.data.database.dao.creatures.CharactersDao
+import com.terraplanistas.rolltogo.data.database.dao.creatures.CreaturesDao
+import com.terraplanistas.rolltogo.data.database.dao.creatures.InvocationDao
+import com.terraplanistas.rolltogo.data.database.dao.creatures.MonstersDao
+import com.terraplanistas.rolltogo.data.database.dao.features.FeaturesDao
+import com.terraplanistas.rolltogo.data.database.dao.features.LevelProgressionsDao
+import com.terraplanistas.rolltogo.data.database.dao.features.SpecialDieDao
+import com.terraplanistas.rolltogo.data.database.dao.features.SpecialDieProgressionsDao
+import com.terraplanistas.rolltogo.data.database.dao.grants.GrantOptionItemsDao
+import com.terraplanistas.rolltogo.data.database.dao.grants.GrantOptionSetsDao
+import com.terraplanistas.rolltogo.data.database.dao.grants.GrantsDao
+import com.terraplanistas.rolltogo.data.database.dao.items.ItemDao
+import com.terraplanistas.rolltogo.data.database.dao.items.ItemModifierDao
+import com.terraplanistas.rolltogo.data.database.dao.items.ItemTagDao
+import com.terraplanistas.rolltogo.data.database.dao.items.VehiclesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.AbilitiesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.AbilityScoreImprovementDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.ActionsDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.BackgroundDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.BonusesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.DamagesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.EffectsDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.FeatsDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.LimitedUsagesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.MovementsDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.ProficienciesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.SensesDao
+import com.terraplanistas.rolltogo.data.database.dao.misc.SkillDao
+import com.terraplanistas.rolltogo.data.database.dao.rooms.RoomCreaturesDao
+import com.terraplanistas.rolltogo.data.database.dao.rooms.RoomParticipantDao
+import com.terraplanistas.rolltogo.data.database.dao.rooms.RoomsDao
+import com.terraplanistas.rolltogo.data.database.dao.species.SpeciesDao
+import com.terraplanistas.rolltogo.data.database.dao.species.SubspeciesDao
+import com.terraplanistas.rolltogo.data.database.dao.spells.SpellDao
+import com.terraplanistas.rolltogo.data.database.dao.spells.SpellMaterialDao
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.database.entities.UserEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.BackgroundEntity
@@ -91,6 +131,47 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
     exportSchema = false
 )
 abstract class RollToGoDatabase : RoomDatabase() {
+
+    abstract fun userDao(): UserDao
+    abstract fun contentDao(): ContentDao
+    abstract fun spellDao(): SpellDao
+    abstract fun spellMaterialDao(): SpellMaterialDao
+    abstract fun speciesDao(): SpeciesDao
+    abstract fun subspeciesDao(): SubspeciesDao
+    abstract fun roomCreaturesDao(): RoomCreaturesDao
+    abstract fun roomParticipantDao(): RoomParticipantDao
+    abstract fun roomsDao(): RoomsDao
+    abstract fun abilitiesDao(): AbilitiesDao
+    abstract fun abilityScoreImprovementDao(): AbilityScoreImprovementDao
+    abstract fun actionsDao(): ActionsDao
+    abstract fun backgroundDao(): BackgroundDao
+    abstract fun bonusesDao(): BonusesDao
+    abstract fun effectsDao(): EffectsDao
+    abstract fun damagesDao(): DamagesDao
+    abstract fun featsDao(): FeatsDao
+    abstract fun limitedUsagesDao(): LimitedUsagesDao
+    abstract fun movementsDao(): MovementsDao
+    abstract fun proficienciesDao(): ProficienciesDao
+    abstract fun sensesDao(): SensesDao
+    abstract fun skillDao(): SkillDao
+    abstract fun itemDao(): ItemDao
+    abstract fun itemModifierDao(): ItemModifierDao
+    abstract fun itemTagDao(): ItemTagDao
+    abstract fun vehiclesDao(): VehiclesDao
+    abstract fun grantOptionItemsDao(): GrantOptionItemsDao
+    abstract fun grantOptionSetsDao(): GrantOptionSetsDao
+    abstract fun grantsDao(): GrantsDao
+    abstract fun featuresDao(): FeaturesDao
+    abstract fun levelProgressionsDao(): LevelProgressionsDao
+    abstract fun specialDieDao(): SpecialDieDao
+    abstract fun specialDieProgressionsDao(): SpecialDieProgressionsDao
+    abstract fun charactersDao(): CharactersDao
+    abstract fun creaturesDao(): CreaturesDao
+    abstract fun invocationDao(): InvocationDao
+    abstract fun monstersDao(): MonstersDao
+    abstract fun classDao(): ClassDao
+    abstract fun spellcastingDao(): SpellcastingDao
+    abstract fun subclassDao(): SubclassDao
 
     companion object {
         @Volatile
