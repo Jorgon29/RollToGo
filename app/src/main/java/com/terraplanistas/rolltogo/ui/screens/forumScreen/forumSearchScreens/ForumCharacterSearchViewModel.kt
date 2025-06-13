@@ -3,18 +3,12 @@ package com.terraplanistas.rolltogo.ui.screens.forumScreen.forumSearchScreens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
-import com.terraplanistas.rolltogo.data.database.repository.BaseRepository
-import com.terraplanistas.rolltogo.data.model.character.DomainCharacter
-import kotlinx.coroutines.flow.Flow
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class ForumCharacterSearchViewModel(
     private val charactersRepository: Any

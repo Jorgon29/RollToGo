@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.model.character
+package com.terraplanistas.rolltogo.data.model.creatures.character
 
 data class DomainClass(
     val id: String,

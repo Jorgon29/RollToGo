@@ -1,27 +1,11 @@
-package com.terraplanistas.rolltogo.data.database.entities.items
+package com.terraplanistas.rolltogo.data.model.creatures.character
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.ForeignKey.Companion.CASCADE
-import androidx.room.PrimaryKey
-import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
+import com.terraplanistas.rolltogo.data.database.entities.items.ItemEntity
 import com.terraplanistas.rolltogo.data.enums.ItemRarityEnum
 import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
-import com.terraplanistas.rolltogo.data.model.creatures.character.DomainItem
 
-@Entity(
-    tableName = "items",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
-)
-data class ItemEntity(
-    @PrimaryKey val id: String,
+data class DomainItem(
+    val id: String,
     val name: String,
     val description: String,
     val item_type_enum: ItemTypeEnum,
@@ -33,10 +17,8 @@ data class ItemEntity(
     val it_magical: Boolean
 )
 
-
-
-fun ItemEntity.toDomainItem(tags: List<String>): DomainItem {
-    return DomainItem(
+fun DomainItem.toItemEntity(): ItemEntity {
+    return ItemEntity(
         id = this.id,
         name = this.name,
         description = this.description,

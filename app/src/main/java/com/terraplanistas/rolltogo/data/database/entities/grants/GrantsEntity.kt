@@ -13,18 +13,16 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
             entity = ContentEntity::class,
             parentColumns = ["id"],
             childColumns = ["granter_content_id"],
-            onDelete = CASCADE
         ),
         ForeignKey(
             entity = ContentEntity::class,
             parentColumns = ["id"],
             childColumns = ["granted_content_id"],
-            onDelete = CASCADE
         )
     ]
 )
 data class GrantsEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: String,
     val granter_type_enum: String,
     val granter_content_id: String,
     val granted_type: String,

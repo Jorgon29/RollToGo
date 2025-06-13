@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import com.terraplanistas.rolltogo.data.enums.AbilityEnum
 import com.terraplanistas.rolltogo.data.enums.SpellProgressionEnum
 
 @Entity(
@@ -21,5 +22,6 @@ data class SpellcastingEntity(
     @PrimaryKey val id: String,
     val class_id: String,
     val spell_progression_enum: SpellProgressionEnum,
-    val preparation_formula: String
+    val preparation_formula: String,
+    val spell_casting_ability: AbilityEnum
 )

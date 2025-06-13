@@ -19,7 +19,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -29,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.R
-import com.terraplanistas.rolltogo.data.model.character.DomainCharacter
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
 import com.terraplanistas.rolltogo.ui.layout.boxes.cateogoryBox.CategoryBox
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.biographyStep.BiographyInputBox
 import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen

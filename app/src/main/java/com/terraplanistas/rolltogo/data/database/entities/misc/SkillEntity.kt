@@ -6,8 +6,7 @@ import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.enums.SkillEnum
-import com.terraplanistas.rolltogo.data.model.character.DomainSkill
-import kotlin.toString
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSkill
 
 @Entity(
     tableName = "skills",

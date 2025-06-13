@@ -21,7 +21,7 @@ interface GrantsDao {
     suspend fun deleteGrant(grant: GrantsEntity)
 
     @Query("SELECT * FROM grants WHERE id = :grantId")
-    fun getGrantById(grantId: Int): Flow<GrantsEntity?>
+    fun getGrantById(grantId: String): Flow<GrantsEntity?>
 
     @Query("SELECT * FROM grants WHERE granter_content_id = :granterContentId")
     fun getGrantsByGranterContentId(granterContentId: String): Flow<List<GrantsEntity>>

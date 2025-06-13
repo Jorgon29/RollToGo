@@ -28,4 +28,8 @@ interface BackgroundDao {
 
     @Query("SELECT * FROM background")
     fun getAllBackgrounds(): Flow<List<BackgroundEntity>>
+
+    @Query("SELECT * FROM background WHERE id = :backgroundName")
+    fun getBackgroundByName(backgroundName: String): Flow<BackgroundEntity?>
+
 }

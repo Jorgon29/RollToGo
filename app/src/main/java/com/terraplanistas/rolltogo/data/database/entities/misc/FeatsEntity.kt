@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.model.character.DomainFeats
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainFeats
 
 @Entity(
     tableName = "feats",

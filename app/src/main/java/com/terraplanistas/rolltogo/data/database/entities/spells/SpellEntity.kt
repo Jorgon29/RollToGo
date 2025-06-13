@@ -4,12 +4,13 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import com.terraplanistas.rolltogo.data.database.dao.items.ItemDao
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
-import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
+import com.terraplanistas.rolltogo.data.database.entities.items.toDomainItem
 import com.terraplanistas.rolltogo.data.enums.SpellSchoolEnum
-import com.terraplanistas.rolltogo.data.model.character.DomainItem
-import com.terraplanistas.rolltogo.data.model.character.DomainSpell
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSpell
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSpellMaterial
+import kotlinx.coroutines.flow.firstOrNull
 
 @Entity(
     tableName = "spell",
@@ -27,25 +28,38 @@ data class SpellEntity(
     val name: String,
     val description: String,
     val spell_components: String,
-    val spell_level_enum: Int,
+    val spell_level_enum: String,
     val spell_school_enum: SpellSchoolEnum,
     val casting_time_value: String,
     val casting_time_unit_enum: String,
     val range_value: String,
-    val range_unit_enum: RangeUnitEnum,
+    val range_unit_enum: String,
     val duration_value: String,
-    val duration_time_unit_enum: DurationUnitEnum
+    val duration_time_unit_enum: String
 )
 
-fun SpellEntity.toDomainSpell(materialItems: List<DomainItem>): DomainSpell {
+suspend fun SpellEntity.toDomainSpell(
+    materialEntities: List<SpellMaterialEntity>,
+    itemDao: ItemDao
+): DomainSpell {
+    val materialComponentsList = materialEntities.mapNotNull { spellMaterial ->
+        val itemEntity = itemDao.getItemById(spellMaterial.item_id).firstOrNull()
+        itemEntity?.let {
+            val domainItem = it.toDomainItem(emptyList())
+            DomainSpellMaterial(item = domainItem, consumed = spellMaterial.consumed)
+        }
+    }
+
     return DomainSpell(
         id = this.id,
         name = this.name,
         description = this.description,
-        spellComponents = materialItems,
+        spellMaterials = materialComponentsList,
+        components = this.spell_components,
         spellSchoolEnum = this.spell_school_enum,
-        castingTime = "${this.casting_time_value} ${this.casting_time_unit_enum}", // Combinar valor y unidad
-        range = "${this.range_value} ${this.range_unit_enum.name}", // Combinar valor y unidad
-        duration = "${this.duration_value} ${this.duration_time_unit_enum.name}" // Combinar valor y unidad
+        castingTime = "${this.casting_time_value} ${this.casting_time_unit_enum}",
+        range = "${this.range_value} ${this.range_unit_enum}",
+        duration = "${this.duration_value} ${this.duration_time_unit_enum}",
+        level = this.spell_level_enum
     )
 }

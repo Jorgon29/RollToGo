@@ -28,4 +28,7 @@ interface SpellMaterialDao {
 
     @Query("SELECT * FROM spell_material WHERE spell_id = :spellId AND item_id = :itemId")
     fun getSpellMaterialByIds(spellId: String, itemId: String): Flow<SpellMaterialEntity?>
+
+    @Query("DELETE FROM spell_material WHERE spell_id = :spellId AND item_id = :itemId")
+    suspend fun deleteSpellMaterialByIds(spellId: String, itemId: String)
 }
