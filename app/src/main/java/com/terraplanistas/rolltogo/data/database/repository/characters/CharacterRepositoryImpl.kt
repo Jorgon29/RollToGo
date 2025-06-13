@@ -210,4 +210,20 @@ class CharacterRepositoryImpl(
             emit(Resource.Error("Error searching characters: ${e.localizedMessage ?: "Unknown error"}"))
         }
     }
+
+    override suspend fun deleteCharacter(characterId: String): Resource<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val characterExists = charactersDao.getCharacterById(characterId).firstOrNull() != null
+                if (!characterExists) {
+                    return@withContext Resource.Error("Character with ID $characterId not found.")
+                }
+                charactersDao.deleteCharacterById(characterId)
+
+                Resource.Success(Unit)
+            } catch (e: Exception) {
+                Resource.Error("Error deleting character: ${e.localizedMessage ?: "Unknown error"}")
+            }
+        }
+    }
 }

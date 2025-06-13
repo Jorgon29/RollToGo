@@ -20,6 +20,9 @@ interface CreaturesDao {
     @Delete
     suspend fun deleteCreature(creature: CreaturesEntity)
 
+    @Query("DELETE FROM characters WHERE id = :characterId")
+    suspend fun deleteCharacterById(characterId: String)
+
     @Query("SELECT * FROM creatures WHERE id = :creatureId")
     fun getCreatureById(creatureId: String): Flow<CreaturesEntity?>
 
