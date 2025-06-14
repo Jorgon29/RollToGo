@@ -22,3 +22,6 @@ object NewCampaignNavigation
 
 @Serializable
 data class ActorScreenNavigation(val id: Int)
+
+@Serializable
+object LoginScreen

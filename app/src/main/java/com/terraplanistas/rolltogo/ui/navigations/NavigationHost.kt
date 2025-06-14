@@ -9,13 +9,14 @@ import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScr
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationViewModel
 import com.terraplanistas.rolltogo.ui.screens.actorScreen.ActorScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
+import com.terraplanistas.rolltogo.ui.screens.login.LoginScreen
 
 @Composable
 fun NavigationHost(){
     val navController = rememberNavController()
 
     Column {
-        NavHost(navController = navController, startDestination = ForumNavigation){
+        NavHost(navController = navController, startDestination = LoginScreen){
             composable<ForumNavigation> {
                 ForumScreen(navController)
             }
@@ -26,6 +27,9 @@ fun NavigationHost(){
 
             composable<ActorScreenNavigation> {
                 ActorScreen(it.arguments?.getInt("id") ?: 0)
+            }
+            composable<LoginScreen>{
+                LoginScreen(nav = navController)
             }
         }
     }

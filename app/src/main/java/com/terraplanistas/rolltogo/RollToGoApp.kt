@@ -1,7 +1,9 @@
 package com.terraplanistas.rolltogo
 
 import android.app.Application
+import android.util.Log
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
@@ -13,13 +15,11 @@ import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.
 import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 
 
-
-class RollToGoApp: Application() {
+class RollToGoApp : Application() {
 
     val appProvider: AppProvider by lazy {
         AppProvider(this)
     }
-
 
     lateinit var playstyleRepository: PlaystyleRepository
     lateinit var userPreferencesRepository: UserPreferencesRepository
@@ -27,16 +27,18 @@ class RollToGoApp: Application() {
     lateinit var racesRepository: RaceRepository
     lateinit var alignmentsRepository: AlignmentsRepository
     lateinit var gendersRepository: GendersRepository
-    private lateinit var auth: FirebaseAuth
+    lateinit var fireBaseAuth: FirebaseAuth
 
     override fun onCreate() {
         super.onCreate()
+        Log.d("FirebaseInit", "Firebase initialized)")
+        FirebaseApp.initializeApp(this)
         userPreferencesRepository = appProvider.provideUserPreferenceRepository()
         playstyleRepository = appProvider.providePlaystyleRepository()
         classesRepository = appProvider.provideClassesRepository()
         racesRepository = appProvider.provideRacesRepository()
         alignmentsRepository = appProvider.provideAlignmentRepository()
         gendersRepository = appProvider.provideGendersRepository()
-        auth = Firebase.auth
+        fireBaseAuth = Firebase.auth
     }
 }
