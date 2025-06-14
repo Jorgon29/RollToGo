@@ -30,10 +30,6 @@ interface ActionsDao {
 
     @Query("SELECT * FROM actions WHERE save_ability_enum = :saveAbility")
     fun getActionsBySaveAbility(saveAbility: SavingThrowEnum): Flow<List<ActionsEntity>>
-
-    @Query("SELECT * FROM actions WHERE actions_source_enum = :source")
-    fun getActionsBySource(source: String): Flow<List<ActionsEntity>>
-
     @Query("SELECT * FROM actions WHERE is_rolled = :isRolled")
     fun getActionsByIsRolled(isRolled: Boolean): Flow<List<ActionsEntity>>
 

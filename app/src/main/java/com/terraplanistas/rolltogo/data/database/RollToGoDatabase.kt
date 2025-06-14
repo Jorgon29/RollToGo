@@ -16,13 +16,11 @@ import com.terraplanistas.rolltogo.data.database.dao.creatures.MonstersDao
 import com.terraplanistas.rolltogo.data.database.dao.features.FeaturesDao
 import com.terraplanistas.rolltogo.data.database.dao.features.LevelProgressionsDao
 import com.terraplanistas.rolltogo.data.database.dao.features.SpecialDieDao
-import com.terraplanistas.rolltogo.data.database.dao.features.SpecialDieProgressionsDao
 import com.terraplanistas.rolltogo.data.database.dao.grants.GrantOptionItemsDao
 import com.terraplanistas.rolltogo.data.database.dao.grants.GrantOptionSetsDao
 import com.terraplanistas.rolltogo.data.database.dao.grants.GrantsDao
 import com.terraplanistas.rolltogo.data.database.dao.items.ItemDao
 import com.terraplanistas.rolltogo.data.database.dao.items.ItemTagDao
-import com.terraplanistas.rolltogo.data.database.dao.items.VehiclesDao
 import com.terraplanistas.rolltogo.data.database.dao.misc.AbilitiesDao
 import com.terraplanistas.rolltogo.data.database.dao.misc.AbilityScoreImprovementDao
 import com.terraplanistas.rolltogo.data.database.dao.misc.ActionsDao
@@ -56,13 +54,11 @@ import com.terraplanistas.rolltogo.data.database.entities.creatures.MonstersEnti
 import com.terraplanistas.rolltogo.data.database.entities.features.FeaturesEntity
 import com.terraplanistas.rolltogo.data.database.entities.features.LevelProgressionsEntity
 import com.terraplanistas.rolltogo.data.database.entities.features.SpecialDieEntity
-import com.terraplanistas.rolltogo.data.database.entities.features.SpecialDieProgressionsEntity
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantOptionItemsEntity
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantOptionSetsEntity
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantsEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.ItemEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.ItemTagEntity
-import com.terraplanistas.rolltogo.data.database.entities.items.VehiclesEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.AbilitiesEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.AbilityScoreImprovementEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.ActionsEntity
@@ -94,13 +90,11 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
         FeaturesEntity::class,
         LevelProgressionsEntity::class,
         SpecialDieEntity::class,
-        SpecialDieProgressionsEntity::class,
         GrantOptionItemsEntity::class,
         GrantOptionSetsEntity::class,
         GrantsEntity::class,
         ItemEntity::class,
         ItemTagEntity::class,
-        VehiclesEntity::class,
         AbilitiesEntity::class,
         AbilityScoreImprovementEntity::class,
         ActionsEntity::class,
@@ -124,7 +118,7 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
         ContentEntity::class,
         UserEntity::class
                ],
-    version = 16,
+    version = 18,
     exportSchema = false
 )
 abstract class RollToGoDatabase : RoomDatabase() {
@@ -153,14 +147,12 @@ abstract class RollToGoDatabase : RoomDatabase() {
     abstract fun skillDao(): SkillDao
     abstract fun itemDao(): ItemDao
     abstract fun itemTagDao(): ItemTagDao
-    abstract fun vehiclesDao(): VehiclesDao
     abstract fun grantOptionItemsDao(): GrantOptionItemsDao
     abstract fun grantOptionSetsDao(): GrantOptionSetsDao
     abstract fun grantsDao(): GrantsDao
     abstract fun featuresDao(): FeaturesDao
     abstract fun levelProgressionsDao(): LevelProgressionsDao
     abstract fun specialDieDao(): SpecialDieDao
-    abstract fun specialDieProgressionsDao(): SpecialDieProgressionsDao
     abstract fun charactersDao(): CharactersDao
     abstract fun creaturesDao(): CreaturesDao
     abstract fun invocationDao(): InvocationDao

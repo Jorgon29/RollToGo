@@ -21,5 +21,5 @@ data class MovementsEntity(
     @PrimaryKey val id: String,
     val max_movement_value: Int,
     val max_movement_unit: String,
-    val ability_type_enum: String
+    val movement_type_enum: String
 )

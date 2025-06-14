@@ -20,8 +20,6 @@ import com.terraplanistas.rolltogo.data.enums.SenseTypeEnum
 )
 data class AbilityScoreImprovementEntity(
     @PrimaryKey val id: String,
-    val senses_type_enum: SenseTypeEnum,
-    val default: String,
-    val distance_value: Int,
-    val movement_unit_enum: String
+    val ability_type_enum: String,
+    val max_points: String
 )

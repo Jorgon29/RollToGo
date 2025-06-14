@@ -26,9 +26,6 @@ interface MovementsDao {
     @Query("SELECT * FROM movements WHERE max_movement_unit = :unit")
     fun getMovementsByUnit(unit: String): Flow<List<MovementsEntity>>
 
-    @Query("SELECT * FROM movements WHERE ability_type_enum = :abilityType")
-    fun getMovementsByAbilityType(abilityType: String): Flow<List<MovementsEntity>>
-
     @Query("SELECT * FROM movements")
     fun getAllMovements(): Flow<List<MovementsEntity>>
 }

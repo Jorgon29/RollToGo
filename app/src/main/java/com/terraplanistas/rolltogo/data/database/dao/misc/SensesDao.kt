@@ -26,9 +26,6 @@ interface SensesDao {
     @Query("SELECT * FROM senses WHERE senses_type_enum = :senseType")
     fun getSensesByType(senseType: String): Flow<List<SensesEntity>>
 
-    @Query("SELECT * FROM senses WHERE movement_unit_enum = :movementUnit")
-    fun getSensesByMovementUnit(movementUnit: String): Flow<List<SensesEntity>>
-
     @Query("SELECT * FROM senses")
     fun getAllSenses(): Flow<List<SensesEntity>>
 }

@@ -26,15 +26,6 @@ interface LevelProgressionsDao {
     @Query("SELECT * FROM level_progressions WHERE level = :level")
     fun getLevelProgressionsByLevel(level: Int): Flow<List<LevelProgressionsEntity>>
 
-    @Query("SELECT * FROM level_progressions WHERE level_progression_type = :type")
-    fun getLevelProgressionsByType(type: String): Flow<List<LevelProgressionsEntity>>
-
-    @Query("SELECT * FROM level_progressions WHERE grant_id = :grantId")
-    fun getLevelProgressionsByGrantId(grantId: String): Flow<List<LevelProgressionsEntity>>
-
-    @Query("SELECT * FROM level_progressions WHERE grant_option_set_id = :grantOptionSetId")
-    fun getLevelProgressionsByGrantOptionSetId(grantOptionSetId: String): Flow<List<LevelProgressionsEntity>>
-
     @Query("SELECT * FROM level_progressions")
     fun getAllLevelProgressions(): Flow<List<LevelProgressionsEntity>>
 }

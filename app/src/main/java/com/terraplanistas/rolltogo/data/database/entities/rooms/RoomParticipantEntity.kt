@@ -9,13 +9,13 @@ import com.terraplanistas.rolltogo.data.enums.GameRoleEnum
 
 @Entity(
     tableName = "room_participants",
-    primaryKeys = ["id", "room_id"],
-    indices = [Index(value = ["id"], unique = true)],
+    primaryKeys = ["user_id", "room_id"],
+    indices = [Index(value = ["user_id", "room_id"], unique = true)],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = ["id"],
-            childColumns = ["id"],
+            childColumns = ["user_id"],
             onDelete = CASCADE
         ),
         ForeignKey(
@@ -27,7 +27,7 @@ import com.terraplanistas.rolltogo.data.enums.GameRoleEnum
     ]
 )
 data class RoomParticipantEntity(
-    val id: String,
+    val user_id: String,
     val room_id: String,
     val role_enum: GameRoleEnum
 )

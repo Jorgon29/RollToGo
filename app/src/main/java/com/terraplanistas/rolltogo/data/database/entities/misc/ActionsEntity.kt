@@ -26,5 +26,4 @@ data class ActionsEntity(
     val save_ability_enum: SavingThrowEnum,
     val save_dc_formula: String,
     val is_rolled: Boolean,
-    val actions_source_enum: String
 )

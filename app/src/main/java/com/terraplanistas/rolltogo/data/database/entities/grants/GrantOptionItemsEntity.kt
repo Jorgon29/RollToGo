@@ -21,10 +21,10 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
             childColumns = ["granter_option_set_id"],
             onDelete = CASCADE
         )
-    ]
+    ],
+    primaryKeys = ["granter_option_set_id", "granted_content_id"]
 )
 data class GrantOptionItemsEntity(
-    @PrimaryKey val id: String,
     val granter_option_set_id: String,
     val granted_content_id: String
 )

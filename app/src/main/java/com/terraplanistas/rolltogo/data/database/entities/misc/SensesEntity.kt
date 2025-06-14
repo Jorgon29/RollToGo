@@ -21,6 +21,6 @@ import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
 data class SensesEntity(
     @PrimaryKey val id: String,
     val senses_type_enum: String,
-    val distance_value: Int,
-    val movement_unit_enum: String
+    val range_value: String,
+    val range_unit_enum: String
 )

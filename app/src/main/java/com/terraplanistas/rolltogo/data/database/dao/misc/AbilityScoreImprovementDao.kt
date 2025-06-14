@@ -24,12 +24,6 @@ interface AbilityScoreImprovementDao {
     @Query("SELECT * FROM ability_score_improvement WHERE id = :improvementId")
     fun getAbilityScoreImprovementById(improvementId: String): Flow<AbilityScoreImprovementEntity?>
 
-    @Query("SELECT * FROM ability_score_improvement WHERE senses_type_enum = :senseType")
-    fun getAbilityScoreImprovementsBySenseType(senseType: SenseTypeEnum): Flow<List<AbilityScoreImprovementEntity>>
-
-    @Query("SELECT * FROM ability_score_improvement WHERE movement_unit_enum = :movementUnit")
-    fun getAbilityScoreImprovementsByMovementUnit(movementUnit: String): Flow<List<AbilityScoreImprovementEntity>>
-
     @Query("SELECT * FROM ability_score_improvement")
     fun getAllAbilityScoreImprovements(): Flow<List<AbilityScoreImprovementEntity>>
 }

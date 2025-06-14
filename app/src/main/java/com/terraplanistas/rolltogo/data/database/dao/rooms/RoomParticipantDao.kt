@@ -21,13 +21,13 @@ interface RoomParticipantDao {
     @Delete
     suspend fun deleteRoomParticipant(roomParticipant: RoomParticipantEntity)
 
-    @Query("SELECT * FROM room_participants WHERE id = :participantId AND room_id = :roomId")
+    @Query("SELECT * FROM room_participants WHERE user_id = :participantId AND room_id = :roomId")
     fun getRoomParticipantByIdAndRoomId(participantId: String, roomId: String): Flow<RoomParticipantEntity?>
 
     @Query("SELECT * FROM room_participants WHERE room_id = :roomId")
     fun getParticipantsByRoomId(roomId: String): Flow<List<RoomParticipantEntity>>
 
-    @Query("SELECT * FROM room_participants WHERE id = :participantId")
+    @Query("SELECT * FROM room_participants WHERE user_id = :participantId")
     fun getRoomsByParticipantId(participantId: String): Flow<List<RoomParticipantEntity>>
 
     @Query("SELECT * FROM room_participants WHERE role_enum = :role")

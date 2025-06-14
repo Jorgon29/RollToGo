@@ -8,6 +8,7 @@ import androidx.transition.Visibility
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.ClassEntity
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.SubclassEntity
 import com.terraplanistas.rolltogo.data.database.entities.features.FeaturesEntity
+import com.terraplanistas.rolltogo.data.database.entities.features.LevelProgressionsEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.ItemEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.AbilitiesEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.AbilityScoreImprovementEntity
@@ -162,6 +163,12 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellEntity
             childColumns = ["id"],
             onDelete = CASCADE
         ),
+        ForeignKey(
+            entity = LevelProgressionsEntity::class,
+            childColumns = ["id"],
+            parentColumns = ["id"],
+            onDelete = CASCADE
+        )
     ]
 )
 data class ContentEntity(

@@ -20,9 +20,6 @@ interface GrantOptionItemsDao {
     @Delete
     suspend fun deleteGrantOptionItem(grantOptionItem: GrantOptionItemsEntity)
 
-    @Query("SELECT * FROM grant_option_items WHERE id = :grantOptionItemId")
-    fun getGrantOptionItemById(grantOptionItemId: String): Flow<GrantOptionItemsEntity?>
-
     @Query("SELECT * FROM grant_option_items WHERE granter_option_set_id = :granterOptionSetId")
     fun getGrantOptionItemsByGranterOptionSetId(granterOptionSetId: String): Flow<List<GrantOptionItemsEntity>>
 
