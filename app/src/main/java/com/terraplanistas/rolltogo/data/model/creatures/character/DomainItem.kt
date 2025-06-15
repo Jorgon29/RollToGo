@@ -16,7 +16,8 @@ data class DomainItem(
     val cost_value: BigDecimal,
     val cost_unit: CurrencyEnum,
     val attunement_required: Boolean,
-    val it_magical: Boolean
+    val it_magical: Boolean,
+    val grantId: String
 )
 
 fun DomainItem.toItemEntity(): ItemEntity {

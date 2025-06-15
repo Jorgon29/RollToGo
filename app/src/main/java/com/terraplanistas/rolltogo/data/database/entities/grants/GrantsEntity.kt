@@ -8,6 +8,8 @@ import androidx.room.TypeConverters
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
+import java.util.UUID
+import kotlin.uuid.Uuid
 
 @Entity(
     tableName = "grants",
@@ -25,7 +27,7 @@ import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
     ]
 )
 data class GrantsEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val granter_type_enum: SourceContentEnum,
     val granter_content_id: String,
     val granted_type: SourceContentEnum,

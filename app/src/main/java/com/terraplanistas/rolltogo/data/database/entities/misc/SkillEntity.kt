@@ -28,10 +28,12 @@ data class SkillEntity(
 )
 
 
-fun SkillEntity.toDomainSkill(): DomainSkill {
+fun SkillEntity.toDomainSkill(grantId: String): DomainSkill {
     return DomainSkill(
         id = this.id,
         dieFormula = this.die_formula,
-        skill = this.skill_enum
+        skill = this.skill_enum,
+        grantId = grantId,
+        proficiency = proficiency_level_enum
     )
 }

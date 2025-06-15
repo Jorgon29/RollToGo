@@ -25,10 +25,11 @@ data class FeatsEntity(
 )
 
 
-fun FeatsEntity.toDomainFeats(): DomainFeats {
+fun FeatsEntity.toDomainFeats(grantId: String): DomainFeats {
     return DomainFeats(
         id = this.id,
         name = this.name,
-        description = this.description
+        description = this.description,
+        grantId = grantId
     )
 }

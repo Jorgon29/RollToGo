@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.playstyleRepository
+package com.terraplanistas.rolltogo.data.repository.playstyleRepository
 
 import android.content.Context
 import com.terraplanistas.rolltogo.data.model.Playstyle

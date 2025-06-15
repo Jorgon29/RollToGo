@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.genders
+package com.terraplanistas.rolltogo.data.repository.genders
 
 import android.content.Context
 import com.terraplanistas.rolltogo.data.defaults.getDefaultGenders

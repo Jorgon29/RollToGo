@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository
+package com.terraplanistas.rolltogo.data.repository
 
 import kotlinx.coroutines.flow.Flow
 

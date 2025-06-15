@@ -7,12 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
-import com.terraplanistas.rolltogo.data.database.repository.BaseRepository
-import com.terraplanistas.rolltogo.data.model.Friend
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
-
 class FriendsScreenViewModel(
     private val friendsRepository: Any
 ): ViewModel() {

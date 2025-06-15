@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.races
+package com.terraplanistas.rolltogo.data.repository.races
 
 import com.terraplanistas.rolltogo.data.model.CharacterRace
 

@@ -5,7 +5,6 @@ import com.terraplanistas.rolltogo.data.database.entities.creatures.CreaturesEnt
 import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
 import com.terraplanistas.rolltogo.data.enums.AlignmentEnum
 import com.terraplanistas.rolltogo.data.enums.CreatureSourceType
-import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
 
 data class DomainCharacter(
     val id: String,
@@ -35,7 +34,8 @@ data class DomainCharacter(
     val spells: List<DomainSpell>,
     val name: String,
     val characterClass: String,
-    val alignment: AlignmentEnum
+    val alignment: AlignmentEnum,
+    val abilities: List<DomainAbility>
 )
 
 fun DomainCharacter.toCharactersEntity(): CharactersEntity {

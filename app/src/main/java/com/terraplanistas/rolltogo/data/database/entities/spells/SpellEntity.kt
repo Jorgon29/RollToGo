@@ -45,12 +45,13 @@ data class SpellEntity(
 
 suspend fun SpellEntity.toDomainSpell(
     materialEntities: List<SpellMaterialEntity>,
-    itemDao: ItemDao
+    itemDao: ItemDao,
+    grantId: String
 ): DomainSpell {
     val materialComponentsList = materialEntities.mapNotNull { spellMaterial ->
         val itemEntity = itemDao.getItemById(spellMaterial.item_id).firstOrNull()
         itemEntity?.let {
-            val domainItem = it.toDomainItem(emptyList())
+            val domainItem = it.toDomainItem(emptyList(), grantId)
             DomainSpellMaterial(item = domainItem, consumed = spellMaterial.consumed)
         }
     }
@@ -66,6 +67,7 @@ suspend fun SpellEntity.toDomainSpell(
         range = "${this.range_value} ${this.range_unit_enum}",
         duration = "${this.duration_value} ${this.duration_time_unit_enum}",
         level = this.spell_level_enum,
-        isRitual = is_ritual
+        isRitual = is_ritual,
+        grantId = grantId
     )
 }

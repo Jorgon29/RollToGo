@@ -41,19 +41,19 @@ import com.terraplanistas.rolltogo.data.database.dao.species.SpeciesDao
 import com.terraplanistas.rolltogo.data.database.dao.species.SubspeciesDao
 import com.terraplanistas.rolltogo.data.database.dao.spells.SpellDao
 import com.terraplanistas.rolltogo.data.database.dao.spells.SpellMaterialDao
-import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
-import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
-import com.terraplanistas.rolltogo.data.database.repository.characters.CharacterRepository
-import com.terraplanistas.rolltogo.data.database.repository.characters.CharacterRepositoryImpl
-import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
-import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
-import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
-import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
-import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepositoryImplementation
+import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentRepositoryImplementation
+import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentsRepository
+import com.terraplanistas.rolltogo.data.repository.characters.CharacterRepository
+import com.terraplanistas.rolltogo.data.repository.characters.CharacterRepositoryImpl
+import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepositoryImplementation
+import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
+import com.terraplanistas.rolltogo.data.repository.genders.GendersRepositoryImplementation
+import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
+import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepositoryImplementation
+import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
+import com.terraplanistas.rolltogo.data.repository.races.RaceRepositoryImplementation
+import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
 
 private val USER_PREFERENCE_NAME = "user_preferences"
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_PREFERENCE_NAME)

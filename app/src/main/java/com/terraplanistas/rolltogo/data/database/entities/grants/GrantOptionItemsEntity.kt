@@ -3,7 +3,6 @@ package com.terraplanistas.rolltogo.data.database.entities.grants
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
-import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 
 @Entity(

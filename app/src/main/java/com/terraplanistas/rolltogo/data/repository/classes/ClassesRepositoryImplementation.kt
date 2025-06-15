@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.classes
+package com.terraplanistas.rolltogo.data.repository.classes
 
 import android.content.Context
 import com.terraplanistas.rolltogo.data.defaults.getDefaultCharacterClasses

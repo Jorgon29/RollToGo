@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.characters
+package com.terraplanistas.rolltogo.data.repository.characters
 
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
 import com.terraplanistas.rolltogo.helpers.Resource

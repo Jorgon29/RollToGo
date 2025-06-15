@@ -36,7 +36,7 @@ data class ItemEntity(
     val is_magical: Boolean
 )
 
-fun ItemEntity.toDomainItem(tags: List<String>): DomainItem {
+fun ItemEntity.toDomainItem(tags: List<String>, grantId: String): DomainItem {
     return DomainItem(
         id = this.id,
         name = this.name,
@@ -47,6 +47,7 @@ fun ItemEntity.toDomainItem(tags: List<String>): DomainItem {
         cost_value = this.cost_value,
         cost_unit = this.cost_unit,
         attunement_required = this.attunement_required,
-        it_magical = this.is_magical
+        it_magical = this.is_magical,
+        grantId = grantId
     )
 }

@@ -6,16 +6,16 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
-import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
-import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
-import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
-import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
-import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.model.CharacterAlignment
 import com.terraplanistas.rolltogo.data.model.CharacterClass
 import com.terraplanistas.rolltogo.data.model.CharacterGender
 import com.terraplanistas.rolltogo.data.model.CharacterRace
 import com.terraplanistas.rolltogo.data.model.Playstyle
+import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentsRepository
+import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
+import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
+import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
 
 class ActorCreationViewModel(
     private val playstyleRepository: PlaystyleRepository,

@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.alignments
+package com.terraplanistas.rolltogo.data.repository.alignments
 
 import android.content.Context
 import com.terraplanistas.rolltogo.data.defaults.getDefaultAlignments

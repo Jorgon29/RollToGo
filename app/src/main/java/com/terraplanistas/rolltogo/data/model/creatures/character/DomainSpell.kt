@@ -18,7 +18,8 @@ data class DomainSpell(
     val range: String,
     val duration: String,
     val level: SpellLevelEnum,
-    val isRitual: Boolean
+    val isRitual: Boolean,
+    val grantId: String
 )
 data class DomainSpellMaterial(
     val item: DomainItem,
