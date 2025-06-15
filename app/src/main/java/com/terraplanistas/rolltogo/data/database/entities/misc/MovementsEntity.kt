@@ -5,6 +5,8 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
+import com.terraplanistas.rolltogo.data.enums.MovementTypeEnum
+import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
 
 @Entity(
     tableName = "movements",
@@ -20,6 +22,6 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 data class MovementsEntity(
     @PrimaryKey val id: String,
     val max_movement_value: Int,
-    val max_movement_unit: String,
-    val movement_type_enum: String
+    val max_movement_unit: RangeUnitEnum,
+    val movement_type_enum: MovementTypeEnum
 )

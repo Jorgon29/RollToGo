@@ -1,13 +1,6 @@
 package com.terraplanistas.rolltogo.data.database.dao.misc
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.enums.AbilityEnum
 import com.terraplanistas.rolltogo.data.enums.BonusTypeEnum
-import com.terraplanistas.rolltogo.data.enums.SkillEnum
-
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,6 +8,8 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.misc.BonusesEntity
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -35,10 +30,10 @@ interface BonusesDao {
     fun getBonusesByType(bonusType: BonusTypeEnum): Flow<List<BonusesEntity>>
 
     @Query("SELECT * FROM bonuses WHERE ability_enum = :ability")
-    fun getBonusesByAbility(ability: AbilityEnum): Flow<List<BonusesEntity>>
+    fun getBonusesByAbility(ability: AbilityTypeEnum): Flow<List<BonusesEntity>>
 
     @Query("SELECT * FROM bonuses WHERE skill_enum = :skill")
-    fun getBonusesBySkill(skill: SkillEnum): Flow<List<BonusesEntity>>
+    fun getBonusesBySkill(skill: SkillTypeEnum): Flow<List<BonusesEntity>>
 
     @Query("SELECT * FROM bonuses")
     fun getAllBonuses(): Flow<List<BonusesEntity>>

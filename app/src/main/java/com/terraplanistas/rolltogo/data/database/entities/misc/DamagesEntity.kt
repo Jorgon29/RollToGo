@@ -6,6 +6,7 @@ import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.enums.DamageTypeEnum
+import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
 
 @Entity(
     tableName = "damages",
@@ -23,6 +24,6 @@ data class DamagesEntity(
     val damage_formula: String,
     val damage_type_enum: DamageTypeEnum,
     val repeat: Boolean,
-    val repetition_value: String,
-    val repetition_unit: String
+    val repetition_value: Int,
+    val repetition_unit: DurationUnitEnum
 )

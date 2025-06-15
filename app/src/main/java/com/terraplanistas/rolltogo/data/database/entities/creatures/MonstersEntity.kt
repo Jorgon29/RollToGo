@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 )
 data class MonstersEntity(
     @PrimaryKey val id: String,
-    val challenge_rating: Double,
+    val challenge_rating: String,
     val legendary: Boolean,
-    val lair: String
+    val lair: Boolean
 )

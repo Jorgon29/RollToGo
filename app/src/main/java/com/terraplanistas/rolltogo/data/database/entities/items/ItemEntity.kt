@@ -4,11 +4,14 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.enums.ItemRarityEnum
+import com.terraplanistas.rolltogo.data.enums.CurrencyEnum
 import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
+import com.terraplanistas.rolltogo.data.enums.RarityEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainItem
-
+import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
+import java.math.BigDecimal
 @Entity(
     tableName = "items",
     foreignKeys = [
@@ -25,15 +28,13 @@ data class ItemEntity(
     val name: String,
     val description: String,
     val item_type_enum: ItemTypeEnum,
-    val rarity_enum: ItemRarityEnum,
-    val weight: Int,
-    val cost_value: Double,
-    val cost_unit: String,
+    val rarity_enum: RarityEnum,
+    val weight: BigDecimal,
+    val cost_value: BigDecimal,
+    val cost_unit: CurrencyEnum,
     val attunement_required: Boolean,
-    val it_magical: Boolean
+    val is_magical: Boolean
 )
-
-
 
 fun ItemEntity.toDomainItem(tags: List<String>): DomainItem {
     return DomainItem(
@@ -46,6 +47,6 @@ fun ItemEntity.toDomainItem(tags: List<String>): DomainItem {
         cost_value = this.cost_value,
         cost_unit = this.cost_unit,
         attunement_required = this.attunement_required,
-        it_magical = this.it_magical
+        it_magical = this.is_magical
     )
 }

@@ -23,5 +23,5 @@ data class ClassEntity(
     val description: String,
     val hit_dice: String,
     val hit_points_first_level: Int,
-    val hit_points_per_level: Int
+    val hit_points_per_level: String
 )

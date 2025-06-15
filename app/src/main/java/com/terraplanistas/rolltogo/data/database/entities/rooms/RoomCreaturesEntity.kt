@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import com.terraplanistas.rolltogo.data.enums.CreatureSourceType
 import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
 
 @Entity(
@@ -28,5 +29,5 @@ data class RoomCreaturesEntity(
     val creature_id: String,
     val owner_id: String,
     val room_id: String,
-    val creature_type_enum: CreatureTypeEnum
+    val creature_type: CreatureSourceType
 )

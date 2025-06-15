@@ -5,7 +5,8 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.enums.SkillEnum
+import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
+import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSkill
 
 @Entity(
@@ -21,9 +22,9 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSkill
 )
 data class SkillEntity(
     @PrimaryKey val id: String,
-    val skill_enum: SkillEnum,
-    val die_formula: String,
-    val proficiency_level_enum: String
+    val skill_enum: SkillTypeEnum,
+    val die_formula: String = "",
+    val proficiency_level_enum: ProficiencyLevelEnum
 )
 
 

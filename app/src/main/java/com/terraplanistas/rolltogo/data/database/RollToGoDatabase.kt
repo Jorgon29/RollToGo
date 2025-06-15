@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.terraplanistas.rolltogo.data.database.dao.ContentDao
 import com.terraplanistas.rolltogo.data.database.dao.UserDao
 import com.terraplanistas.rolltogo.data.database.dao.classDao.ClassDao
@@ -78,6 +80,37 @@ import com.terraplanistas.rolltogo.data.database.entities.species.SpeciesEntity
 import com.terraplanistas.rolltogo.data.database.entities.species.SubspeciesEntity
 import com.terraplanistas.rolltogo.data.database.entities.spells.SpellEntity
 import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEntity
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
+import com.terraplanistas.rolltogo.data.enums.ActionTypeEnum
+import com.terraplanistas.rolltogo.data.enums.AlignmentEnum
+import com.terraplanistas.rolltogo.data.enums.BonusTypeEnum
+import com.terraplanistas.rolltogo.data.enums.CastingTimeUnitEnum
+import com.terraplanistas.rolltogo.data.enums.ConditionTypeEnum
+import com.terraplanistas.rolltogo.data.enums.CoverTypeEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureSourceType
+import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
+import com.terraplanistas.rolltogo.data.enums.CurrencyEnum
+import com.terraplanistas.rolltogo.data.enums.DamageTypeEnum
+import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
+import com.terraplanistas.rolltogo.data.enums.ItemModifierTypeEnum
+import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
+import com.terraplanistas.rolltogo.data.enums.LevelProgressionTypeEnum
+import com.terraplanistas.rolltogo.data.enums.MovementTypeEnum
+import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
+import com.terraplanistas.rolltogo.data.enums.ProficiencyTypeEnum
+import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
+import com.terraplanistas.rolltogo.data.enums.RarityEnum
+import com.terraplanistas.rolltogo.data.enums.RecoveryTypeEnum
+import com.terraplanistas.rolltogo.data.enums.RoleEnum
+import com.terraplanistas.rolltogo.data.enums.SensesTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
+import com.terraplanistas.rolltogo.data.enums.SpellLevelEnum
+import com.terraplanistas.rolltogo.data.enums.SpellSchoolEnum
+import com.terraplanistas.rolltogo.data.enums.SpellcastingProgressionEnum
+import com.terraplanistas.rolltogo.data.enums.VisibilityEnum
+import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 
 @Database(
     entities = [ClassEntity::class,
@@ -118,8 +151,12 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEn
         ContentEntity::class,
         UserEntity::class
                ],
-    version = 18,
-    exportSchema = false
+    version = 19,
+    exportSchema = false,
+
+)
+@TypeConverters(
+    EnumConverters::class
 )
 abstract class RollToGoDatabase : RoomDatabase() {
 

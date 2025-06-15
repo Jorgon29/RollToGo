@@ -30,7 +30,7 @@ interface RoomCreaturesDao {
     @Query("SELECT * FROM room_creatures WHERE owner_id = :ownerId")
     fun getRoomCreaturesByOwnerId(ownerId: String): Flow<List<RoomCreaturesEntity>>
 
-    @Query("SELECT * FROM room_creatures WHERE creature_type_enum = :creatureType")
+    @Query("SELECT * FROM room_creatures WHERE creature_type = :creatureType")
     fun getRoomCreaturesByType(creatureType: CreatureTypeEnum): Flow<List<RoomCreaturesEntity>>
 
     @Query("SELECT * FROM room_creatures")

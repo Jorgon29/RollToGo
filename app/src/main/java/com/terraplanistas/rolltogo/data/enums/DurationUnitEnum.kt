@@ -1,13 +1,15 @@
 package com.terraplanistas.rolltogo.data.enums
 
-enum class DurationUnitEnum {
-    INSTANTANEOUS,
-    ROUND,
-    MINUTE,
-    HOUR,
-    DAY,
-    UNTIL_DISPELLED,
-    CONCENTRATION_ROUND,
-    CONCENTRATION_MINUTE,
-    CONCENTRATION_HOUR
+enum class DurationUnitEnum(val value: String) {
+    ROUNDS("rounds"),
+    MINUTES("minutes"),
+    HOURS("hours"),
+    DAYS("days"),
+    PERMANENT("permanent"),
+    INSTANTANEOUS("instantaneous");
+
+    companion object {
+        fun fromValue(value: String): DurationUnitEnum? =
+            entries.find { it.value == value }
+    }
 }

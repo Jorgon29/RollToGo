@@ -21,6 +21,6 @@ data class FeaturesEntity(
     @PrimaryKey val id: String,
     val name: String,
     val description: String,
-    val is_magilcal: Boolean,
+    val is_magical: Boolean,
     val is_passive: Boolean
 )

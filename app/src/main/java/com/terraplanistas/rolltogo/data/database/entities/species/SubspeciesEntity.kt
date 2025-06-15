@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import com.terraplanistas.rolltogo.data.enums.SizeEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
 
 @Entity(
     tableName = "subspecies",
@@ -23,5 +23,5 @@ data class SubspeciesEntity(
     val name: String,
     val description: String,
     val languages: String,
-    val size_enum: SizeEnum
+    val size_enum: CreatureSizeEnum
 )

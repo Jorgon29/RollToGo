@@ -4,7 +4,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
+import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
+import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 
 @Entity(
     tableName = "grants",
@@ -23,8 +26,8 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 )
 data class GrantsEntity(
     @PrimaryKey val id: String,
-    val granter_type_enum: String,
+    val granter_type_enum: SourceContentEnum,
     val granter_content_id: String,
-    val granted_type: String,
+    val granted_type: SourceContentEnum,
     val granted_content_id: String
 )

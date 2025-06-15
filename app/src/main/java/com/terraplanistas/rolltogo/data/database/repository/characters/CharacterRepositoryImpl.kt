@@ -22,8 +22,10 @@ import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainSkill
 import com.terraplanistas.rolltogo.data.database.entities.species.toDomainRace
 import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEntity
 import com.terraplanistas.rolltogo.data.database.entities.spells.toDomainSpell
-import com.terraplanistas.rolltogo.data.enums.AbilityEnum
-import com.terraplanistas.rolltogo.data.enums.SizeEnum
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainFeats
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainItem
@@ -62,11 +64,15 @@ class CharacterRepositoryImpl(
             ?: return null
 
         val raceEntity = speciesDao.getSpeciesById(charEntity.race_id).firstOrNull()
-        val domainRace = raceEntity?.toDomainRace() ?: DomainRace("", "Unknown Race", "", "", SizeEnum.MEDIUM)
+        val domainRace = raceEntity?.toDomainRace() ?: DomainRace(
+            "", "Unknown Race", "", "",
+            size = CreatureSizeEnum.MEDIUM,
+            type = CreatureTypeEnum.HUMANOID,
+        )
 
         val backgroundGrant = grantsDao.getGrantsByGranterContentId(charEntity.id)
             .firstOrNull()
-            ?.find { it.granted_type == "BACKGROUND" }
+            ?.find { it.granted_type == SourceContentEnum.BACKGROUND }
         val backgroundEntity = backgroundGrant?.let {
             backgroundDao.getBackgroundById(it.granted_content_id).firstOrNull()
         }
@@ -74,11 +80,11 @@ class CharacterRepositoryImpl(
         val backgroundDescription = backgroundEntity?.description ?: "N/A"
 
         var characterClass = "Unknown"
-        var spellcastingAbility: AbilityEnum? = null
+        var spellcastingAbility: AbilityTypeEnum? = null
 
         val classGrant = grantsDao.getGrantsByGranterContentId(charEntity.id)
             .firstOrNull()
-            ?.find { it.granted_type == "CLASS" }
+            ?.find { it.granted_type == SourceContentEnum.CLASS }
         classGrant?.let {
             val classEntity = classDao.getClassById(it.granted_content_id).firstOrNull()
             characterClass = classEntity?.name ?: "Unknown"
@@ -91,7 +97,7 @@ class CharacterRepositoryImpl(
         val domainSkills = mutableListOf<DomainSkill>()
         val skillGrants = grantsDao.getGrantsByGranterContentId(charEntity.id)
             .firstOrNull()
-            ?.filter { it.granted_type == "SKILL_PROFICIENCY" }
+            ?.filter { it.granted_type == SourceContentEnum.SKILLS }
             ?: emptyList()
 
         for (skillGrant in skillGrants) {
@@ -104,7 +110,7 @@ class CharacterRepositoryImpl(
         val domainItems = mutableListOf<DomainItem>()
         val itemGrants = grantsDao.getGrantsByGranterContentId(charEntity.id)
             .firstOrNull()
-            ?.filter { it.granted_type == "ITEM" } // Ajusta el tipo
+            ?.filter { it.granted_type == SourceContentEnum.ITEM }
             ?: emptyList()
 
         for (itemGrant in itemGrants) {
@@ -119,7 +125,7 @@ class CharacterRepositoryImpl(
         val domainFeats = mutableListOf<DomainFeats>()
         val featGrants = grantsDao.getGrantsByGranterContentId(charEntity.id)
             .firstOrNull()
-            ?.filter { it.granted_type == "FEAT" }
+            ?.filter { it.granted_type == SourceContentEnum.FEATS }
             ?: emptyList()
         for (featGrant in featGrants) {
             val featEntity = featsDao.getFeatById(featGrant.granted_content_id).firstOrNull()
@@ -131,7 +137,7 @@ class CharacterRepositoryImpl(
         val domainSpells = mutableListOf<DomainSpell>()
         val spellGrants = grantsDao.getGrantsByGranterContentId(charEntity.id)
             .firstOrNull()
-            ?.filter { it.granted_type == "SPELL" }
+            ?.filter { it.granted_type == SourceContentEnum.SPELLS }
             ?: emptyList()
         for (spellGrant in spellGrants) {
             val spellEntity = spellDao.getSpellById(spellGrant.granted_content_id).firstOrNull()
@@ -170,12 +176,12 @@ class CharacterRepositoryImpl(
             backgroundTitle = backgroundTitle,
             backgroundDescription = backgroundDescription,
             characterClass = characterClass,
-            spellcastingAbility = spellcastingAbility ?: AbilityEnum.NONE,
+            spellcastingAbility = spellcastingAbility ?: AbilityTypeEnum.ALL,
             skills = domainSkills,
             items = domainItems,
             feats = domainFeats,
             spells = domainSpells,
-            alignment = creatureEntity.alignment_enum
+            alignment = creatureEntity.alignment_enum,
         )
     }
 
@@ -245,7 +251,7 @@ class CharacterRepositoryImpl(
 
                 val existingBackgroundGrant = grantsDao.getGrantsByGranterContentId(character.id)
                     .firstOrNull()
-                    ?.find { it.granted_type == "BACKGROUND" }
+                    ?.find { it.granted_type == SourceContentEnum.BACKGROUND }
 
                 if (character.backgroundTitle != "N/A" || character.backgroundDescription != "N/A") {
                     val backgroundId = backgroundDao.getBackgroundByName(character.backgroundTitle)
@@ -254,9 +260,9 @@ class CharacterRepositoryImpl(
                         val newGrantId = existingBackgroundGrant?.id ?: "0"
                         val newBackgroundGrant = GrantsEntity(
                             id = newGrantId,
-                            granter_type_enum = "CHARACTER",
+                            granter_type_enum = SourceContentEnum.CREATURES,
                             granter_content_id = character.id,
-                            granted_type = "BACKGROUND",
+                            granted_type = SourceContentEnum.BACKGROUND,
                             granted_content_id = backgroundId
                         )
                         grantsDao.insertGrant(newBackgroundGrant)
@@ -270,7 +276,7 @@ class CharacterRepositoryImpl(
 
                 val currentSkillGrants = grantsDao.getGrantsByGranterContentId(character.id)
                     .firstOrNull()
-                    ?.filter { it.granted_type == "SKILL_PROFICIENCY" }
+                    ?.filter { it.granted_type == SourceContentEnum.SKILLS }
                     ?: emptyList()
 
                 val domainSkillIds = character.skills.map { it.id }.toSet()
@@ -280,9 +286,9 @@ class CharacterRepositoryImpl(
                 for (skillId in skillsToAdd) {
                     val newGrant = GrantsEntity(
                         id = "0",
-                        granter_type_enum = "CHARACTER",
+                        granter_type_enum = SourceContentEnum.CREATURES,
                         granter_content_id = character.id,
-                        granted_type = "SKILL_PROFICIENCY",
+                        granted_type = SourceContentEnum.SKILLS,
                         granted_content_id = skillId
                     )
                     grantsDao.insertGrant(newGrant)
@@ -298,7 +304,7 @@ class CharacterRepositoryImpl(
 
                 val currentItemGrants = grantsDao.getGrantsByGranterContentId(character.id)
                     .firstOrNull()
-                    ?.filter { it.granted_type == "ITEM" }
+                    ?.filter { it.granted_type == SourceContentEnum.ITEM }
                     ?: emptyList()
 
                 val domainItemIds = character.items.map { it.id }.toSet()
@@ -310,9 +316,9 @@ class CharacterRepositoryImpl(
                     if (!currentGrantedItemIds.contains(domainItem.id)) {
                         grantsDao.insertGrant(GrantsEntity(
                             id = "0",
-                            granter_type_enum = "CHARACTER",
+                            granter_type_enum = SourceContentEnum.CREATURES,
                             granter_content_id = character.id,
-                            granted_type = "ITEM",
+                            granted_type = SourceContentEnum.ITEM,
                             granted_content_id = domainItem.id
                         ))
                     }
@@ -328,7 +334,7 @@ class CharacterRepositoryImpl(
                 
                 val currentFeatGrants = grantsDao.getGrantsByGranterContentId(character.id)
                     .firstOrNull()
-                    ?.filter { it.granted_type == "FEAT" }
+                    ?.filter { it.granted_type == SourceContentEnum.FEATS }
                     ?: emptyList()
 
                 val domainFeatIds = character.feats.map { it.id }.toSet()
@@ -338,9 +344,9 @@ class CharacterRepositoryImpl(
                 for (featId in featsToAdd) {
                     grantsDao.insertGrant(GrantsEntity(
                         id = "0",
-                        granter_type_enum = "CHARACTER",
+                        granter_type_enum = SourceContentEnum.CREATURES,
                         granter_content_id = character.id,
-                        granted_type = "FEAT",
+                        granted_type = SourceContentEnum.FEATS,
                         granted_content_id = featId
                     ))
                 }
@@ -354,7 +360,7 @@ class CharacterRepositoryImpl(
 
                 val currentSpellGrants = grantsDao.getGrantsByGranterContentId(character.id)
                     .firstOrNull()
-                    ?.filter { it.granted_type == "SPELL" }
+                    ?.filter { it.granted_type == SourceContentEnum.SPELLS }
                     ?: emptyList()
 
                 val domainSpellIds = character.spells.map { it.id }.toSet()
@@ -391,9 +397,9 @@ class CharacterRepositoryImpl(
                     if (!currentGrantedSpellIds.contains(domainSpell.id)) {
                         grantsDao.insertGrant(GrantsEntity(
                             id = "0",
-                            granter_type_enum = "CHARACTER",
+                            granter_type_enum = SourceContentEnum.CREATURES,
                             granter_content_id = character.id,
-                            granted_type = "SPELL",
+                            granted_type = SourceContentEnum.SPELLS,
                             granted_content_id = domainSpell.id
                         ))
                     }

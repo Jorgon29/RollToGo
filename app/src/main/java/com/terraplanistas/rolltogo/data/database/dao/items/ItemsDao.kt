@@ -7,8 +7,8 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.items.ItemEntity
-import com.terraplanistas.rolltogo.data.enums.ItemRarityEnum
 import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
+import com.terraplanistas.rolltogo.data.enums.RarityEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -32,12 +32,12 @@ interface ItemDao {
     fun getItemsByType(itemType: ItemTypeEnum): Flow<List<ItemEntity>>
 
     @Query("SELECT * FROM items WHERE rarity_enum = :rarity")
-    fun getItemsByRarity(rarity: ItemRarityEnum): Flow<List<ItemEntity>>
+    fun getItemsByRarity(rarity: RarityEnum): Flow<List<ItemEntity>>
 
     @Query("SELECT * FROM items WHERE attunement_required = :attunementRequired")
     fun getAttunementRequiredItems(attunementRequired: Boolean): Flow<List<ItemEntity>>
 
-    @Query("SELECT * FROM items WHERE it_magical = :isMagical")
+    @Query("SELECT * FROM items WHERE is_magical = :isMagical")
     fun getMagicalItems(isMagical: Boolean): Flow<List<ItemEntity>>
 
     @Query("SELECT * FROM items")

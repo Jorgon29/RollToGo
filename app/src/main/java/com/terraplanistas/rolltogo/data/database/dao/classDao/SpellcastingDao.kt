@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.SpellcastingEntity
-import com.terraplanistas.rolltogo.data.enums.SpellProgressionEnum
+import com.terraplanistas.rolltogo.data.enums.SpellcastingProgressionEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -28,7 +28,7 @@ interface SpellcastingDao {
     fun getSpellcastingByClassId(classId: String): Flow<List<SpellcastingEntity>>
 
     @Query("SELECT * FROM spellcasting WHERE spell_progression_enum = :progression")
-    fun getSpellcastingByProgression(progression: SpellProgressionEnum): Flow<List<SpellcastingEntity>>
+    fun getSpellcastingByProgression(progression: SpellcastingProgressionEnum): Flow<List<SpellcastingEntity>>
 
     @Query("SELECT * FROM spellcasting")
     fun getAllSpellcasting(): Flow<List<SpellcastingEntity>>

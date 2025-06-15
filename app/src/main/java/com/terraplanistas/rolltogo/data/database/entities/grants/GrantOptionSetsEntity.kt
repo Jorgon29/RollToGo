@@ -20,6 +20,6 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 data class GrantOptionSetsEntity(
     @PrimaryKey val id: String,
     val granter_content_id: String,
-    val min_choices: String,
-    val max_choices: String,
+    val min_choices: Int,
+    val max_choices: Int,
 )

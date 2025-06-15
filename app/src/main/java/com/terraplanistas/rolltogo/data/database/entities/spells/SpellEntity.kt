@@ -7,6 +7,10 @@ import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.dao.items.ItemDao
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.toDomainItem
+import com.terraplanistas.rolltogo.data.enums.CastingTimeUnitEnum
+import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
+import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
+import com.terraplanistas.rolltogo.data.enums.SpellLevelEnum
 import com.terraplanistas.rolltogo.data.enums.SpellSchoolEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSpell
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSpellMaterial
@@ -28,14 +32,15 @@ data class SpellEntity(
     val name: String,
     val description: String,
     val spell_components: String,
-    val spell_level_enum: String,
+    val spell_level_enum: SpellLevelEnum,
     val spell_school_enum: SpellSchoolEnum,
-    val casting_time_value: String,
-    val casting_time_unit_enum: String,
-    val range_value: String,
-    val range_unit_enum: String,
-    val duration_value: String,
-    val duration_time_unit_enum: String
+    val casting_time_value: Int,
+    val casting_time_unit_enum: CastingTimeUnitEnum,
+    val range_value: Int,
+    val range_unit_enum: RangeUnitEnum,
+    val duration_value: Int,
+    val duration_time_unit_enum: DurationUnitEnum,
+    val is_ritual: Boolean
 )
 
 suspend fun SpellEntity.toDomainSpell(
@@ -60,6 +65,7 @@ suspend fun SpellEntity.toDomainSpell(
         castingTime = "${this.casting_time_value} ${this.casting_time_unit_enum}",
         range = "${this.range_value} ${this.range_unit_enum}",
         duration = "${this.duration_value} ${this.duration_time_unit_enum}",
-        level = this.spell_level_enum
+        level = this.spell_level_enum,
+        isRitual = is_ritual
     )
 }

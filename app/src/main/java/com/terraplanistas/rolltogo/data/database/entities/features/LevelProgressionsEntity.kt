@@ -22,5 +22,6 @@ import com.terraplanistas.rolltogo.data.database.entities.grants.GrantsEntity
 data class LevelProgressionsEntity(
     @PrimaryKey val id: String,
     val level: Int,
+    val new_special_value: Int,
     val new_progression_value: String
 )

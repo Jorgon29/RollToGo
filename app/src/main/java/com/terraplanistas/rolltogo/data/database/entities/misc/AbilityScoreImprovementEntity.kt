@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
-import com.terraplanistas.rolltogo.data.enums.SenseTypeEnum
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
 
 @Entity(
     tableName = "ability_score_improvement",
@@ -20,6 +20,6 @@ import com.terraplanistas.rolltogo.data.enums.SenseTypeEnum
 )
 data class AbilityScoreImprovementEntity(
     @PrimaryKey val id: String,
-    val ability_type_enum: String,
-    val max_points: String
+    val ability_type_enum: AbilityTypeEnum,
+    val max_points: Int
 )

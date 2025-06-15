@@ -2,7 +2,10 @@ package com.terraplanistas.rolltogo.data.model.creatures.character
 
 import com.terraplanistas.rolltogo.data.database.entities.creatures.CharactersEntity
 import com.terraplanistas.rolltogo.data.database.entities.creatures.CreaturesEntity
-import com.terraplanistas.rolltogo.data.enums.AbilityEnum
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
+import com.terraplanistas.rolltogo.data.enums.AlignmentEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureSourceType
+import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
 
 data class DomainCharacter(
     val id: String,
@@ -28,11 +31,11 @@ data class DomainCharacter(
     val race: DomainRace,
     val hp: Int,
     val ac: Int,
-    val spellcastingAbility: AbilityEnum,
+    val spellcastingAbility: AbilityTypeEnum,
     val spells: List<DomainSpell>,
     val name: String,
     val characterClass: String,
-    val alignment: String
+    val alignment: AlignmentEnum
 )
 
 fun DomainCharacter.toCharactersEntity(): CharactersEntity {
@@ -60,11 +63,11 @@ fun DomainCharacter.toCreaturesEntity(): CreaturesEntity {
     return CreaturesEntity(
         id = this.id,
         name = this.name,
-        size_enum = this.race.size.name,
-        type_enum = "HUMANOID",
+        size_enum = this.race.size,
+        type_enum = this.race.type,
         alignment_enum = this.alignment,
         base_hp = this.hp,
         base_ac = this.ac,
-        creature_source_type = "PLAYER_CHARACTER"
+        creature_source_type = CreatureSourceType.CHARACTER
     )
 }

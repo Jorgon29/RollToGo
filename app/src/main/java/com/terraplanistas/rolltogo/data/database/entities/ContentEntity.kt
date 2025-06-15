@@ -27,6 +27,8 @@ import com.terraplanistas.rolltogo.data.database.entities.rooms.RoomsEntity
 import com.terraplanistas.rolltogo.data.database.entities.species.SpeciesEntity
 import com.terraplanistas.rolltogo.data.database.entities.species.SubspeciesEntity
 import com.terraplanistas.rolltogo.data.database.entities.spells.SpellEntity
+import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
+import com.terraplanistas.rolltogo.data.enums.VisibilityEnum
 
 @Entity(
     tableName = "content",
@@ -173,8 +175,8 @@ import com.terraplanistas.rolltogo.data.database.entities.spells.SpellEntity
 )
 data class ContentEntity(
     @PrimaryKey val id: String,
-    val source_content_enum: String,
-    val visibility_enum: String,
+    val source_content_enum: SourceContentEnum,
+    val visibility_enum: VisibilityEnum,
     val created_at: String,
     val author_id: String
 )

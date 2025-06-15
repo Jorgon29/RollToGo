@@ -1,22 +1,15 @@
 package com.terraplanistas.rolltogo.data.enums
 
-    enum class ItemTypeEnum {
-        ARMOR,
-        WEAPON,
-        POTION,
-        RING,
-        ROD,
-        SCROLL,
-        STAFF,
-        WAND,
-        WONDROUS_ITEM,
-        AMMUNITION,
-        ADVENTURING_GEAR,
-        TOOL,
-        CONTAINER,
-        GEM,
-        ARCANE_FOCUS,
-        HOLY_SYMBOL,
-        DRUIDIC_FOCUS,
-        OTHER
+enum class ItemTypeEnum(val value: String) {
+    WEAPON("weapon"),
+    ARMOR("armor"),
+    ACCESSORY("accessory"),
+    CONSUMABLE("consumable"),
+    TOOL("tool"),
+    MISCELLANEOUS("miscellaneous");
+
+    companion object {
+        fun fromValue(value: String): ItemTypeEnum? =
+            entries.find { it.value == value }
     }
+}

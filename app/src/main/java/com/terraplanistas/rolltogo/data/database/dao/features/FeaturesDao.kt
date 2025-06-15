@@ -26,7 +26,7 @@ interface FeaturesDao {
     @Query("SELECT * FROM features WHERE name LIKE :searchQuery || '%'")
     fun searchFeaturesByName(searchQuery: String): Flow<List<FeaturesEntity>>
 
-    @Query("SELECT * FROM features WHERE is_magilcal = :isMagical")
+    @Query("SELECT * FROM features WHERE is_magical = :isMagical")
     fun getMagicalFeatures(isMagical: Boolean): Flow<List<FeaturesEntity>>
 
     @Query("SELECT * FROM features WHERE is_passive = :isPassive")

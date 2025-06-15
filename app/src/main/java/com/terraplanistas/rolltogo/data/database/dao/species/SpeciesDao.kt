@@ -7,8 +7,8 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.species.SpeciesEntity
+import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
 import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
-import com.terraplanistas.rolltogo.data.enums.SizeEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -32,7 +32,7 @@ interface SpeciesDao {
     fun getSpeciesByCreatureType(creatureType: CreatureTypeEnum): Flow<List<SpeciesEntity>>
 
     @Query("SELECT * FROM species WHERE size_enum = :size")
-    fun getSpeciesBySize(size: SizeEnum): Flow<List<SpeciesEntity>>
+    fun getSpeciesBySize(size: CreatureSizeEnum): Flow<List<SpeciesEntity>>
 
     @Query("SELECT * FROM species")
     fun getAllSpecies(): Flow<List<SpeciesEntity>>

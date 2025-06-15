@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.rooms.RoomParticipantEntity
-import com.terraplanistas.rolltogo.data.enums.GameRoleEnum
+import com.terraplanistas.rolltogo.data.enums.RoleEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -31,7 +31,7 @@ interface RoomParticipantDao {
     fun getRoomsByParticipantId(participantId: String): Flow<List<RoomParticipantEntity>>
 
     @Query("SELECT * FROM room_participants WHERE role_enum = :role")
-    fun getParticipantsByRole(role: GameRoleEnum): Flow<List<RoomParticipantEntity>>
+    fun getParticipantsByRole(role: RoleEnum): Flow<List<RoomParticipantEntity>>
 
     @Query("SELECT * FROM room_participants")
     fun getAllRoomParticipants(): Flow<List<RoomParticipantEntity>>

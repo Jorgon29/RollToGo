@@ -1,8 +1,10 @@
 package com.terraplanistas.rolltogo.data.model.creatures.character
 
 import com.terraplanistas.rolltogo.data.database.entities.spells.SpellEntity
+import com.terraplanistas.rolltogo.data.enums.CastingTimeUnitEnum
 import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
 import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
+import com.terraplanistas.rolltogo.data.enums.SpellLevelEnum
 import com.terraplanistas.rolltogo.data.enums.SpellSchoolEnum
 
 data class DomainSpell(
@@ -15,7 +17,8 @@ data class DomainSpell(
     val castingTime: String,
     val range: String,
     val duration: String,
-    val level: String,
+    val level: SpellLevelEnum,
+    val isRitual: Boolean
 )
 data class DomainSpellMaterial(
     val item: DomainItem,
@@ -43,11 +46,13 @@ fun DomainSpell.toSpellEntity(): SpellEntity {
         spell_components = this.components, // V, S, M
         spell_level_enum = this.level,
         spell_school_enum = this.spellSchoolEnum,
-        casting_time_value = castingTimeValue,
-        casting_time_unit_enum = castingTimeUnit,
-        range_value = rangeValue,
-        range_unit_enum = rangeUnit,
-        duration_value = durationValue,
-        duration_time_unit_enum = durationUnit
+        casting_time_value = castingTimeValue.toIntOrNull() ?: 0,
+        casting_time_unit_enum = CastingTimeUnitEnum.valueOf(castingTimeUnit),
+        range_value = rangeValue.toIntOrNull() ?: 0,
+        range_unit_enum = RangeUnitEnum.valueOf(rangeUnit),
+        duration_value = durationValue.toIntOrNull() ?: 0,
+        duration_time_unit_enum = DurationUnitEnum.valueOf(durationUnit),
+        is_ritual = isRitual
+
     )
 }

@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.misc.AbilityScoreImprovementEntity
-import com.terraplanistas.rolltogo.data.enums.SenseTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SensesTypeEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao

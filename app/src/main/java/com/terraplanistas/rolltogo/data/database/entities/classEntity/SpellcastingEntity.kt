@@ -4,8 +4,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import com.terraplanistas.rolltogo.data.enums.AbilityEnum
-import com.terraplanistas.rolltogo.data.enums.SpellProgressionEnum
+import androidx.room.TypeConverters
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SpellcastingProgressionEnum
+import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 
 @Entity(
     tableName = "spellcasting",
@@ -21,7 +23,7 @@ import com.terraplanistas.rolltogo.data.enums.SpellProgressionEnum
 data class SpellcastingEntity(
     @PrimaryKey val id: String,
     val class_id: String,
-    val spell_progression_enum: SpellProgressionEnum,
+    val spell_progression_enum: SpellcastingProgressionEnum,
     val preparation_formula: String,
-    val spell_casting_ability: AbilityEnum
+    val spell_casting_ability: AbilityTypeEnum
 )

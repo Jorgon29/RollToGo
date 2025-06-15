@@ -7,8 +7,8 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import com.terraplanistas.rolltogo.data.database.entities.misc.ActionsEntity
+import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
 import com.terraplanistas.rolltogo.data.enums.ActionTypeEnum
-import com.terraplanistas.rolltogo.data.enums.SavingThrowEnum
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -29,7 +29,7 @@ interface ActionsDao {
     fun getActionsByType(actionType: ActionTypeEnum): Flow<List<ActionsEntity>>
 
     @Query("SELECT * FROM actions WHERE save_ability_enum = :saveAbility")
-    fun getActionsBySaveAbility(saveAbility: SavingThrowEnum): Flow<List<ActionsEntity>>
+    fun getActionsBySaveAbility(saveAbility: AbilityTypeEnum): Flow<List<ActionsEntity>>
     @Query("SELECT * FROM actions WHERE is_rolled = :isRolled")
     fun getActionsByIsRolled(isRolled: Boolean): Flow<List<ActionsEntity>>
 
