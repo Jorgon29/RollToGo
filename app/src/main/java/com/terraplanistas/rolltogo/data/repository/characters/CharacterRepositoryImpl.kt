@@ -231,8 +231,6 @@ class CharacterRepositoryImpl(
                     return@withContext Resource.Error("Character with ID $characterId not found.")
                 }
                 charactersDao.deleteCharacterById(characterId)
-                // TODO: Consider cascading deletes for creature, grants, abilities etc., if Room doesn't handle them automatically or if you want explicit control.
-                // You will likely need to explicitly delete grants tied to this character ID as well, if they are not cascaded.
                 val grantsToDelete = grantsDao.getGrantsByGranterContentId(characterId).firstOrNull() ?: emptyList()
                 for(grant in grantsToDelete) {
                     grantsDao.deleteGrant(grant)
