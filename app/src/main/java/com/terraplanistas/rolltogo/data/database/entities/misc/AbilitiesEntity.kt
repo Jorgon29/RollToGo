@@ -31,6 +31,7 @@ fun AbilitiesEntity.toDomainAbility(grantId: String): DomainAbility{
         id = id,
         abilityEnum = ability_enum,
         modifier = modifier,
-        grantId = grantId
+        grantId = grantId,
+        value = value
     )
 }

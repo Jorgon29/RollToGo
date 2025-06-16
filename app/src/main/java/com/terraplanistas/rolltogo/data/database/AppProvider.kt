@@ -117,7 +117,8 @@ class AppProvider (context: Context){
         spellDao = spellDao,
         spellcastingDao = spellcastingDao,
         spellMaterialDao = spellMaterialDao,
-        backgroundDao = backgroundDao
+        backgroundDao = backgroundDao,
+        abilitiesDao
     )
 
     fun providePlaystyleRepository(): PlaystyleRepository {
