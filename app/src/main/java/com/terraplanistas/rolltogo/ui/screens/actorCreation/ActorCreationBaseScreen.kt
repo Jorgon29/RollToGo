@@ -38,7 +38,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreationViewModel = viewModel( factory = ActorCreationViewModel.Factory)) {
+fun ActorCreationHomeScreen(
+    navController: NavController,
+    viewModel: ActorCreationViewModel = viewModel( factory = ActorCreationViewModel.Factory)
+) {
     val context = remember { ActorCreationContext() }
     val snackbarHostState = remember { SnackbarHostState() }
     val incompleteData: String = stringResource(R.string.actor_creation_incomplete_fields)
@@ -112,7 +115,7 @@ fun ActorCreationHomeScreen(navController: NavController, viewModel: ActorCreati
                         }
                     }
                 }
-            }
+            },
 
         )
     }

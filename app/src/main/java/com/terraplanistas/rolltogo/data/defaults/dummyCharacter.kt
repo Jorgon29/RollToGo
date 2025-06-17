@@ -8,9 +8,9 @@ import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
 import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
 import com.terraplanistas.rolltogo.data.enums.SpellLevelEnum
 import com.terraplanistas.rolltogo.data.enums.SpellSchoolEnum
-import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum // NEW
-import com.terraplanistas.rolltogo.data.enums.RarityEnum // NEW
-import com.terraplanistas.rolltogo.data.enums.CurrencyEnum // NEW
+import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
+import com.terraplanistas.rolltogo.data.enums.RarityEnum
+import com.terraplanistas.rolltogo.data.enums.CurrencyEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainAbility
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainFeats

@@ -116,4 +116,11 @@
     <string name="actor_creation_characteristics_faith">Fe</string>
     <string name="actor_creation_characteristics_eyes">Ojos</string>
 
+    <!-- Actor screen -->
+    <string name="actor_screen_character">Personaje</string>
+    <string name="actor_screen_inventory">Inventario</string>
+    <string name="actor_screen_spells">Hechizos</string>
+    <string name="actor_screen_feats">Rasgos</string>
+    <string name="actor_screen_biography">Biografía</string>
+
 </resources>

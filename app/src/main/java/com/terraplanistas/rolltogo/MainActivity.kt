@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.terraplanistas.rolltogo.ui.layout.CustomScaffold
+import com.terraplanistas.rolltogo.ui.navigations.NavigationHost
 import com.terraplanistas.rolltogo.ui.theme.RollToGoTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RollToGoTheme {
-                CustomScaffold()
+                NavigationHost()
             }
         }
     }

@@ -1,40 +1,168 @@
 package com.terraplanistas.rolltogo.ui.navigations
 
-import androidx.compose.foundation.layout.Column
+import android.util.Log
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScreen
-import com.terraplanistas.rolltogo.ui.screens.actorScreen.ActorScreen
+import com.terraplanistas.rolltogo.ui.screens.characterScreen.CharacterScreen
+import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.ItemsScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.forumSearchScreens.ForumCharacterSearchScreen
 import com.terraplanistas.rolltogo.ui.screens.friendsScreen.FriendsScreen
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
+import com.composables.icons.lucide.Backpack
+import com.composables.icons.lucide.Feather
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.PencilLine
+import com.composables.icons.lucide.PersonStanding
+import com.composables.icons.lucide.Sparkles
+import com.terraplanistas.rolltogo.R
+import com.terraplanistas.rolltogo.ui.layout.bars.BarItem
+import com.terraplanistas.rolltogo.ui.layout.bars.BaseBottomBar
+import com.terraplanistas.rolltogo.ui.layout.bars.TopGoBackBar
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.currentRecomposeScope
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
+import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
+import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
 
 @Composable
-fun NavigationHost(){
+fun NavigationHost() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    var currentView by rememberSaveable { mutableStateOf("") }
+    var showCampaignModal = rememberSaveable { mutableStateOf(false) }
 
-    Column {
-        NavHost(navController = navController, startDestination = ForumNavigation){
+    val showDropDown = rememberSaveable { mutableStateOf(false) }
+    val modifyDropDownState = { newState: Boolean ->
+        showDropDown.value = newState
+    }
+
+    val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
+    val baseViews = listOf("forum","new_actor","friends","search_characters")
+
+    Scaffold(
+        topBar = {
+            if (
+                currentView in characterViews
+            ) {
+                TopGoBackBar(goBack = { navController.popBackStack() })
+            }
+        },
+        bottomBar = {
+            if (
+                currentView in characterViews
+            ) {
+                val currentCharacterId = navBackStackEntry?.arguments?.getString("id") ?: "holaf"
+
+                BaseBottomBar(
+                    items = listOf(
+                        BarItem(
+                            text = stringResource(R.string.actor_screen_character),
+                            icon = Lucide.PersonStanding,
+                            navigation = ActorScreenNavigation(currentCharacterId)
+                        ),
+                        BarItem(
+                            text = stringResource(R.string.actor_screen_inventory),
+                            icon = Lucide.Backpack,
+                            navigation = ActorItemsListNavigation(currentCharacterId)
+                        ),
+                        BarItem(
+                            text = stringResource(R.string.actor_screen_spells),
+                            icon = Lucide.Sparkles,
+                            navigation = ActorSpellsListNavigation(currentCharacterId)
+                        ),
+                        BarItem(
+                            text = stringResource(R.string.actor_screen_feats),
+                            icon = Lucide.Feather,
+                            navigation = ActorFeatsListNavigation(currentCharacterId)
+                        ),
+                        BarItem(
+                            text = stringResource(R.string.actor_screen_biography),
+                            icon = Lucide.PencilLine,
+                            navigation = ActorBiographyScreenNavigation(currentCharacterId)
+                        )
+                    ),
+                    navController = navController
+                )
+            }
+
+            if(currentView in baseViews){
+                HomeBottomNavigationBar(navController) { }
+            }
+        },
+        floatingActionButton = {
+            if (currentView in baseViews
+                ){
+                PlusButton(
+                    size = 88.dp,
+                    expanded = showDropDown.value,
+                    hide = { modifyDropDownState(false) },
+                    navigateToNewCharacter = {navController.navigate(NewActorNavigation)},
+                    navigateNewCampaign = {showCampaignModal.value = true},
+                    showDropDown = {modifyDropDownState(true)}
+                )
+            }
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = ForumNavigation,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             composable<ForumNavigation> {
+                currentView = "forum"
                 ForumScreen(navController)
             }
-
             composable<NewActorNavigation> {
+                currentView = "new_actor"
                 ActorCreationHomeScreen(navController)
             }
-
-            composable<ActorScreenNavigation> {
-                ActorScreen(it.arguments?.getInt("id") ?: 0)
+            composable<ActorScreenNavigation> { actorScreenArgs ->
+                currentView = "actor"
+                CharacterScreen(navController, actorScreenArgs.id)
             }
-
             composable<FriendsNavigation> {
+                currentView = "friends"
                 FriendsScreen(navController)
             }
-
             composable<SearchCharactersNavigation> {
+                currentView = "search_characters"
                 ForumCharacterSearchScreen(navController)
+            }
+            composable<ActorItemsListNavigation> { actorItemsListArgs ->
+                currentView = "actor_items"
+                ItemsScreen(id = actorItemsListArgs.id)
+            }
+            composable<CampaignsNavigation> {
+                currentView = "campaigns"
+                Text("Campaigns Screen")
+            }
+            composable<ActorSpellsListNavigation> { actorSpellsListArgs ->
+                currentView = "actor_spells"
+                Text("Spells Screen for ${actorSpellsListArgs.id}")
+            }
+            composable<ActorFeatsListNavigation> { actorFeatsListArgs ->
+                currentView = "actor_feats"
+                Text("Feats Screen for ${actorFeatsListArgs.id}")
+            }
+            composable<ActorBiographyScreenNavigation> { actorBiographyScreenArgs ->
+                currentView = "actor_biography"
+                Text("Biography Screen for ${actorBiographyScreenArgs.id}")
             }
         }
     }
