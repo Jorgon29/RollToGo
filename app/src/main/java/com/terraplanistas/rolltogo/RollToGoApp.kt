@@ -1,6 +1,10 @@
 package com.terraplanistas.rolltogo
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -12,8 +16,9 @@ import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
+import com.terraplanistas.rolltogo.data.repository.settings.UriUtils
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
-
+import java.io.File
 
 
 class RollToGoApp : Application() {
@@ -31,6 +36,12 @@ class RollToGoApp : Application() {
     lateinit var fireBaseAuth: FirebaseAuth
     lateinit var charactersRepository: CharacterRepository
 
+    val getSafeUriForFirebase: (Uri) -> Uri? = { uri ->
+        UriUtils.persistableUriFromPicker(this, uri)
+    }
+
+
+
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
@@ -41,6 +52,9 @@ class RollToGoApp : Application() {
         alignmentsRepository = appProvider.provideAlignmentRepository()
         gendersRepository = appProvider.provideGendersRepository()
         charactersRepository = appProvider.provideCharactersRepository()
-        fireBaseAuth = Firebase.auth
+        fireBaseAuth = appProvider.provideFirebaseAuth()
     }
 }
+
+
+

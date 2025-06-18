@@ -37,6 +37,7 @@ import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusBu
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.BiographyScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.FeatsScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.SpellsScreen
+import com.terraplanistas.rolltogo.ui.screens.profile.ProfileScreen
 
 @Composable
 fun NavigationHost() {
@@ -168,7 +169,7 @@ fun NavigationHost() {
                 LoginScreen(nav = navController)
             }
             composable<AccountNavigation> {
-                Text("Campaigns Screen")
+                ProfileScreen(nav = navController)
             }
         }
     }

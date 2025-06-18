@@ -1,6 +1,9 @@
 package com.terraplanistas.rolltogo.data.database
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -103,7 +106,7 @@ class AppProvider (context: Context){
     private val classDao: ClassDao = appDatabase.classDao()
     private val spellcastingDao: SpellcastingDao = appDatabase.spellcastingDao()
     private val subclassDao: SubclassDao = appDatabase.subclassDao()
-
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val playstyleRepository: PlaystyleRepository = PlaystyleRepositoryImplementation(context)
     private val userPreferenceRepository: UserPreferencesRepository = UserPreferencesRepository(context.dataStore)
     private val classesRepository: ClassesRepository = ClassesRepositoryImplementation(context)
@@ -127,8 +130,12 @@ class AppProvider (context: Context){
         abilitiesDao
     )
 
+
     fun providePlaystyleRepository(): PlaystyleRepository {
         return playstyleRepository
+    }
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return firebaseAuth
     }
 
     fun provideUserPreferenceRepository(): UserPreferencesRepository {
@@ -153,6 +160,19 @@ class AppProvider (context: Context){
 
     fun provideCharactersRepository(): CharacterRepository {
         return charactersRepository
+    }
+
+    fun persistableUriFromPicker(context: Context, uri: Uri): Uri? {
+        try {
+            context.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            return uri
+        } catch (e: SecurityException) {
+            Log.e("UriUtils", "No se pudo tomar persistencia del URI", e)
+        }
+        return null
     }
 
 }
