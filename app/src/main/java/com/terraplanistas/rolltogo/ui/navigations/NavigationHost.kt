@@ -118,7 +118,7 @@ fun NavigationHost() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = ActorScreenNavigation("holaf"),
+            startDestination = ForumNavigation,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
