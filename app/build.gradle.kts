@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.androidx.security.crypto)
+    implementation(libs.firebase.storage.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.activity.compose.v190)
     implementation(libs.androidx.material.icons.extended)

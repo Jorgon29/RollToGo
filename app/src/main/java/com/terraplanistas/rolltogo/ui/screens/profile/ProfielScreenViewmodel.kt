@@ -6,10 +6,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
 import android.net.Uri
+
 import com.google.firebase.auth.FirebaseAuth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +21,8 @@ import kotlinx.coroutines.tasks.await
 
 class ProfielScreenViewmodel(
     private val auth: FirebaseAuth,
-     val persistUri: (Uri) -> Uri?
+    private val persistUri: (Uri) -> Uri?,
+    private val preferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val _loading = MutableStateFlow(false)
@@ -50,16 +53,6 @@ class ProfielScreenViewmodel(
         }
     }
 
-    fun getPersistUri(uri: Uri): Uri? {
-        return try {
-            persistUri(uri)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-
     fun updateDisplayName(newName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.emit(true)
@@ -79,21 +72,32 @@ class ProfielScreenViewmodel(
         }
     }
 
-    fun onImagePicked(newPic: Uri) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _loading.emit(true)
-            try {
-                val request = UserProfileChangeRequest.Builder()
-                    .setPhotoUri(newPic)
+    fun onImagePicked(newUri: Uri) {
+        viewModelScope.launch {
+            _loading.value = true
+            persistUri(newUri).let{
+                val update = UserProfileChangeRequest.Builder()
+                    .setPhotoUri(it)
                     .setDisplayName(auth.currentUser?.displayName)
                     .build()
+                auth.currentUser?.updateProfile(update)?.await()
+                _userPicture.value = newUri
+            }
 
-                auth.currentUser?.updateProfile(request)?.await()
-                _userPicture.emit(newPic)
+            _loading.value = false
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                auth.signOut()
+                preferencesRepository.saveLoginPreference(loginPreference = false)
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                _loading.emit(false)
+                _loading.value = false
             }
         }
     }
@@ -105,7 +109,8 @@ class ProfielScreenViewmodel(
                     ?: error("App is not RollToGoApp")
                 ProfielScreenViewmodel(
                     app.fireBaseAuth,
-                    persistUri = app.getSafeUriForFirebase
+                    persistUri = app.getSafeUriForFirebase,
+                    preferencesRepository = app.userPreferencesRepository
                 )
             }
         }
