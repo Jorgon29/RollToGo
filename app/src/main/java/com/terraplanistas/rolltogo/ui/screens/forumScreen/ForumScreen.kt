@@ -13,6 +13,7 @@ import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen
 
 @Composable
 fun ForumScreen(navController: NavController) {
+
     BaseHomeScreen(navController, title = stringResource(R.string.bottom_navigation_forum),
         content = {
             CategoryBox(title = "Personajes")
