@@ -167,6 +167,9 @@ fun NavigationHost() {
             composable<LoginScreen>{
                 LoginScreen(nav = navController)
             }
+            composable<AccountNavigation> {
+                Text("Campaigns Screen")
+            }
         }
     }
 }
