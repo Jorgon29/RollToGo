@@ -1,12 +1,10 @@
 package com.terraplanistas.rolltogo
 
 import android.app.Application
-import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.data.database.AppProvider
 import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.repository.characters.CharacterRepository

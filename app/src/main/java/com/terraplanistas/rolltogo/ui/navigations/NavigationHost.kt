@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScreen
-import com.terraplanistas.rolltogo.ui.screens.actorScreen.ActorScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.CharacterScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.ItemsScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
@@ -120,7 +119,7 @@ fun NavigationHost() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = ForumNavigation,
+            startDestination = LoginScreen,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)

@@ -56,17 +56,7 @@ import com.terraplanistas.rolltogo.data.repository.races.RaceRepositoryImplement
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
-import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
-import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
-import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
-import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
-import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
-import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
-import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepositoryImplementation
+
 
 
 private val USER_PREFERENCE_NAME = "user_preferences"

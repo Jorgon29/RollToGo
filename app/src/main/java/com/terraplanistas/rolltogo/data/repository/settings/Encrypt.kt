@@ -1,4 +1,4 @@
-package com.terraplanistas.rolltogo.data.database.repository.settings
+package com.terraplanistas.rolltogo.data.repository.settings
 
 import android.util.Base64
 import javax.crypto.Cipher
@@ -7,17 +7,11 @@ import javax.crypto.spec.IvParameterSpec
 
 object Encrypt {
 
-
-    private const val SECRET_KEY = "1234567890123456"
-    private const val INIT_VECTOR = "abcdefghijklmnop"
+    private const val SECRET_KEY = "1234567890abcdef" // 16 caracteres = 16 bytes
+    private const val INIT_VECTOR = "abcdefghijklmnop" // 16 caracteres = 16 bytes
 
     private val charset = Charsets.UTF_8
 
-    /** *
-     * Encrypta dependiendo de un input string
-     * @param input String a encriptar
-     */
-  // /
     fun encrypt(input: String): String {
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         val keySpec = SecretKeySpec(SECRET_KEY.toByteArray(charset), "AES")
@@ -26,11 +20,6 @@ object Encrypt {
         val encrypted = cipher.doFinal(input.toByteArray(charset))
         return Base64.encodeToString(encrypted, Base64.DEFAULT)
     }
-
-    /** *
-     * Desencripta dependiendo de un input string
-     * @param encrypted String a desencriptar
-     */
 
     fun decrypt(encrypted: String): String {
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
@@ -41,4 +30,5 @@ object Encrypt {
         return String(decrypted, charset)
     }
 }
+
 
