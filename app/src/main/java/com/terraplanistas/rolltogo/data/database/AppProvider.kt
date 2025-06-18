@@ -54,11 +54,27 @@ import com.terraplanistas.rolltogo.data.repository.playstyleRepository.Playstyle
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepositoryImplementation
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.terraplanistas.rolltogo.data.database.repository.settings.UserPreferencesRepository
+import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.alignments.AlignmentsRepository
+import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.database.repository.classes.ClassesRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepository
+import com.terraplanistas.rolltogo.data.database.repository.genders.GendersRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepository
+import com.terraplanistas.rolltogo.data.database.repository.playstyleRepository.PlaystyleRepositoryImplementation
+import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepository
+import com.terraplanistas.rolltogo.data.database.repository.races.RaceRepositoryImplementation
+
 
 private val USER_PREFERENCE_NAME = "user_preferences"
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_PREFERENCE_NAME)
 
+
 class AppProvider (context: Context){
+
     private val appDatabase: RollToGoDatabase = RollToGoDatabase.getDatabase(context)
     private val userDao: UserDao = appDatabase.userDao()
     private val contentDao: ContentDao = appDatabase.contentDao()

@@ -1,4 +1,5 @@
 package com.terraplanistas.rolltogo.ui.navigations
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -45,6 +46,9 @@ data class ActorSpellsListNavigation(val id: String) {
 data class ActorFeatsListNavigation(val id: String) {
     val BASE_ROUTE_NAME = "ActorFeatsListNavigation"
 }
+
+@Serializable
+object LoginScreen
 
 @Serializable
 data class ActorBiographyScreenNavigation(val id: String) {

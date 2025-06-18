@@ -9,9 +9,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationHomeScreen
+import com.terraplanistas.rolltogo.ui.screens.actorScreen.ActorScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.CharacterScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.ItemsScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
+import com.terraplanistas.rolltogo.ui.screens.login.LoginScreen
 import com.terraplanistas.rolltogo.ui.screens.forumScreen.forumSearchScreens.ForumCharacterSearchScreen
 import com.terraplanistas.rolltogo.ui.screens.friendsScreen.FriendsScreen
 import androidx.compose.runtime.getValue
@@ -162,6 +164,9 @@ fun NavigationHost() {
             composable<ActorBiographyScreenNavigation> { actorBiographyScreenArgs ->
                 currentView = "actor_biography"
                 BiographyScreen(id = actorBiographyScreenArgs.id)
+            }
+            composable<LoginScreen>{
+                LoginScreen(nav = navController)
             }
         }
     }

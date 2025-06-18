@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.1.20"
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.gms.google.services)
+
+
 }
 
 android {
@@ -45,6 +48,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.google.services)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.androidx.security.crypto)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.activity.compose.v190)
     implementation(libs.androidx.material.icons.extended)
