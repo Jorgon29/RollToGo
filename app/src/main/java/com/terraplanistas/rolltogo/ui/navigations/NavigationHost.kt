@@ -1,6 +1,4 @@
 package com.terraplanistas.rolltogo.ui.navigations
-
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,15 +26,16 @@ import com.terraplanistas.rolltogo.R
 import com.terraplanistas.rolltogo.ui.layout.bars.BarItem
 import com.terraplanistas.rolltogo.ui.layout.bars.BaseBottomBar
 import com.terraplanistas.rolltogo.ui.layout.bars.TopGoBackBar
-
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
+import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.BiographyScreen
+import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.FeatsScreen
+import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.SpellsScreen
 
 @Composable
 fun NavigationHost() {
@@ -119,7 +118,7 @@ fun NavigationHost() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = ForumNavigation,
+            startDestination = ActorScreenNavigation("holaf"),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -154,15 +153,15 @@ fun NavigationHost() {
             }
             composable<ActorSpellsListNavigation> { actorSpellsListArgs ->
                 currentView = "actor_spells"
-                Text("Spells Screen for ${actorSpellsListArgs.id}")
+                SpellsScreen(id = actorSpellsListArgs.id)
             }
             composable<ActorFeatsListNavigation> { actorFeatsListArgs ->
                 currentView = "actor_feats"
-                Text("Feats Screen for ${actorFeatsListArgs.id}")
+                FeatsScreen(id = actorFeatsListArgs.id)
             }
             composable<ActorBiographyScreenNavigation> { actorBiographyScreenArgs ->
                 currentView = "actor_biography"
-                Text("Biography Screen for ${actorBiographyScreenArgs.id}")
+                BiographyScreen(id = actorBiographyScreenArgs.id)
             }
         }
     }

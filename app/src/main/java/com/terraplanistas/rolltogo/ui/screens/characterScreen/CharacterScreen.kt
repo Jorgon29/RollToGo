@@ -41,7 +41,6 @@ fun CharacterScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
                     .background(
                         Brush.radialGradient(listOf<Color>(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.surfaceContainer),
                             radius = 1300f
@@ -56,7 +55,7 @@ fun CharacterScreen(
                         Text("Cargando personaje...", modifier = Modifier.padding(top = 8.dp))
                     }
                     is Resource.Error -> {
-                        Text("Error: ${(characterResource as Resource.Error).message}", color = Color.Red)
+                        Text("Error: ${(characterResource as Resource.Error).message}")
                     }
                     is Resource.Success -> {
                         val character = (characterResource as Resource.Success<DomainCharacter>).data
@@ -121,7 +120,6 @@ fun CharacterScreen(
                                     imageResId = R.drawable.group6,
                                     value = it.hp.toString(),
                                     contentDescription = "Puntos de Golpe",
-                                    valueColor = Color.Red
                                 )
                             }
                             Spacer(Modifier.height(24.dp))
@@ -137,7 +135,6 @@ fun CharacterScreen(
                                     imageResId = R.drawable.d20,
                                     value = if (initiativeModifier >= 0) "+$initiativeModifier" else "$initiativeModifier",
                                     contentDescription = "Iniciativa",
-                                    valueColor = Color.Blue
                                 )
                             }
                         } ?: run {

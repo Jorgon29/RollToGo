@@ -19,7 +19,8 @@ fun BiographyInputBox(
     placeholder: String,
     text: String,
     changeText: (String) -> Unit,
-    isNumeric: Boolean = false
+    isNumeric: Boolean = false,
+    readOnly: Boolean = false
 ) {
     val backgroundColor = MaterialTheme.colorScheme.secondary
     val textColor = Color.Black
@@ -52,7 +53,8 @@ fun BiographyInputBox(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .background(backgroundColor, shape = RoundedCornerShape(8.dp))
+            .background(backgroundColor, shape = RoundedCornerShape(8.dp)),
+        readOnly = readOnly
     )
 }
 
