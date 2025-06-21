@@ -24,7 +24,8 @@ fun HomeBottomNavigationBar(navController: NavController, floatingAction: () -> 
         BarItem(
             text = stringResource(R.string.bottom_navigation_forum),
             icon = Lucide.MessagesSquare,
-            navigation = ForumNavigation
+            navigation = ForumNavigation,
+
         ),
         BarItem(
             text = stringResource(R.string.bottom_navigation_friends),

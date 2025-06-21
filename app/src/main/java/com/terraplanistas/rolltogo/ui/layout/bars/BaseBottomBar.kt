@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 @Composable
@@ -16,11 +17,11 @@ fun BaseBottomBar(items: List<BarItem>, navController: NavController){
     val selected = rememberSaveable() { mutableStateOf(items[0].text) }
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.tertiary,
-        contentColor = MaterialTheme.colorScheme.surface
+        contentColor = MaterialTheme.colorScheme.surface,
     ) {
         items.forEach { item ->
             NavigationBarItem(
-                label = { Text(item.text)},
+                label = { Text(item.text, color = Color.Black)},
                 icon = { Icon(item.icon, item.text)},
                 selected = selected.value == item.text,
                 onClick = {

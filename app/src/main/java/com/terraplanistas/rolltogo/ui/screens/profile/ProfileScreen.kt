@@ -131,7 +131,9 @@ fun ProfileScreen(
                     Button(
                         onClick = {
                             vm.logout()
-                            nav.navigate(LoginScreen)
+                            nav.navigate(LoginScreen){
+                                popUpTo(LoginScreen) { inclusive = true } // Limpia la pila de navegación para evitar volver a la pantalla de perfil
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f))
                     ) {

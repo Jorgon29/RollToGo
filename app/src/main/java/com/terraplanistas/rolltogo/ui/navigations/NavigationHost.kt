@@ -108,7 +108,7 @@ fun NavigationHost() {
             if (currentView in baseViews
                 ){
                 PlusButton(
-                    size = 88.dp,
+                    size = 78.dp,
                     expanded = showDropDown.value,
                     hide = { modifyDropDownState(false) },
                     navigateToNewCharacter = {navController.navigate(NewActorNavigation)},

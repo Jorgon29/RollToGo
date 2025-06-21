@@ -61,7 +61,9 @@ fun LoginScreen(
     LaunchedEffect(loginStatus.value) { //Efecto que se ejecuta caundo login status es verdadero, por lo tanto, se ha iniciado sesión correctamente
         if (loginStatus.value) {
             Log.d("LoginScreen", "Login successful, navigating to forum")
-            nav.navigate(ForumNavigation) // Navega a la pantalla del foro
+            nav.navigate(ForumNavigation){
+                popUpTo(ForumNavigation) { inclusive = true } // Limpia la pila de navegación para evitar volver a la pantalla de inicio de sesión
+            } // Navega a la pantalla del foro
         }
     }
 
