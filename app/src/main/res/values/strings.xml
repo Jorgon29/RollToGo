@@ -123,4 +123,8 @@
     <string name="actor_screen_feats">Rasgos</string>
     <string name="actor_screen_biography">Biografía</string>
 
+    <!-- Content creation -->
+
+    <string name="content_creation">Crear contenido</string>
+
 </resources>

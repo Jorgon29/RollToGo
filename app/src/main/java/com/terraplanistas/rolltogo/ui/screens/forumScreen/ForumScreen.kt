@@ -21,5 +21,8 @@ fun ForumScreen(navController: NavController) {
                 SearchCharactersNavigation)})
             Spacer(modifier = Modifier.height(16.dp))
             CategoryBox(title = stringResource(R.string.monsters))
+            CategoryBox(title = stringResource(R.string.content_creation),
+                onClick = {}
+            )
         })
 }

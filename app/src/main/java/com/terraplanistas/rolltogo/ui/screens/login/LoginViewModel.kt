@@ -131,7 +131,6 @@ class LoginViewModel(
     ) {
         _loading.value = true
         if (!(email.isEmpty() || password.isEmpty())) {
-            _loginStatus.value = true
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
