@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.composables.icons.lucide.BookOpenText
+import com.composables.icons.lucide.Factory
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Plus
 import com.composables.icons.lucide.Users
@@ -39,7 +40,8 @@ fun PlusButton(
     hide: () -> Unit,
     navigateToNewCharacter: () -> Unit,
     navigateNewCampaign: () -> Unit,
-    showDropDown: () -> Unit
+    showDropDown: () -> Unit,
+    navigateToContentCreation: () -> Unit
 ){
     Row(verticalAlignment = Alignment.Top ,
         horizontalArrangement = Arrangement.Center,
@@ -86,6 +88,19 @@ fun PlusButton(
                     leadingIcon = {
                         CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
                             Icon(imageVector = Lucide.BookOpenText, contentDescription = stringResource(R.string.new_campaign))
+                        }
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
+                            Text(stringResource(R.string.content_creation))
+                        }
+                    },
+                    onClick = { navigateToContentCreation() },
+                    leadingIcon = {
+                        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimary) {
+                            Icon(imageVector = Lucide.Factory, contentDescription = stringResource(R.string.content_creation))
                         }
                     }
                 )

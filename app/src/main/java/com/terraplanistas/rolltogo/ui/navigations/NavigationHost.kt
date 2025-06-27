@@ -52,7 +52,7 @@ fun NavigationHost() {
     }
 
     val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
-    val baseViews = listOf("forum","new_actor","friends","search_characters")
+    val baseViews = listOf("forum","new_actor","friends","search_characters", "account")
 
     Scaffold(
         topBar = {
@@ -113,7 +113,8 @@ fun NavigationHost() {
                     hide = { modifyDropDownState(false) },
                     navigateToNewCharacter = {navController.navigate(NewActorNavigation)},
                     navigateNewCampaign = {showCampaignModal.value = true},
-                    showDropDown = {modifyDropDownState(true)}
+                    showDropDown = {modifyDropDownState(true)},
+                    navigateToContentCreation = {navController.navigate(ForumNavigation)},
                 )
             }
         }
@@ -167,9 +168,11 @@ fun NavigationHost() {
             }
             composable<LoginScreen>{
                 LoginScreen(nav = navController)
+                currentView = "login"
             }
             composable<AccountNavigation> {
                 ProfileScreen(nav = navController)
+                currentView = "account"
             }
         }
     }

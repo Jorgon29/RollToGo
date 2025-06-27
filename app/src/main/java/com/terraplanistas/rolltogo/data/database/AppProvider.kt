@@ -59,7 +59,8 @@ import com.terraplanistas.rolltogo.data.repository.races.RaceRepositoryImplement
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-
+import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
+import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepositoryImpi
 
 
 private val USER_PREFERENCE_NAME = "user_preferences"
@@ -129,6 +130,18 @@ class AppProvider (context: Context){
         backgroundDao = backgroundDao,
         abilitiesDao
     )
+    private val contentCreationRepository: ContentCreationRepository =
+        ContentCreationRepositoryImpi(
+            contentDao = contentDao,
+            grantsDao = grantsDao,
+            itemDao = itemDao,
+            itemTagDao = itemTagDao,
+            damagesDao = damagesDao,
+            spellDao = spellDao,
+            backgroundDao = backgroundDao,
+            creaturesDao = creaturesDao,
+            monstersDao = monstersDao
+        )
 
 
     fun providePlaystyleRepository(): PlaystyleRepository {
@@ -173,6 +186,9 @@ class AppProvider (context: Context){
             Log.e("UriUtils", "No se pudo tomar persistencia del URI", e)
         }
         return null
+    }
+    fun provideContentCreationRepository(): ContentCreationRepository {
+        return contentCreationRepository
     }
 
 }
