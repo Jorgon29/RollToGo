@@ -25,6 +25,6 @@ enum class SourceContentEnum(val value: String) {
 
     companion object {
         fun fromValue(value: String): SourceContentEnum? =
-            entries.find { it.value == value }
+            entries.find { it.value.equals(value, ignoreCase = true) }
     }
 }

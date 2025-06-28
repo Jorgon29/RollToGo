@@ -7,7 +7,7 @@ import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreati
 import com.terraplanistas.rolltogo.ui.screens.content.strategy.ContentStrategy
 import java.math.BigDecimal
 
-class WeaponStrategy: ContentStrategy {
+class WeaponStrategy : ContentStrategy {
     override fun validateContent(data: Map<String, Any>): Boolean {
         return data["name"].toString().isNotEmpty()
                 && data["description"].toString().isNotEmpty()
@@ -19,6 +19,7 @@ class WeaponStrategy: ContentStrategy {
                 && data["attunment"] != null
                 && data["is_magical"] != null
                 && data["item_tag"] != null
+                && data["attack_bonus"] != null
                 && data["damage"].toString().isNotEmpty()
                 && data["damage_tipe"].toString().isNotEmpty()
 
@@ -33,12 +34,17 @@ class WeaponStrategy: ContentStrategy {
         return mapOf(
             "name" to "",
             "description" to "",
-            "item_type" to ItemTypeEnum,
-            "rarity" to RarityEnum,
-            "weight" to BigDecimal.ONE
-
-
-
+            "item_type" to "",
+            "rarity" to "",
+            "weight" to "",
+            "cost_value" to "",
+            "cost_unit" to "",
+            "attunment" to false,
+            "is_magical" to false,
+            "item_tag" to emptyList<String>(),
+            "attack_bonus" to "",
+            "damage" to "",
+            "damage_tipe" to ""
         )
     }
 

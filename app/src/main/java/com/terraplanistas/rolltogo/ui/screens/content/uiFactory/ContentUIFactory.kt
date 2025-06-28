@@ -13,9 +13,9 @@ import com.terraplanistas.rolltogo.ui.screens.content.screens.spells.SpellConten
 
 object ContentUIFactory {
     fun createScreen(
-        type: SourceContentEnum,
+        type: SourceContentEnum?,
         viewModel: ContentCreationViewModel,
-        nav : NavHostController
+        nav: NavHostController
     ): @Composable () -> Unit {
         return when (type) {
             SourceContentEnum.ITEM -> {

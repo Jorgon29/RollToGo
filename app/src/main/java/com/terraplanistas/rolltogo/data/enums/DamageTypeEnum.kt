@@ -13,7 +13,9 @@ enum class DamageTypeEnum(val value: String) {
     PSYCHIC("psychic"),
     RADIANT("radiant"),
     SLASHING("slashing"),
-    THUNDER("thunder");
+    THUNDER("thunder"),
+    HEALING("healing"),
+    TEMPORAL("temporal");
 
     companion object {
         fun fromValue(value: String): DamageTypeEnum? =
