@@ -33,7 +33,7 @@ fun getDummyCharacter(): DomainCharacter {
 
     val dummySkill1 = DomainSkill(
         id = UUID.randomUUID().toString(),
-        grantId = UUID.randomUUID().toString(),
+        abilityId = UUID.randomUUID().toString(),
         dieFormula = "1d20",
         skill = SkillTypeEnum.ACROBATICS,
         proficiency = ProficiencyLevelEnum.PROFICIENT,
@@ -41,7 +41,7 @@ fun getDummyCharacter(): DomainCharacter {
 
     val dummySkill2 = DomainSkill(
         id = UUID.randomUUID().toString(),
-        grantId = UUID.randomUUID().toString(),
+        abilityId = UUID.randomUUID().toString(),
         dieFormula = "1d20",
         skill = SkillTypeEnum.PERCEPTION,
         proficiency = ProficiencyLevelEnum.PROFICIENT,

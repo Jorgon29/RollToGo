@@ -1,6 +1,4 @@
 package com.terraplanistas.rolltogo.data.repository.monsters
-
-// Make sure to add this import if you haven't already in your repository package
 import com.terraplanistas.rolltogo.data.database.dao.classDao.SpellcastingDao
 import com.terraplanistas.rolltogo.data.database.dao.creatures.CreaturesDao
 import com.terraplanistas.rolltogo.data.database.dao.creatures.MonstersDao
@@ -40,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
@@ -54,26 +53,35 @@ class MonsterRepositoryImpl(
     private val spellDao: SpellDao,
     private val spellcastingDao: SpellcastingDao,
     private val spellMaterialDao: SpellMaterialDao,
-    // ADD THIS: You'll need an AbilitiesDao to manage ability entities for monsters too
     private val abilitiesDao: AbilitiesDao
-) : MonstersRepository { // You'll need to define the MonsterRepository interface
+) : MonstersRepository {
 
-    // --- Helper function to build a DomainMonster from entities ---
     private suspend fun buildDomainMonster(monsterEntity: MonstersEntity): DomainMonster? {
         val creatureEntity = creaturesDao.getCreatureById(monsterEntity.id).firstOrNull()
-            ?: return null // A monster MUST have a corresponding creature entry
+            ?: return null
 
-        // Fetch all grants for this monster once to optimize
         val allGrantsForMonster = grantsDao.getGrantsByGranterContentId(monsterEntity.id).firstOrNull() ?: emptyList()
+
+        // --- NEW: Fetch Abilities ---
+        val domainAbilities = mutableListOf<DomainAbility>()
+        val abilityGrants = allGrantsForMonster.filter { it.granted_type == SourceContentEnum.ABILITIES }
+        for (abilityGrant in abilityGrants) {
+            val abilityEntity = abilitiesDao.getAbilityById(abilityGrant.granted_content_id).firstOrNull()
+            abilityEntity?.let {
+                domainAbilities.add(it.toDomainAbility(grantId = abilityGrant.id))
+            }
+        }
 
         // Skills
         val domainSkills = mutableListOf<DomainSkill>()
-        val skillGrants = allGrantsForMonster.filter { it.granted_type == SourceContentEnum.SKILLS }
-        for (skillGrant in skillGrants) {
-            val skillEntity = skillDao.getSkillById(skillGrant.granted_content_id).firstOrNull()
-            skillEntity?.let {
-                domainSkills.add(it.toDomainSkill(grantId = skillGrant.id))
-            }
+        domainAbilities.forEach { ability ->
+            skillDao.getSkillsByAbilityId(ability.id)
+                .mapNotNull { skillEntities ->
+                    skillEntities.map { it.toDomainSkill() }
+                }
+                .collect { skillsForAbility ->
+                    domainSkills.addAll(skillsForAbility)
+                }
         }
 
         // Items
@@ -109,15 +117,7 @@ class MonsterRepositoryImpl(
             }
         }
 
-        // --- NEW: Fetch Abilities ---
-        val domainAbilities = mutableListOf<DomainAbility>()
-        val abilityGrants = allGrantsForMonster.filter { it.granted_type == SourceContentEnum.ABILITIES }
-        for (abilityGrant in abilityGrants) {
-            val abilityEntity = abilitiesDao.getAbilityById(abilityGrant.granted_content_id).firstOrNull()
-            abilityEntity?.let {
-                domainAbilities.add(it.toDomainAbility(grantId = abilityGrant.id))
-            }
-        }
+
         // Spellcasting ability can be derived from the creature entity or explicitly defined
         // For monster, it's often fixed or based on primary stats.
         // If it's stored in a separate SpellcastingEntity for monsters, you'd fetch it here.
@@ -200,28 +200,6 @@ class MonsterRepositoryImpl(
                 val allCurrentGrants = grantsDao.getGrantsByGranterContentId(monster.id)
                     .firstOrNull() ?: emptyList()
 
-                // --- Skill Grants Logic ---
-                val currentSkillGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.SKILLS }
-                val currentGrantedSkillContentIds = currentSkillGrants.map { it.granted_content_id }.toSet()
-
-                for (domainSkill in monster.skills) {
-                    skillDao.insertSkill(domainSkill.toSkillEntity())
-                    if (!currentGrantedSkillContentIds.contains(domainSkill.id)) {
-                        grantsDao.insertGrant(GrantsEntity(
-                            id = domainSkill.grantId ?: UUID.randomUUID().toString(),
-                            granter_type_enum = SourceContentEnum.CREATURES,
-                            granter_content_id = monster.id,
-                            granted_type = SourceContentEnum.SKILLS,
-                            granted_content_id = domainSkill.id
-                        ))
-                    }
-                }
-                val domainSkillContentIds = monster.skills.map { it.id }.toSet()
-                val skillsToRemove = currentSkillGrants.filter { it.granted_content_id !in domainSkillContentIds }
-                for (grantToDelete in skillsToRemove) {
-                    grantsDao.deleteGrant(grantToDelete)
-                }
-
                 // --- Item Grants Logic ---
                 val currentItemGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.ITEM }
                 val currentGrantedItemContentIds = currentItemGrants.map { it.granted_content_id }.toSet()
@@ -243,6 +221,10 @@ class MonsterRepositoryImpl(
                 val itemsToRemove = currentItemGrants.filter { it.granted_content_id !in domainItemContentIds }
                 for (grantToDelete in itemsToRemove) {
                     grantsDao.deleteGrant(grantToDelete)
+                }
+
+                for(domainSkill in monster.skills){
+                    skillDao.insertSkill(domainSkill.toSkillEntity())
                 }
 
                 // --- Feat Grants Logic ---

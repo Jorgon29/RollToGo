@@ -151,7 +151,7 @@ import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
         ContentEntity::class,
         UserEntity::class
                ],
-    version = 20,
+    version = 21,
     exportSchema = false,
 
 )

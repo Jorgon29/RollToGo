@@ -8,8 +8,8 @@ data class DomainSkill(
     val id: String,
     val dieFormula: String,
     val skill: SkillTypeEnum,
-    val grantId: String,
-    val proficiency: ProficiencyLevelEnum
+    val proficiency: ProficiencyLevelEnum,
+    val abilityId: String
 )
 
 fun DomainSkill.toSkillEntity(): SkillEntity{
@@ -17,6 +17,7 @@ fun DomainSkill.toSkillEntity(): SkillEntity{
         id = id,
         skill_enum = skill,
         die_formula = dieFormula,
-        proficiency_level_enum = proficiency
+        proficiency_level_enum = proficiency,
+        abilityId
     )
 }

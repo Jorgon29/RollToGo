@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import androidx.transition.Visibility
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.ClassEntity
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.SubclassEntity
 import com.terraplanistas.rolltogo.data.database.entities.features.FeaturesEntity
@@ -22,7 +21,6 @@ import com.terraplanistas.rolltogo.data.database.entities.misc.LimitedUsagesEnti
 import com.terraplanistas.rolltogo.data.database.entities.misc.MovementsEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.ProficienciesEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.SensesEntity
-import com.terraplanistas.rolltogo.data.database.entities.misc.SkillEntity
 import com.terraplanistas.rolltogo.data.database.entities.rooms.RoomsEntity
 import com.terraplanistas.rolltogo.data.database.entities.species.SpeciesEntity
 import com.terraplanistas.rolltogo.data.database.entities.species.SubspeciesEntity
@@ -155,12 +153,6 @@ import com.terraplanistas.rolltogo.data.enums.VisibilityEnum
         ),
         ForeignKey(
             entity = SensesEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        ),
-        ForeignKey(
-            entity = SkillEntity::class,
             parentColumns = ["id"],
             childColumns = ["id"],
             onDelete = CASCADE
