@@ -2,11 +2,10 @@ package com.terraplanistas.rolltogo.ui.screens.content.screens.spells
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.terraplanistas.rolltogo.ui.screens.content.ContentCreationViewModel
+import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemCreationViewModel
 
 @Composable
 fun SpellContentCreationScreen(
-    viewModel: ContentCreationViewModel,
     nav: NavHostController
 ) {
     // Aquí se implementará la UI para la creación de contenido de hechizos

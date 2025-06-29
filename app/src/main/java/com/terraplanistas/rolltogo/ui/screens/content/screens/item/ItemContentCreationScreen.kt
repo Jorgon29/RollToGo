@@ -38,20 +38,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.terraplanistas.rolltogo.data.enums.ActionTypeEnum
 import com.terraplanistas.rolltogo.data.enums.CurrencyEnum
 import com.terraplanistas.rolltogo.data.enums.DamageTypeEnum
 import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
 import com.terraplanistas.rolltogo.data.enums.RarityEnum
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
-import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
-import com.terraplanistas.rolltogo.ui.screens.content.ContentCreationViewModel
-import com.terraplanistas.rolltogo.ui.screens.forumScreen.ForumScreen
+import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemCreationViewModel
 import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemContentCreationScreen(
-    viewModel: ContentCreationViewModel,
+    viewModel: ItemCreationViewModel = viewModel(factory = ItemCreationViewModel.factory),
     nav: NavHostController
 ) {
 
@@ -75,6 +75,7 @@ fun ItemContentCreationScreen(
     val itemTypeOptions = ItemTypeEnum.entries
     val currencyOptions = CurrencyEnum.entries.map { it.value }
     val damageTypes = DamageTypeEnum.entries.map { it.value }
+    val actionTypes = ActionTypeEnum.entries.map {it.value }
     val tagOptions = listOf(
         "Plateada",
         "Dos-manos",
@@ -403,6 +404,49 @@ fun ItemContentCreationScreen(
                     }
                 }
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ){
+                Box(modifier = Modifier.weight(1f)) {
+                    var expanded by remember { mutableStateOf(false) }
+                    val selectedActiontype = formData.value.formData["action_type"]?.toString() ?: ""
+
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = { expanded = !expanded }
+                    ) {
+                        OutlinedTextField(
+                            value = selectedActiontype,
+                            onValueChange = {},
+                            label = { Text("Tipo de acción*") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .menuAnchor(),
+                            colors = textFieldColors(),
+                            readOnly = true,
+                            trailingIcon = {
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                            }
+                        )
+
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            actionTypes.forEach { option ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        updateFormData("action_type", option)
+                                        expanded = false
+                                    },
+                                    text = { Text(text = option) }
+                                )
+                            }
+                        }
+                    }
+                }
+
+            }
 
             // Sección de etiquetas
             Text(
@@ -456,7 +500,7 @@ fun ItemContentCreationScreen(
                                 " moneda: ${formData.value.formData["cost_unit"]} ataque: ${formData.value.formData["attack_bonus"]}" +
                                 " daño: ${formData.value.formData["damage"]} tipo de daño: ${formData.value.formData["damage_tipe"]}" +
                                 " es mágico: ${formData.value.formData["is_magical"]} requiere sintonización: ${formData.value.formData["attunment"]}" +
-                                " etiquetas: ${formData.value.formData["item_tag"]}")
+                                " etiquetas: ${formData.value.formData["item_tag"]} tipo de acción: ${formData.value.formData["action_type"]}")
                     }
                 },
                 modifier = Modifier

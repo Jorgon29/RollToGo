@@ -1,13 +1,10 @@
 package com.terraplanistas.rolltogo.ui.screens.content.strategy.concreteStrategies.ItemStrategy
 
-import com.terraplanistas.rolltogo.data.enums.ItemTypeEnum
-import com.terraplanistas.rolltogo.data.enums.RarityEnum
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
 import com.terraplanistas.rolltogo.ui.screens.content.strategy.ContentStrategy
-import java.math.BigDecimal
 
-class WeaponStrategy : ContentStrategy {
+class ItemStrategy : ContentStrategy {
     override fun validateContent(data: Map<String, Any>): Boolean {
         return data["name"].toString().isNotEmpty()
                 && data["description"].toString().isNotEmpty()
@@ -44,7 +41,8 @@ class WeaponStrategy : ContentStrategy {
             "item_tag" to emptyList<String>(),
             "attack_bonus" to "",
             "damage" to "",
-            "damage_tipe" to ""
+            "damage_tipe" to "",
+            "action_type" to ""
         )
     }
 

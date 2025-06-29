@@ -140,7 +140,8 @@ class AppProvider (context: Context){
             spellDao = spellDao,
             backgroundDao = backgroundDao,
             creaturesDao = creaturesDao,
-            monstersDao = monstersDao
+            monstersDao = monstersDao,
+            featuresDao = featuresDao
         )
 
 

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
-import com.terraplanistas.rolltogo.ui.screens.content.ContentCreationViewModel
+import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemCreationViewModel
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.BackgroundContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.creatures.CreatureContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemContentCreationScreen
@@ -14,25 +14,24 @@ import com.terraplanistas.rolltogo.ui.screens.content.screens.spells.SpellConten
 object ContentUIFactory {
     fun createScreen(
         type: SourceContentEnum?,
-        viewModel: ContentCreationViewModel,
+        viewModel: ItemCreationViewModel,
         nav: NavHostController
     ): @Composable () -> Unit {
         return when (type) {
             SourceContentEnum.ITEM -> {
-                { ItemContentCreationScreen(viewModel, nav) }
+                { ItemContentCreationScreen( nav = nav) }
             }
             SourceContentEnum.SPELLS -> {
-                { SpellContentCreationScreen(viewModel, nav) }
+                { SpellContentCreationScreen(nav =  nav) }
             }
             SourceContentEnum.BACKGROUND -> {
-                { BackgroundContentCreationScreen(viewModel, nav) }
+                { BackgroundContentCreationScreen( nav = nav) }
             }
             SourceContentEnum.SPECIES -> {
-                { SpecieContentCreationScreen(viewModel, nav) }
+                { SpecieContentCreationScreen( nav =  nav) }
             }
-
             SourceContentEnum.CREATURES -> {
-                { CreatureContentCreationScreen(viewModel, nav) }
+                { CreatureContentCreationScreen( nav =  nav) }
             }
             else -> {
                 { nav.navigate(ForumNavigation)}

@@ -83,7 +83,6 @@ fun ContentTypeSelectionScreen(
             items(contentTypes) { (type, icon) ->
                 Card(
                     onClick = {
-                               Log.d("ContentTypeSelectionScreen", "Navigating to ContentCreation for type: $type")
                                nav.navigate(ContentCreation(type = type))
                               },
                     modifier = Modifier
