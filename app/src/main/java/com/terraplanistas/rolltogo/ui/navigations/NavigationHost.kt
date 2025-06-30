@@ -1,4 +1,5 @@
 package com.terraplanistas.rolltogo.ui.navigations
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,11 +33,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.BiographyScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.FeatsScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.SpellsScreen
+import com.terraplanistas.rolltogo.ui.screens.content.ContentTypeSelectionScreen
+import com.terraplanistas.rolltogo.ui.screens.content.contentcreation.ContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.profile.ProfileScreen
 
 @Composable
@@ -52,7 +56,7 @@ fun NavigationHost() {
     }
 
     val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
-    val baseViews = listOf("forum","new_actor","friends","search_characters")
+    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation")
 
     Scaffold(
         topBar = {
@@ -113,7 +117,8 @@ fun NavigationHost() {
                     hide = { modifyDropDownState(false) },
                     navigateToNewCharacter = {navController.navigate(NewActorNavigation)},
                     navigateNewCampaign = {showCampaignModal.value = true},
-                    showDropDown = {modifyDropDownState(true)}
+                    showDropDown = {modifyDropDownState(true)},
+                    navigateToContentCreation = {navController.navigate(ContentCreationNavigation)},
                 )
             }
         }
@@ -167,9 +172,25 @@ fun NavigationHost() {
             }
             composable<LoginScreen>{
                 LoginScreen(nav = navController)
+                currentView = "login"
             }
             composable<AccountNavigation> {
                 ProfileScreen(nav = navController)
+                currentView = "account"
+            }
+            composable<ContentCreationNavigation> {
+                currentView = "content_creation_Navigation"
+                ContentTypeSelectionScreen(nav = navController)
+            }
+            composable<ContentCreation> {  contentCreationArgs ->
+                currentView = "content_creation"
+                val creatingType = navBackStackEntry?.arguments?.getString("type") ?: "items"
+                Log.d("ContentCreationNavigation", "Creating: $creatingType")
+                ContentCreationScreen(
+                    type = creatingType,
+                    nav = navController
+                )
+
             }
         }
     }

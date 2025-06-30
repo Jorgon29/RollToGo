@@ -155,12 +155,6 @@ class LoginViewModel(
         }
     }
 
-    //Cierra la sesión del usuario actual y cambia el estado de loginStatus a false.
-    fun logout() {
-        auth.signOut()
-        _loginStatus.value = false
-    }
-
     /** *  Verifica si se ha puesto la preferencia de inicio de sesion automatico, en caso de serlo
      * intenta iniciar sesión automáticamente con el correo y la contraseña guardados.
      * Si no hay un usuario autenticado, cambia el estado de loginStatus a false.

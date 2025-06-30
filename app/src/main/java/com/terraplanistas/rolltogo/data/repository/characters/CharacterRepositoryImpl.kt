@@ -72,6 +72,7 @@ class CharacterRepositoryImpl(
         val creatureEntity = creaturesDao.getCreatureById(charEntity.id).firstOrNull()
             ?: return null
 
+
         val raceEntity = speciesDao.getSpeciesById(charEntity.race_id).firstOrNull()
         val domainRace = raceEntity?.toDomainRace() ?: DomainRace(
             "", "Unknown Race", "", "",
