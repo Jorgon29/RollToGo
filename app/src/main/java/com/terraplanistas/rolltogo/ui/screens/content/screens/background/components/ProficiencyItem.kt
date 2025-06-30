@@ -17,12 +17,12 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
-import com.terraplanistas.rolltogo.ui.screens.content.screens.background.ProficiencyLevelSelector
+import com.terraplanistas.rolltogo.ui.screens.content.screens.background.components.ProficiencyLevelSelector
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.dataHolders.ProficiencyUI
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun ProficiencyItem(
+internal fun ProficiencyItem(
     proficiency: ProficiencyUI,
     currentLevel: ProficiencyLevelEnum,
     onLevelSelected: (ProficiencyLevelEnum) -> Unit,
