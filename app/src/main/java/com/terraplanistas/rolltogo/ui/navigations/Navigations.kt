@@ -3,59 +3,43 @@ package com.terraplanistas.rolltogo.ui.navigations
 import kotlinx.serialization.Serializable
 
 @Serializable
-object ForumNavigation {
-    const val ROUTE_NAME = "ForumNavigation"
-}
+object ForumNavigation
 
 @Serializable
-object FriendsNavigation {
-    const val ROUTE_NAME = "FriendsNavigation"
-}
+object FriendsNavigation
 
 @Serializable
-object CampaignsNavigation {
-    const val ROUTE_NAME = "CampaignsNavigation"
-}
+object CampaignsNavigation
 
 @Serializable
-object AccountNavigation {
-    const val ROUTE_NAME = "AccountNavigation"
-}
+object AccountNavigation
 
 @Serializable
-object NewActorNavigation {
-    const val ROUTE_NAME = "NewActorNavigation"
-}
+object NewActorNavigation
 
 @Serializable
-data class ActorScreenNavigation(val id: String) {
-    val BASE_ROUTE_NAME = "ActorScreenNavigation"
-}
+data class ActorScreenNavigation(val id: String)
 
 @Serializable
-data class ActorItemsListNavigation(val id: String) {
-    val BASE_ROUTE_NAME = "ActorItemsListNavigation"
-}
+data class ActorItemsListNavigation(val id: String)
 
 @Serializable
-data class ActorSpellsListNavigation(val id: String) {
-    val BASE_ROUTE_NAME = "ActorSpellsListNavigation"
-}
+data class ActorSpellsListNavigation(val id: String)
 
 @Serializable
-data class ActorFeatsListNavigation(val id: String) {
-    val BASE_ROUTE_NAME = "ActorFeatsListNavigation"
-}
+data class ActorFeatsListNavigation(val id: String)
 
 @Serializable
 object LoginScreen
 
 @Serializable
-data class ActorBiographyScreenNavigation(val id: String) {
-    val BASE_ROUTE_NAME = "ActorBiographyScreenNavigation"
-}
+data class ActorBiographyScreenNavigation(val id: String)
 
 @Serializable
-object SearchCharactersNavigation {
-    val ROUTE_NAME = "SearchCharactersNavigation"
-}
+object SearchCharactersNavigation
+
+@Serializable
+object ContentCreationNavigation
+
+@Serializable
+data class ContentCreation(val type: String)

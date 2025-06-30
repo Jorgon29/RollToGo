@@ -17,6 +17,7 @@ import com.terraplanistas.rolltogo.data.database.dao.spells.SpellMaterialDao
 import com.terraplanistas.rolltogo.data.database.entities.creatures.CharactersEntity
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantsEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.toDomainItem
+import com.terraplanistas.rolltogo.data.database.entities.misc.SkillEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainAbility
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainFeats
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainSkill
@@ -38,6 +39,7 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.toAbilityEntit
 import com.terraplanistas.rolltogo.data.model.creatures.character.toCharactersEntity
 import com.terraplanistas.rolltogo.data.model.creatures.character.toCreaturesEntity
 import com.terraplanistas.rolltogo.data.model.creatures.character.toItemEntity
+import com.terraplanistas.rolltogo.data.model.creatures.character.toSkillEntity
 import com.terraplanistas.rolltogo.data.model.creatures.character.toSpellEntity
 import com.terraplanistas.rolltogo.helpers.Resource
 import kotlinx.coroutines.flow.flow
@@ -45,6 +47,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import java.util.UUID
 class CharacterRepositoryImpl(
@@ -67,6 +71,7 @@ class CharacterRepositoryImpl(
     private suspend fun buildDomainCharacter(charEntity: CharactersEntity): DomainCharacter? {
         val creatureEntity = creaturesDao.getCreatureById(charEntity.id).firstOrNull()
             ?: return null
+
 
         val raceEntity = speciesDao.getSpeciesById(charEntity.race_id).firstOrNull()
         val domainRace = raceEntity?.toDomainRace() ?: DomainRace(
@@ -102,14 +107,6 @@ class CharacterRepositoryImpl(
         val allGrantsForCharacter = grantsDao.getGrantsByGranterContentId(charEntity.id).firstOrNull() ?: emptyList()
 
 
-        val domainSkills = mutableListOf<DomainSkill>()
-        val skillGrants = allGrantsForCharacter.filter { it.granted_type == SourceContentEnum.SKILLS }
-        for (skillGrant in skillGrants) {
-            val skillEntity = skillDao.getSkillById(skillGrant.granted_content_id).firstOrNull()
-            skillEntity?.let {
-                domainSkills.add(it.toDomainSkill(grantId = skillGrant.id))
-            }
-        }
 
         val domainItems = mutableListOf<DomainItem>()
         val itemGrants = allGrantsForCharacter.filter { it.granted_type == SourceContentEnum.ITEM }
@@ -141,7 +138,6 @@ class CharacterRepositoryImpl(
             }
         }
 
-        // --- NEW: Fetch Abilities ---
         val domainAbilities = mutableListOf<DomainAbility>()
         val abilityGrants = allGrantsForCharacter.filter { it.granted_type == SourceContentEnum.ABILITIES }
         for (abilityGrant in abilityGrants) {
@@ -149,6 +145,18 @@ class CharacterRepositoryImpl(
             abilityEntity?.let {
                 domainAbilities.add(it.toDomainAbility(grantId = abilityGrant.id))
             }
+        }
+
+
+        val domainSkills = mutableListOf<DomainSkill>()
+        domainAbilities.forEach { ability ->
+            skillDao.getSkillsByAbilityId(ability.id)
+                .mapNotNull { skillEntities ->
+                    skillEntities.map { it.toDomainSkill() }
+                }
+                .collect { skillsForAbility ->
+                    domainSkills.addAll(skillsForAbility)
+                }
         }
 
         return DomainCharacter(
@@ -251,11 +259,9 @@ class CharacterRepositoryImpl(
                 charactersDao.insertCharacter(characterEntity)
                 creaturesDao.insertCreature(creatureEntity)
 
-                // Fetch all current grants once to avoid repeated DB calls.
                 val allCurrentGrants = grantsDao.getGrantsByGranterContentId(character.id)
                     .firstOrNull() ?: emptyList()
 
-                // --- Background Grant Logic ---
                 val existingBackgroundGrant = allCurrentGrants.find { it.granted_type == SourceContentEnum.BACKGROUND }
 
                 if (character.backgroundTitle != "N/A" || character.backgroundDescription != "N/A") {
@@ -276,32 +282,6 @@ class CharacterRepositoryImpl(
                     grantsDao.deleteGrant(existingBackgroundGrant)
                 }
 
-                // --- Skill Grants Logic ---
-                val currentSkillGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.SKILLS }
-                val currentGrantedSkillIds = currentSkillGrants.map { it.granted_content_id }.toSet()
-
-                for (domainSkill in character.skills) {
-                    // Upsert the skill itself (if it's not a static reference data)
-                    // skillDao.insertSkill(domainSkill.toSkillEntity()) // Uncomment if skills can be custom created/updated
-                    if (!currentGrantedSkillIds.contains(domainSkill.id)) {
-                        grantsDao.insertGrant(GrantsEntity(
-                            id = domainSkill.grantId ?: UUID.randomUUID().toString(),
-                            granter_type_enum = SourceContentEnum.CREATURES,
-                            granter_content_id = character.id,
-                            granted_type = SourceContentEnum.SKILLS,
-                            granted_content_id = domainSkill.id
-                        ))
-                    }
-                }
-
-                val domainSkillContentIds = character.skills.map { it.id }.toSet()
-                val skillsToRemove = currentSkillGrants.filter { it.granted_content_id !in domainSkillContentIds }
-                for (grantToDelete in skillsToRemove) {
-                    grantsDao.deleteGrant(grantToDelete)
-                }
-
-
-                // --- Item Grants Logic ---
                 val currentItemGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.ITEM }
                 val currentGrantedItemIds = currentItemGrants.map { it.granted_content_id }.toSet()
 
@@ -319,18 +299,20 @@ class CharacterRepositoryImpl(
                     }
                 }
 
+                for(domainSkill in character.skills){
+                    skillDao.insertSkill(domainSkill.toSkillEntity())
+                }
+
                 val domainItemContentIds = character.items.map { it.id }.toSet()
                 val itemsToRemove = currentItemGrants.filter { it.granted_content_id !in domainItemContentIds }
                 for (grantToDelete in itemsToRemove) {
                     grantsDao.deleteGrant(grantToDelete)
                 }
 
-                // --- Feat Grants Logic ---
                 val currentFeatGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.FEATS }
                 val currentGrantedFeatIds = currentFeatGrants.map { it.granted_content_id }.toSet()
 
                 for (domainFeat in character.feats) {
-                    // featsDao.insertFeat(domainFeat.toFeatEntity()) // Uncomment if feats can be custom created/updated
                     if (!currentGrantedFeatIds.contains(domainFeat.id)) {
                         grantsDao.insertGrant(GrantsEntity(
                             id = domainFeat.grantId ?: UUID.randomUUID().toString(),
@@ -348,7 +330,6 @@ class CharacterRepositoryImpl(
                     grantsDao.deleteGrant(grantToDelete)
                 }
 
-                // --- Spell Grants Logic ---
                 val currentSpellGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.SPELLS }
                 val currentGrantedSpellIds = currentSpellGrants.map { it.granted_content_id }.toSet()
 
@@ -398,27 +379,23 @@ class CharacterRepositoryImpl(
                     grantsDao.deleteGrant(grantToDelete)
                 }
 
-                // --- NEW: Abilities Grants Logic ---
                 val currentAbilityGrants = allCurrentGrants.filter { it.granted_type == SourceContentEnum.ABILITIES }
                 val currentGrantedAbilityIds = currentAbilityGrants.map { it.granted_content_id }.toSet()
 
                 for (domainAbility in character.abilities) {
-                    // Upsert the ability itself if it's not just static reference data.
-                    // This is crucial if ability modifiers or other details can be changed by the user.
                     abilitiesDao.insertAbility(domainAbility.toAbilityEntity())
 
                     if (!currentGrantedAbilityIds.contains(domainAbility.id)) {
                         grantsDao.insertGrant(GrantsEntity(
-                            id = domainAbility.grantId ?: UUID.randomUUID().toString(), // Use domain's grantId or generate new
+                            id = domainAbility.grantId ?: UUID.randomUUID().toString(),
                             granter_type_enum = SourceContentEnum.CREATURES,
                             granter_content_id = character.id,
                             granted_type = SourceContentEnum.ABILITIES,
-                            granted_content_id = domainAbility.id // This is the ability's actual ID
+                            granted_content_id = domainAbility.id
                         ))
                     }
                 }
 
-                // Remove abilities that are in DB but not in current domain character
                 val domainAbilityContentIds = character.abilities.map { it.id }.toSet()
                 val abilitiesToRemove = currentAbilityGrants.filter { it.granted_content_id !in domainAbilityContentIds }
                 for (grantToDelete in abilitiesToRemove) {

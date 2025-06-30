@@ -13,6 +13,7 @@ import com.terraplanistas.rolltogo.data.database.AppProvider
 import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentsRepository
 import com.terraplanistas.rolltogo.data.repository.characters.CharacterRepository
 import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepository
+import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
 import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
@@ -35,6 +36,8 @@ class RollToGoApp : Application() {
     lateinit var gendersRepository: GendersRepository
     lateinit var fireBaseAuth: FirebaseAuth
     lateinit var charactersRepository: CharacterRepository
+    lateinit var contentCreationRepository: ContentCreationRepository
+
 
     val getSafeUriForFirebase: (Uri) -> Uri? = { uri ->
         UriUtils.persistableUriFromPicker(this, uri)
@@ -55,6 +58,7 @@ class RollToGoApp : Application() {
         gendersRepository = appProvider.provideGendersRepository()
         charactersRepository = appProvider.provideCharactersRepository()
         fireBaseAuth = appProvider.provideFirebaseAuth()
+        contentCreationRepository = appProvider.provideContentCreationRepository()
     }
 }
 

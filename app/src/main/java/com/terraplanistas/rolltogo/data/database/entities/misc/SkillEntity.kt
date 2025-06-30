@@ -13,9 +13,9 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSkill
     tableName = "skills",
     foreignKeys = [
         ForeignKey(
-            entity = ContentEntity::class,
+            entity = AbilitiesEntity::class,
             parentColumns = ["id"],
-            childColumns = ["id"],
+            childColumns = ["ability"],
             onDelete = CASCADE
         )
     ]
@@ -24,16 +24,17 @@ data class SkillEntity(
     @PrimaryKey val id: String,
     val skill_enum: SkillTypeEnum,
     val die_formula: String = "",
-    val proficiency_level_enum: ProficiencyLevelEnum
+    val proficiency_level_enum: ProficiencyLevelEnum,
+    val ability: String
 )
 
 
-fun SkillEntity.toDomainSkill(grantId: String): DomainSkill {
+fun SkillEntity.toDomainSkill(): DomainSkill {
     return DomainSkill(
         id = this.id,
         dieFormula = this.die_formula,
         skill = this.skill_enum,
-        grantId = grantId,
-        proficiency = proficiency_level_enum
+        proficiency = proficiency_level_enum,
+        ability
     )
 }

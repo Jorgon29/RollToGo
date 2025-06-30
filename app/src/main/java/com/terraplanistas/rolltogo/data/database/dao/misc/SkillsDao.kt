@@ -30,6 +30,9 @@ interface SkillDao {
     @Query("SELECT * FROM skills WHERE proficiency_level_enum = :proficiencyLevel")
     fun getSkillsByProficiencyLevel(proficiencyLevel: String): Flow<List<SkillEntity>>
 
+    @Query("SELECT * FROM skills WHERE ability = :ability")
+    fun getSkillsByAbilityId(ability: String): Flow<List<SkillEntity>>
+
     @Query("SELECT * FROM skills")
     fun getAllSkills(): Flow<List<SkillEntity>>
 }

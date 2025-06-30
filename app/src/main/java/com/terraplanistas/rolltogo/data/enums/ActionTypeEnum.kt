@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.data.enums
 
 enum class ActionTypeEnum(val value: String) {
+
     ACTION("action"),
     BONUS_ACTION("bonus_action"),
     REACTION("reaction"),
