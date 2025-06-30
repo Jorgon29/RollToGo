@@ -22,31 +22,16 @@ class ItemCreationViewModel(
     private val repo: ContentCreationRepository
 ) : ViewModel() {
 
-    fun getRepository(): ContentCreationRepository {
-        return repo
-    }
-    private var _currentContentType: SourceContentEnum? = null
-    var currentStrategy: ContentStrategy? = null
+
+    var currentStrategy: ContentStrategy = ItemStrategy()
 
     private val _uiState = MutableStateFlow(ContentCreationState())
     val uiState: StateFlow<ContentCreationState> = _uiState.asStateFlow()
 
-    fun setContentType(type: SourceContentEnum) {
-        Log.d("Cosa", "Setting content type to: ${type.value}")
-        _currentContentType = type
-        currentStrategy = when (type) {
-            SourceContentEnum.ITEM -> ItemStrategy()
-            SourceContentEnum.SPELLS -> SpellStrategy()
-            SourceContentEnum.BACKGROUND -> BackgroundStrategy()
-            SourceContentEnum.CREATURES -> CreatureStrategy()
-            SourceContentEnum.SPECIES -> CreatureStrategy()
-            else -> throw IllegalArgumentException("Unsupported content type: $type")
-        }
-        Log.d("AAA","Se asigno el tipo de estrategia")
-        _uiState.value = _uiState.value.copy(
-            formData = currentStrategy?.getDefaultData() ?: emptyMap()
+    init {
+        _uiState.value = ContentCreationState(
+            formData = currentStrategy.getDefaultData(),
         )
-        Log.d("Contenido esperado", "${_uiState.value.formData["is_magical"]} ${_uiState.value.formData["attunment"]}")
     }
 
     fun updateFormData(data: Map<String, Any>) {

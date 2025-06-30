@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.terraplanistas.rolltogo.ui.screens.content.screens.background.FeatureItem
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.dataHolders.FeatureUI
 
 @Composable

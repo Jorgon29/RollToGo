@@ -10,7 +10,6 @@ import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
 import com.terraplanistas.rolltogo.data.enums.ProficiencyTypeEnum
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
-import com.terraplanistas.rolltogo.ui.screens.content.contentcreation.ContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.dataHolders.FeatureUI
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.dataHolders.ProficiencyUI
 import com.terraplanistas.rolltogo.ui.screens.content.strategy.ContentCreationState
@@ -50,7 +49,7 @@ class BackgroundCreationViewModel(
             formData = _strategy.getDefaultData()
         )
     }
-
+ //Aberraci
     private fun loadInitialData() {
         viewModelScope.launch {
             _availableProficiencies.value = listOf(

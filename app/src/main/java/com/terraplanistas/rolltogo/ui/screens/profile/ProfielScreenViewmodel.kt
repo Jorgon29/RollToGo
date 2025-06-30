@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
 import android.net.Uri
+import android.util.Log
 
 import com.google.firebase.auth.FirebaseAuth
 import androidx.lifecycle.ViewModel
@@ -45,6 +46,7 @@ class ProfielScreenViewmodel(
                 _username.value = auth.currentUser?.displayName
                 _userPicture.value = auth.currentUser?.photoUrl
                 _userEmail.value = auth.currentUser?.email
+                Log.d("userid", "User ID: ${auth.currentUser?.uid}, token: ${auth.currentUser?.getIdToken(false)?.await()?.token}")
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {

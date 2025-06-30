@@ -56,11 +56,7 @@ fun ItemContentCreationScreen(
 ) {
 
 
-    LaunchedEffect(Unit) {
-        Log.d("Creando", "inicio")
-        viewModel.setContentType(SourceContentEnum.ITEM)
-        Log.d("Creando", "fin")
-    }
+
 
     val formData = viewModel.uiState.collectAsState()
 
@@ -71,8 +67,8 @@ fun ItemContentCreationScreen(
         viewModel.updateFormData(updatedMap)
     }
 
-    val rarityOptions = RarityEnum.entries
-    val itemTypeOptions = ItemTypeEnum.entries
+    val rarityOptions = RarityEnum.entries.map { it.value }
+    val itemTypeOptions = ItemTypeEnum.entries.map{it.value}
     val currencyOptions = CurrencyEnum.entries.map { it.value }
     val damageTypes = DamageTypeEnum.entries.map { it.value }
     val actionTypes = ActionTypeEnum.entries.map {it.value }
@@ -528,7 +524,6 @@ fun ItemContentCreationScreen(
     }
 }
 
-// Función de extensión para colores de TextField
 @Composable
 private fun textFieldColors(): TextFieldColors {
     return TextFieldDefaults.colors(
