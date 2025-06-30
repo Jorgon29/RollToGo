@@ -60,6 +60,9 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.androidx.security.crypto)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.convert.gson)
+    implementation(libs.logging.interceptor)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.activity.compose.v190)
     implementation(libs.androidx.material.icons.extended)
@@ -92,4 +95,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
 }
