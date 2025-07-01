@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
+import com.terraplanistas.rolltogo.ui.screens.campaingCreation.CampaignCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.BiographyScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.FeatsScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.SpellsScreen
@@ -116,7 +117,7 @@ fun NavigationHost() {
                     expanded = showDropDown.value,
                     hide = { modifyDropDownState(false) },
                     navigateToNewCharacter = {navController.navigate(NewActorNavigation)},
-                    navigateNewCampaign = {showCampaignModal.value = true},
+                    navigateNewCampaign = {navController.navigate(CampaignCreation)},
                     showDropDown = {modifyDropDownState(true)},
                     navigateToContentCreation = {navController.navigate(ContentCreationNavigation)},
                 )
@@ -191,6 +192,11 @@ fun NavigationHost() {
                     nav = navController
                 )
 
+            }
+            composable<CampaignCreation>{
+                CampaignCreationScreen(
+                    navController = navController
+                )
             }
         }
     }

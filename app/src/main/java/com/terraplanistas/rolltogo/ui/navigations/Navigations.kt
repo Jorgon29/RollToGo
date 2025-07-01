@@ -43,3 +43,12 @@ object ContentCreationNavigation
 
 @Serializable
 data class ContentCreation(val type: String)
+
+@Serializable
+object CampaingsList
+
+@Serializable
+object CampaignCreation
+
+@Serializable
+data class CampaingNavigation(val id: String)

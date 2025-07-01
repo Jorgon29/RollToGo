@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -56,8 +57,6 @@ fun ItemContentCreationScreen(
 ) {
 
 
-
-
     val formData = viewModel.uiState.collectAsState()
 
     fun updateFormData(key: String, value: Any) {
@@ -68,10 +67,10 @@ fun ItemContentCreationScreen(
     }
 
     val rarityOptions = RarityEnum.entries.map { it.value }
-    val itemTypeOptions = ItemTypeEnum.entries.map{it.value}
+    val itemTypeOptions = ItemTypeEnum.entries.map { it.value }
     val currencyOptions = CurrencyEnum.entries.map { it.value }
     val damageTypes = DamageTypeEnum.entries.map { it.value }
-    val actionTypes = ActionTypeEnum.entries.map {it.value }
+    val actionTypes = ActionTypeEnum.entries.map { it.value }
     val tagOptions = listOf(
         "Plateada",
         "Dos-manos",
@@ -90,6 +89,7 @@ fun ItemContentCreationScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
+
         ) {
             Text(
                 text = "Crear Nueva Arma",
@@ -142,7 +142,9 @@ fun ItemContentCreationScreen(
                             value = formData.value.formData["item_type"].toString(),
                             onValueChange = {},
                             label = { Text("Tipo de arma*") },
-                            modifier = Modifier.fillMaxWidth().menuAnchor(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .menuAnchor(),
                             colors = textFieldColors(),
                             readOnly = true,
                             trailingIcon = {
@@ -160,7 +162,16 @@ fun ItemContentCreationScreen(
                                     onClick = {
                                         updateFormData("item_type", option)
                                         expanded = false
-                                    }
+                                    },
+                                    colors = MenuItemColors(
+                                        textColor = Color.White,
+                                        leadingIconColor = Color.White,
+                                        trailingIconColor = Color(255, 255, 255),
+                                        disabledTextColor = Color(255, 255, 255),
+                                        disabledLeadingIconColor = Color(255, 255, 255),
+                                        disabledTrailingIconColor = Color(255, 255, 255),
+                                    )
+
                                 )
                             }
                         }
@@ -179,7 +190,9 @@ fun ItemContentCreationScreen(
                             value = formData.value.formData["rarity"].toString(),
                             onValueChange = {},
                             label = { Text("Rareza*") },
-                            modifier = Modifier.fillMaxWidth().menuAnchor(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .menuAnchor(),
                             colors = textFieldColors(),
                             readOnly = true,
                             trailingIcon = {
@@ -197,7 +210,17 @@ fun ItemContentCreationScreen(
                                         updateFormData("rarity", option)
                                         expanded = false
                                     },
+
                                     text = { Text(text = option.toString()) }
+                                    ,
+                                    colors = MenuItemColors(
+                                        textColor = Color.White,
+                                        leadingIconColor = Color.White,
+                                        trailingIconColor = Color(255, 255, 255),
+                                        disabledTextColor = Color(255, 255, 255),
+                                        disabledLeadingIconColor = Color(255, 255, 255),
+                                        disabledTrailingIconColor = Color(255, 255, 255),
+                                    )
                                 )
                             }
                         }
@@ -258,7 +281,9 @@ fun ItemContentCreationScreen(
                             value = formData.value.formData["cost_unit"].toString(),
                             onValueChange = {},
                             label = { Text("Moneda*") },
-                            modifier = Modifier.fillMaxWidth().menuAnchor(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .menuAnchor(),
                             colors = textFieldColors(),
                             readOnly = true,
                             trailingIcon = {
@@ -277,6 +302,15 @@ fun ItemContentCreationScreen(
                                         expanded = false
                                     },
                                     text = { Text(text = option) }
+                                    ,
+                                    colors = MenuItemColors(
+                                        textColor = Color.White,
+                                        leadingIconColor = Color.White,
+                                        trailingIconColor = Color(255, 255, 255),
+                                        disabledTextColor = Color(255, 255, 255),
+                                        disabledLeadingIconColor = Color(255, 255, 255),
+                                        disabledTrailingIconColor = Color(255, 255, 255),
+                                    )
                                 )
                             }
                         }
@@ -363,7 +397,8 @@ fun ItemContentCreationScreen(
                 // Tipo de daño
                 Box(modifier = Modifier.weight(1f)) {
                     var expanded by remember { mutableStateOf(false) }
-                    val selectedDamageType = formData.value.formData["damage_tipe"]?.toString() ?: ""
+                    val selectedDamageType =
+                        formData.value.formData["damage_tipe"]?.toString() ?: ""
 
                     ExposedDropdownMenuBox(
                         expanded = expanded,
@@ -393,7 +428,15 @@ fun ItemContentCreationScreen(
                                         updateFormData("damage_tipe", option)
                                         expanded = false
                                     },
-                                    text = { Text(text = option) }
+                                    text = { Text(text = option) },
+                                    colors = MenuItemColors(
+                                        textColor = Color.White,
+                                        leadingIconColor = Color.White,
+                                        trailingIconColor = Color(255, 255, 255),
+                                        disabledTextColor = Color(255, 255, 255),
+                                        disabledLeadingIconColor = Color(255, 255, 255),
+                                        disabledTrailingIconColor = Color(255, 255, 255),
+                                    )
                                 )
                             }
                         }
@@ -402,10 +445,11 @@ fun ItemContentCreationScreen(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-            ){
+            ) {
                 Box(modifier = Modifier.weight(1f)) {
                     var expanded by remember { mutableStateOf(false) }
-                    val selectedActiontype = formData.value.formData["action_type"]?.toString() ?: ""
+                    val selectedActiontype =
+                        formData.value.formData["action_type"]?.toString() ?: ""
 
                     ExposedDropdownMenuBox(
                         expanded = expanded,
@@ -435,7 +479,15 @@ fun ItemContentCreationScreen(
                                         updateFormData("action_type", option)
                                         expanded = false
                                     },
-                                    text = { Text(text = option) }
+                                    text = { Text(text = option) },
+                                    colors = MenuItemColors(
+                                        textColor = Color.White,
+                                        leadingIconColor = Color.White,
+                                        trailingIconColor = Color(255, 255, 255),
+                                        disabledTextColor = Color(255, 255, 255),
+                                        disabledLeadingIconColor = Color(255, 255, 255),
+                                        disabledTrailingIconColor = Color(255, 255, 255),
+                                    )
                                 )
                             }
                         }
@@ -487,16 +539,19 @@ fun ItemContentCreationScreen(
             // Botón de guardar
             Button(
                 onClick = {
-                    if (viewModel.currentStrategy?.validateContent(formData.value.formData) == true) {
-                       // viewModel.currentStrategy?.sumbit(formData.value.formData, viewModel.getRepository())
+                    if (viewModel.currentStrategy.validateContent(formData.value.formData)) {
+                        // viewModel.currentStrategy?.sumbit(formData.value.formData, viewModel.getRepository())
                         //nav.popBackStack()
-                        Log.d("Item", "Item guardado: ${formData.value.formData["name"]} descripción: ${formData.value.formData["description"]}" +
-                                " tipo: ${formData.value.formData["item_type"]} rareza: ${formData.value.formData["rarity"]}" +
-                                " peso: ${formData.value.formData["weight"]} valor: ${formData.value.formData["cost_value"]}" +
-                                " moneda: ${formData.value.formData["cost_unit"]} ataque: ${formData.value.formData["attack_bonus"]}" +
-                                " daño: ${formData.value.formData["damage"]} tipo de daño: ${formData.value.formData["damage_tipe"]}" +
-                                " es mágico: ${formData.value.formData["is_magical"]} requiere sintonización: ${formData.value.formData["attunment"]}" +
-                                " etiquetas: ${formData.value.formData["item_tag"]} tipo de acción: ${formData.value.formData["action_type"]}")
+                        Log.d(
+                            "Item",
+                            "Item guardado: ${formData.value.formData["name"]} descripción: ${formData.value.formData["description"]}" +
+                                    " tipo: ${formData.value.formData["item_type"]} rareza: ${formData.value.formData["rarity"]}" +
+                                    " peso: ${formData.value.formData["weight"]} valor: ${formData.value.formData["cost_value"]}" +
+                                    " moneda: ${formData.value.formData["cost_unit"]} ataque: ${formData.value.formData["attack_bonus"]}" +
+                                    " daño: ${formData.value.formData["damage"]} tipo de daño: ${formData.value.formData["damage_tipe"]}" +
+                                    " es mágico: ${formData.value.formData["is_magical"]} requiere sintonización: ${formData.value.formData["attunment"]}" +
+                                    " etiquetas: ${formData.value.formData["item_tag"]} tipo de acción: ${formData.value.formData["action_type"]}"
+                        )
                     }
                 },
                 modifier = Modifier
@@ -506,18 +561,19 @@ fun ItemContentCreationScreen(
                     containerColor = Color(70, 130, 180),
                     contentColor = Color.White
                 ),
-                enabled = viewModel.currentStrategy?.validateContent(formData.value.formData) ?: false
+                enabled = viewModel.currentStrategy?.validateContent(formData.value.formData)
+                    ?: false
             ) {
                 Text("Guardar Item")
             }
         }
-    }else{
+    } else {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             CircularProgressIndicator()
 
         }

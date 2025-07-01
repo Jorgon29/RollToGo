@@ -61,6 +61,8 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepositoryImpi
+import com.terraplanistas.rolltogo.data.repository.rooms.RoomRepository
+import com.terraplanistas.rolltogo.data.repository.rooms.RoomRepositoryImpl
 
 
 private val USER_PREFERENCE_NAME = "user_preferences"
@@ -143,6 +145,16 @@ class AppProvider (context: Context){
             monstersDao = monstersDao,
             featuresDao = featuresDao
         )
+
+    private val roomsRepository: RoomRepository = RoomRepositoryImpl(
+        userDao = userDao,
+        roomsDao = roomsDao,
+        roomParticipantDao = roomParticipantDao
+    )
+
+    fun provideRoomsRepository(): RoomRepository {
+        return roomsRepository
+    }
 
 
     fun providePlaystyleRepository(): PlaystyleRepository {
