@@ -8,6 +8,9 @@ data class ActionResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("actionType")
     val actionType: ActionTypeEnum,
 

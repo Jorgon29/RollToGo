@@ -9,6 +9,9 @@ data class LevelProgressionResponse(
     @SerializedName("level")
     val level: Int,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("newSpecialValue")
     val newSpecialValue: Int?,
 

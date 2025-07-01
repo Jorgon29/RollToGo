@@ -6,6 +6,9 @@ data class FeatureResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("name")
     val name: String,
 
@@ -16,5 +19,7 @@ data class FeatureResponse(
     val isMagic: Boolean,
 
     @SerializedName("isPassive")
-    val isPassive: Boolean
+    val isPassive: Boolean,
+    @SerializedName("specialDies")
+    val specialDies: List<SpecialDieResponse>
 )

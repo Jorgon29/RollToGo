@@ -10,12 +10,12 @@ data class GrantResponse(
     @SerializedName("granterType")
     val granterType: SourceContentEnum,
 
-    @SerializedName("granterContentId")
-    val granterContentId: String,
+    @SerializedName("granterContent")
+    val granterContent: ContentResponse,
 
     @SerializedName("grantedType")
     val grantedType: SourceContentEnum,
 
-    @SerializedName("grantedContentId")
-    val grantedContentId: String
+    @SerializedName("grantedContent")
+    val grantedContent: ContentResponse
 )

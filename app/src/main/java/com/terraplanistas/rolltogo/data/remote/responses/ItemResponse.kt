@@ -8,6 +8,9 @@ data class ItemResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("name")
     val name: String,
 
@@ -33,5 +36,8 @@ data class ItemResponse(
     val attunementRequired: Boolean?,
 
     @SerializedName("isMagic")
-    val isMagic: Boolean?
+    val isMagic: Boolean?,
+
+    @SerializedName("itemTags")
+    val itemTags: List<ItemTagResponse>
 )

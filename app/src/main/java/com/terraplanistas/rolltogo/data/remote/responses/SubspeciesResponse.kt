@@ -7,8 +7,8 @@ data class SubspeciesResponse(
     @SerializedName("id")
     val id: String,
 
-    @SerializedName("speciesId")
-    val speciesId: String,
+    @SerializedName("species")
+    val species: SpeciesResponse,
 
     @SerializedName("name")
     val name: String,

@@ -8,6 +8,9 @@ data class BonusResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("bonusTypeEnum")
     val bonusTypeEnum: BonusTypeEnum,
 

@@ -8,6 +8,9 @@ data class MovementResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("maxMovementValue")
     val maxMovementValue: Int,
 

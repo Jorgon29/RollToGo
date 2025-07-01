@@ -17,5 +17,7 @@ data class UserResponse(
     val email: String,
 
     @SerializedName("createdAt")
-    val createdAt: OffsetDateTime?
+    val createdAt: OffsetDateTime?,
+    @SerializedName("roomParticipants")
+    val roomParticipants: List<RoomParticipantResponse>
 )

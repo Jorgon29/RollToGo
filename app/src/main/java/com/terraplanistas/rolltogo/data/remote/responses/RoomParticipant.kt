@@ -1,4 +1,6 @@
 package com.terraplanistas.rolltogo.data.remote.responses
+import com.google.gson.annotations.SerializedName
+import com.terraplanistas.rolltogo.data.enums.RoleEnum
 
 data class RoomParticipantResponse(
     @SerializedName("roomId")

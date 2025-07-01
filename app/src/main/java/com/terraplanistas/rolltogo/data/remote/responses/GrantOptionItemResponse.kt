@@ -3,9 +3,9 @@ package com.terraplanistas.rolltogo.data.remote.responses
 import com.google.gson.annotations.SerializedName
 
 data class GrantOptionItemResponse(
-    @SerializedName("granterOptionSetId")
-    val granterOptionSetId: String,
+    @SerializedName("granterOptionSet")
+    val granterOptionSet: GrantOptionSetResponse,
 
     @SerializedName("grantedContentId")
-    val grantedContentId: String
+    val grantedContent: ContentResponse
 )

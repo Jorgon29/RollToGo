@@ -17,4 +17,16 @@ data class ContentResponse(
 
     @SerializedName("createdAt")
     val createdAt: OffsetDateTime,
+
+    @SerializedName("grants")
+    val grants: List<GrantResponse>?,
+
+    @SerializedName("grantedBy")
+    val grantedBy: List<GrantResponse>?,
+
+    @SerializedName("grantOptionSets")
+    val grantOptionSets: List<GrantOptionSetResponse>?,
+
+    @SerializedName("grantOptionItems")
+    val grantOptionItems: List<GrantOptionItemResponse>?
 )

@@ -7,6 +7,9 @@ data class SenseResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("sensesTypeEnum")
     val sensesTypeEnum: SensesTypeEnum,
 

@@ -8,6 +8,9 @@ data class DamageResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("damageFormula")
     val damageFormula: String,
 

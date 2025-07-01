@@ -7,6 +7,9 @@ data class AbilityResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("abilityTypeEnum")
     val abilityTypeEnum: AbilityTypeEnum,
 

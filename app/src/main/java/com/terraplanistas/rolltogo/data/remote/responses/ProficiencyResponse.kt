@@ -7,6 +7,9 @@ data class ProficiencyResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("name")
     val name: String,
 

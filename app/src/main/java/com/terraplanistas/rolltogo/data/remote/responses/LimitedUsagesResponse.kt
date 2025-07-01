@@ -7,6 +7,9 @@ data class LimitedUsageResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("baseMaxUsesFormula")
     val baseMaxUsesFormula: String,
 

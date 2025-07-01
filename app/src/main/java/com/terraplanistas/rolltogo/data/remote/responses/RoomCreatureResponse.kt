@@ -6,14 +6,14 @@ import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
 data class RoomCreatureResponse(
     @SerializedName("id")
     val id: String,
-    @SerializedName("creatureId")
-    val creatureId: String,
+    @SerializedName("creature")
+    val creature: CreatureResponse,
 
-    @SerializedName("ownerId")
-    val ownerId: String,
+    @SerializedName("owner")
+    val owner: UserResponse,
 
-    @SerializedName("roomId")
-    val roomId: String,
+    @SerializedName("room")
+    val room: RoomResponse,
 
     @SerializedName("creatureType")
     val creatureType: CreatureTypeEnum

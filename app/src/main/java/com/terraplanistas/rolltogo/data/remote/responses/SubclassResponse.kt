@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.data.remote.responses
 
 import com.google.gson.annotations.SerializedName
+import com.terraplanistas.rolltogo.data.remote.services.ClassResponse
 
 data class SubclassResponse(
     @SerializedName("id")
@@ -8,6 +9,9 @@ data class SubclassResponse(
 
     @SerializedName("classId")
     val classId: String,
+
+    @SerializedName("clazz")
+    val clazz: ClassResponse,
 
     @SerializedName("name")
     val name: String,

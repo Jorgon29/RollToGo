@@ -6,6 +6,9 @@ data class InvocationResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("creature")
+    val creature: CreatureResponse,
+
     @SerializedName("durationValue")
     val durationValue: Int,
 

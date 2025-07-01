@@ -6,9 +6,13 @@ data class FeatResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("name")
     val name: String,
 
     @SerializedName("description")
-    val description: String?
+    val description: String?,
+
 )

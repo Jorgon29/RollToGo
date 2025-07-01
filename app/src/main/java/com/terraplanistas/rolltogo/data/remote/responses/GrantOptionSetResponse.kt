@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 data class GrantOptionSetResponse(
     @SerializedName("id")
     val id: String,
-    @SerializedName("contentId")
-    val contentId: String,
+    @SerializedName("content")
+    val content: ContentResponse,
 
     @SerializedName("minChoices")
     val minChoices: Int,

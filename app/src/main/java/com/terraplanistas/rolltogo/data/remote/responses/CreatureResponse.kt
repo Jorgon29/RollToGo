@@ -9,6 +9,9 @@ data class CreatureResponse(
     @SerializedName("id")
     val id: String,
 
+    @SerializedName("content")
+    val content: ContentResponse,
+
     @SerializedName("name")
     val name: String,
 
@@ -28,5 +31,5 @@ data class CreatureResponse(
     val baseAc: Int,
 
     @SerializedName("creatureSourceType")
-    val creatureSourceType: CreatureSourceType
+    val creatureSourceType: CreatureSourceType,
 )

@@ -1,10 +1,14 @@
 package com.terraplanistas.rolltogo.data.remote.services
 
 import com.google.gson.annotations.SerializedName
+import com.terraplanistas.rolltogo.data.remote.responses.CreatureResponse
 
 data class CharacterResponse(
     @SerializedName("id")
     val id: String,
+
+    @SerializedName("creature")
+    val creature: CreatureResponse,
 
     @SerializedName("race")
     val race: Int?,
