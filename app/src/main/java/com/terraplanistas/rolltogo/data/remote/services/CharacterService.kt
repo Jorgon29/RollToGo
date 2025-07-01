@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface CharacterService {
 
     @POST("characters")
-    suspend fun saveCharacter(@Body character: CharacterResponse): Response<Unit>
+    suspend fun saveCharacter(@Body character: CharacterResponse): CharacterResponse
 
 
     @GET("characters")

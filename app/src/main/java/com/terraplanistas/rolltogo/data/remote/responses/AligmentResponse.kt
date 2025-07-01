@@ -8,9 +8,3 @@ data class AlignmentResponse(
     val desc: String,
     val url: String
 )
-
-
-data class ApiListResponse<T>(
-    val count: Int,
-    val results: List<T>
-)

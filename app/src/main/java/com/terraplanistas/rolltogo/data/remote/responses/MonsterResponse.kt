@@ -1,13 +1,17 @@
 package com.terraplanistas.rolltogo.data.remote.services
 
-data class MonsterResponse(
-    // Datos de la API si hubiera allí
-    val index: String,
-    val name: String, //mutumbo
-    val hit_points: Int,
-    val alignment: String,
+import com.google.gson.annotations.SerializedName
 
-    // Monstruos locales
-    val isCustom: Boolean = false,  // Para diferenciar monstruos de API vs. creados
-    val createdBy: String? = null   // ID del usuario (si es personalizado)
+data class MonsterResponse(
+    @SerializedName("id")
+    val id: String,
+
+    @SerializedName("challengeRating")
+    val challengeRating: String,
+
+    @SerializedName("legendary")
+    val legendary: Boolean,
+
+    @SerializedName("lair")
+    val lair: Boolean
 )

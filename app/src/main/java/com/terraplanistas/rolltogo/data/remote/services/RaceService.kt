@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.data.remote.responses
 
+import com.terraplanistas.rolltogo.data.remote.services.ApiListResponse
 import com.terraplanistas.rolltogo.data.remote.services.ApiReference
 import com.terraplanistas.rolltogo.data.remote.services.RaceResponse
 import retrofit2.http.GET
@@ -14,9 +15,3 @@ interface RaceService {
     @GET("api/races/{index}")
     suspend fun getRaceDetails(@Path("index") index: String): RaceResponse
 }
-
-
-data class ApiListResponse<T>(
-    val count: Int,
-    val results: List<T>
-)

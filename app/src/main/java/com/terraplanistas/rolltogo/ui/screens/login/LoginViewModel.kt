@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.terraplanistas.rolltogo.RollToGoApp
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -102,6 +103,15 @@ class LoginViewModel(
                     if (task.isSuccessful) {
                         _loginStatus.value = true
                         _loading.value = false
+                        val user: FirebaseUser? = auth.currentUser
+                        user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+                            if (tokenTask.isSuccessful) {
+                                val idToken: String? = tokenTask.result?.token
+                                Log.d("token","Firebase ID Token: $idToken")
+                            } else {
+                                _error.value = "Error al obtener el token de usuario"
+                            }
+                        }
                     } else {
                         _loginStatus.value = false
                         _error.value = "Por favor revise los datos ingresados"
@@ -109,15 +119,11 @@ class LoginViewModel(
                     }
 
                 }
-
         } else {
-
             _loginStatus.value = false
             _error.value = "Debe llenar ambos campos antes de poder iniciar sesión"
             _loading.value = false
         }
-
-
     }
 
 

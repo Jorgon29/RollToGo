@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.data.remote.responses
 
+import com.terraplanistas.rolltogo.data.remote.services.ApiListResponse
 import com.terraplanistas.rolltogo.data.remote.services.ApiReference
 import com.terraplanistas.rolltogo.data.remote.services.ClassResponse
 import retrofit2.http.GET
@@ -14,7 +15,3 @@ interface ClassService {
     suspend fun getClassDetails(@Path("index") index: String): ClassResponse
 }
 
-data class ApiListResponse<T>(
-    val count: Int,
-    val results: List<T>
-)

@@ -4,6 +4,5 @@ import android.content.Context
 import com.terraplanistas.rolltogo.data.model.CharacterAlignment
 
 interface AlignmentsRepository {
-    fun getAlignments(context: Context): List<CharacterAlignment>
-    fun getDefaultAlignments(context: Context): List<CharacterAlignment>
+    fun getAlignments(): List<CharacterAlignment>
 }

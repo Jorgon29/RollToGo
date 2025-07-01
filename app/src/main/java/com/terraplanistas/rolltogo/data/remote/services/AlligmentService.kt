@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.data.remote.responses
 
 import com.terraplanistas.rolltogo.data.remote.services.AlignmentResponse
+import com.terraplanistas.rolltogo.data.remote.services.ApiListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
