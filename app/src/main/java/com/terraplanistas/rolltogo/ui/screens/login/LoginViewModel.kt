@@ -11,6 +11,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.terraplanistas.rolltogo.RollToGoApp
+import com.terraplanistas.rolltogo.data.remote.RetrofitInstance
+import com.terraplanistas.rolltogo.data.remote.dtos.UserCreateRequest
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -106,8 +108,26 @@ class LoginViewModel(
                         val user: FirebaseUser? = auth.currentUser
                         user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
                             if (tokenTask.isSuccessful) {
-                                val idToken: String? = tokenTask.result?.token
-                                saveToken(idToken?: "")
+                                try {
+                                    val idToken: String? = tokenTask.result?.token
+                                    saveToken(idToken?: "")
+
+                                    viewModelScope.launch {
+                                        val response = RetrofitInstance.userService.createUser(
+                                            UserCreateRequest(
+                                                userImageUrl = null,
+                                                username = email,
+                                                email = email,
+                                                id = user.uid
+                                            )
+                                        )
+                                    }
+                                } catch (e: Exception){
+                                    _loginStatus.value = false
+                                    _error.value = "Error de red/API al procesar login: ${e.localizedMessage ?: "Error desconocido"}"
+                                }
+
+
                             } else {
                                 _error.value = "Error al obtener el token de usuario"
                             }

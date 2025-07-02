@@ -18,6 +18,10 @@ data class UserResponse(
 
     @SerializedName("createdAt")
     val createdAt: OffsetDateTime?,
+
+
+    @SerializedName("contents")
+    val contents: List<ContentResponse>,
     @SerializedName("roomParticipants")
     val roomParticipants: List<RoomParticipantResponse>
 )
