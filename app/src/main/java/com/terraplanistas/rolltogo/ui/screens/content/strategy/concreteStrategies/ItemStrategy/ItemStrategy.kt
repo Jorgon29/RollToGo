@@ -28,7 +28,7 @@ class ItemStrategy : ContentStrategy {
     }
 
     override fun getDefaultData(): Map<String, Any> {
-        return mapOf(
+        return mutableMapOf(
             "name" to "",
             "description" to "",
             "item_type" to "",

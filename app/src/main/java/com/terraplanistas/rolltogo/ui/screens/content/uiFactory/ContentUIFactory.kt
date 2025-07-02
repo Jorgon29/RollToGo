@@ -7,6 +7,7 @@ import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
 import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemCreationViewModel
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.BackgroundContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.creatures.CreatureContentCreationScreen
+import com.terraplanistas.rolltogo.ui.screens.content.screens.features.FeatureCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.species.SpecieContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.spells.SpellContentCreationScreen
@@ -32,6 +33,9 @@ object ContentUIFactory {
             }
             SourceContentEnum.CREATURES -> {
                 { CreatureContentCreationScreen( nav =  nav) }
+            }
+            SourceContentEnum.FEATURES ->{
+                { FeatureCreationScreen(nav = nav) }
             }
             else -> {
                 { nav.navigate(ForumNavigation)}

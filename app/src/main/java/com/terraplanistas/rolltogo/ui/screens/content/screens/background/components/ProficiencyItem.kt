@@ -22,7 +22,7 @@ import com.terraplanistas.rolltogo.ui.screens.content.screens.background.dataHol
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-internal fun ProficiencyItem(
+fun ProficiencyItem(
     proficiency: ProficiencyUI,
     currentLevel: ProficiencyLevelEnum,
     onLevelSelected: (ProficiencyLevelEnum) -> Unit,

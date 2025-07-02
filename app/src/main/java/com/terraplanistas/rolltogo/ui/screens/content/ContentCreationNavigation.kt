@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.composables.icons.lucide.Book
 import com.composables.icons.lucide.Flame
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Scroll
@@ -48,7 +49,8 @@ fun ContentTypeSelectionScreen(
         "Background" to Lucide.Scroll,
         "Creatures" to Lucide.Flame,
         "Species" to Lucide.User,
-        "Spells" to Lucide.Sparkles
+        "Spells" to Lucide.Sparkles,
+        "Features" to Lucide.Book
     )
 
     val backgroundColor = Color(72, 94, 146) // blue-500 de tu paleta

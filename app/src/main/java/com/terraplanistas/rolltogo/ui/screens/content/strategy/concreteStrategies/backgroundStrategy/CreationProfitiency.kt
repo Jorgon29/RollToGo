@@ -5,6 +5,4 @@ data class CreationProfitiency(
     val type: String,
     val ability: String,
     val proficiencyType: String
-
-
 )

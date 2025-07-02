@@ -21,7 +21,8 @@ enum class SourceContentEnum(val value: String) {
     SENSES("senses"),
     ABILITY_SCORE_IMPROVEMENT("ability_score_improvement"),
     MOVEMENTS("movements"),
-    ROOMS("rooms");
+    ROOMS("rooms"),
+    FEATURES("features");
 
     companion object {
         fun fromValue(value: String): SourceContentEnum? =
