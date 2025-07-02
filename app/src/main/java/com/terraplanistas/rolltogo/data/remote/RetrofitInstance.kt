@@ -37,6 +37,7 @@ import com.terraplanistas.rolltogo.data.remote.services.SenseService
 import com.terraplanistas.rolltogo.data.remote.services.SkillService
 import com.terraplanistas.rolltogo.data.remote.services.SpecialDieService
 import com.terraplanistas.rolltogo.data.remote.services.SpellMaterialService
+import com.terraplanistas.rolltogo.data.remote.services.SpellService
 import com.terraplanistas.rolltogo.data.remote.services.SpellcastingService
 import com.terraplanistas.rolltogo.data.remote.services.SubclassService
 import com.terraplanistas.rolltogo.data.remote.services.SubspeciesService
@@ -190,6 +191,10 @@ object RetrofitInstance {
 
     val spellMaterialService: SpellMaterialService by lazy {
         localRetrofit.create(SpellMaterialService::class.java)
+    }
+
+    val spellService: SpellService by lazy {
+        localRetrofit.create(SpellService::class.java)
     }
 
     val subclassService: SubclassService by lazy {
