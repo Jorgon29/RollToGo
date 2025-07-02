@@ -29,7 +29,9 @@ class RollToGoApp : Application() {
     }
 
     lateinit var playstyleRepository: PlaystyleRepository
-    lateinit var userPreferencesRepository: UserPreferencesRepository
+    companion object {
+        lateinit var userPreferencesRepository: UserPreferencesRepository
+    }
     lateinit var classesRepository: ClassesRepository
     lateinit var racesRepository: RaceRepository
     lateinit var alignmentsRepository: AlignmentsRepository
@@ -42,11 +44,6 @@ class RollToGoApp : Application() {
     val getSafeUriForFirebase: (Uri) -> Uri? = { uri ->
         UriUtils.persistableUriFromPicker(this, uri)
     }
-
-
-
-
-
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)

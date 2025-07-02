@@ -19,6 +19,7 @@ class UserPreferencesRepository(
         val LOGIN_PREFERENCE = booleanPreferencesKey("login_preference")
         val USERNAME_PREFERENCE = stringPreferencesKey("username_preference")
         val PASSWORD_PREFERENCE = stringPreferencesKey("password_preference")
+        val AUTH_TOKEN_KEY = stringPreferencesKey("auth_token_key")
     }
 
     suspend fun savePreference(testPreference: Boolean) {
@@ -46,6 +47,24 @@ class UserPreferencesRepository(
             preferences[PASSWORD_PREFERENCE] = Encrypt.encrypt(password)
         }
     }
+
+    suspend fun saveAuthTokenKeyPreference(token: String){
+        datastore.edit { preferences ->
+            preferences[AUTH_TOKEN_KEY] = token
+        }
+    }
+
+    val authTokenPreference: Flow<String> = datastore.data
+        .catch {
+            if (it is IOException){
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }.map { preferences ->
+            preferences[AUTH_TOKEN_KEY]?: ""
+        }
+
     // Recupera la contraseña encriptada desde las preferencias y la desencripta antes de devolverla
     val passwordPreference: Flow<String> = datastore.data
         .catch {
@@ -92,5 +111,6 @@ class UserPreferencesRepository(
         }.map { preferences ->
             preferences[LOGIN_PREFERENCE] ?: false
         }
+
 
 }

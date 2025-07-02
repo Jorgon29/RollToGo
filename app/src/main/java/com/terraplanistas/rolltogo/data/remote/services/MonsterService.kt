@@ -1,22 +1,28 @@
 package com.terraplanistas.rolltogo.data.remote.responses
 
-import com.google.android.gms.common.api.Response
-import com.terraplanistas.rolltogo.data.remote.services.ApiListResponse
+import com.terraplanistas.rolltogo.data.remote.dtos.MonsterCreateRequest
 import com.terraplanistas.rolltogo.data.remote.services.MonsterResponse
+import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import java.util.UUID
 
 interface MonsterService {
 
-    @GET("api/monsters")
-    suspend fun getApiMonsters(): ApiListResponse<MonsterResponse>
+    @GET("monsters")
+    suspend fun getAllMonsters(): List<MonsterResponse>
 
-    @GET("api/monsters/{index}")
-    suspend fun getApiMonsterDetails(@Path("index") index: String): MonsterResponse
+    @GET("monsters/{id}")
+    suspend fun getMonsterById(@Path("id") id: UUID): MonsterResponse
+    @POST("monsters")
+    suspend fun createMonster(@Body request: MonsterCreateRequest): Response<MonsterResponse>
+    @PUT("monsters")
+    suspend fun updateMonster(@Body monster: MonsterResponse): MonsterResponse
 
-    // Datos locales (personalizados)
-    @POST("monsters/custom")
-    suspend fun saveCustomMonster(@Body monster: MonsterResponse): MonsterResponse
+    @DELETE("monsters/{id}")
+    suspend fun deleteMonsterById(@Path("id") id: UUID)
 }

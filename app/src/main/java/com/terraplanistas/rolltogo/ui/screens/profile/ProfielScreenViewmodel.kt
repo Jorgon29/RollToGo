@@ -110,7 +110,7 @@ class ProfielScreenViewmodel(
                 ProfielScreenViewmodel(
                     app.fireBaseAuth,
                     persistUri = app.getSafeUriForFirebase,
-                    preferencesRepository = app.userPreferencesRepository
+                    preferencesRepository = app.appProvider.provideUserPreferenceRepository()
                 )
             }
         }

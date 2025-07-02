@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.ui.screens.login
 
 import android.util.Log
+import androidx.browser.trusted.Token
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -83,12 +84,11 @@ class LoginViewModel(
         }
     }
 
-    /*
-    * Inicia sesion con el correo y la contraseña proporcionados.
-    * El usuario queda guardado en auth.currentUser()
-    * Si el inicio de sesión es exitoso, se cambia el estado de loginStatus a true.
-    * Si hay un error, se cambia el estado de loginStatus a false y se muestra un mensaje de error.
-    * */
+    fun saveToken(token: String){
+        viewModelScope.launch {
+            preference.saveAuthTokenKeyPreference(token)
+        }
+    }
     fun login(
         email: String,
         password: String
@@ -107,7 +107,7 @@ class LoginViewModel(
                         user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
                             if (tokenTask.isSuccessful) {
                                 val idToken: String? = tokenTask.result?.token
-                                Log.d("token","Firebase ID Token: $idToken")
+                                saveToken(idToken?: "")
                             } else {
                                 _error.value = "Error al obtener el token de usuario"
                             }
@@ -218,7 +218,7 @@ class LoginViewModel(
                     ?: throw IllegalStateException("Application is not RollToGoApp")
                 LoginViewModel(
                     auth = aplication.fireBaseAuth,
-                    preference = aplication.userPreferencesRepository
+                    preference = aplication.appProvider.provideUserPreferenceRepository()
                 )
 
             }
