@@ -129,6 +129,7 @@ class LoginViewModel(
         email: String,
         password: String
     ) {
+
         _loading.value = true
         if (!(email.isEmpty() || password.isEmpty())) {
             auth.createUserWithEmailAndPassword(email, password)
