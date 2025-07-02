@@ -19,11 +19,9 @@ class RoomRepositoryImpl(
     val roomParticipantDao: RoomParticipantDao
 ) : RoomRepository {
 
-    override suspend fun getRoomsByPlayerId(playerId: String): Flow<List<RoomDomain?>> {
-
-        //Solo en local
-       return roomParticipantDao.getRoomsByParticipantId(playerId).map { entity ->
-            entity.map {
+    override suspend fun getRoomsByPlayerId(playerId: String): Flow<List<RoomDomain>> {
+        return roomParticipantDao.getRoomsByParticipantId(playerId).map { entity ->
+            entity.mapNotNull {
                 roomsDao.getRoomById(it.room_id).firstOrNull()?.toDomain()
             }
         }

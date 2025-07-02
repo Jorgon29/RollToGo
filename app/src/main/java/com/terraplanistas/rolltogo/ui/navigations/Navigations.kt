@@ -52,3 +52,9 @@ object CampaignCreation
 
 @Serializable
 data class CampaingNavigation(val id: String)
+
+@Serializable
+object CampaignListNavigation
+
+@Serializable
+object CampaignCreationNavigation

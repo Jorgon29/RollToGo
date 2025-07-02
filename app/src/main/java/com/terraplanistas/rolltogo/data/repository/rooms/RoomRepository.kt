@@ -9,5 +9,4 @@ interface RoomRepository {
     suspend fun getRoomsByPlayerId(playerId: String): Flow<List<RoomDomain?>>
     fun createRoom(room: RoomsEntity)
 
-
 }
