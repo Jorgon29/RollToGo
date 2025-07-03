@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -19,7 +20,6 @@ import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -64,6 +64,13 @@ class ActorCreationViewModel(
         initialValue = ""
     )
 
+    init {
+        viewModelScope.launch {
+            userId.collect { id ->
+                Log.d("ViewModelUserID", "userId StateFlow value changed to: '$id'")
+            }
+        }
+    }
 
     fun getPlaystyles(): List<Playstyle> {
         return playstyleRepository.getPlaystyles()
@@ -103,7 +110,7 @@ class ActorCreationViewModel(
 
     fun buildCharacter(character: ActorCreationContext){
        viewModelScope.launch {
-           characterRepository.buildCharacter(character,userId.value)
+           characterRepository.buildCharacter(character, userId?.value ?: "hola")
        }
     }
 

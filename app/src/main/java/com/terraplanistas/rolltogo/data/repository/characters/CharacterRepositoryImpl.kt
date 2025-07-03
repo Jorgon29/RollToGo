@@ -28,6 +28,8 @@ import com.terraplanistas.rolltogo.data.enums.AlignmentEnum
 import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
 import com.terraplanistas.rolltogo.data.enums.CreatureSourceType
 import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
+import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
+import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.data.enums.VisibilityEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainAbility
@@ -45,9 +47,12 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.toSkillEntity
 import com.terraplanistas.rolltogo.data.model.creatures.character.toSpellEntity
 import com.terraplanistas.rolltogo.data.remote.RetrofitInstance
 import com.terraplanistas.rolltogo.data.remote.RetrofitInstance.characterService
+import com.terraplanistas.rolltogo.data.remote.dtos.AbilityCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.CharacterCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.ContentCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.CreatureCreateRequest
+import com.terraplanistas.rolltogo.data.remote.dtos.GrantCreateRequest
+import com.terraplanistas.rolltogo.data.remote.dtos.SkillCreateRequest
 import com.terraplanistas.rolltogo.helpers.Resource
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationContext
 import kotlinx.coroutines.flow.flow
@@ -464,6 +469,82 @@ class CharacterRepositoryImpl(
                                 gender = character.gender
                             )
                         )
+                        if(myCharacter.isSuccessful){
+                            val classGrant = RetrofitInstance.grantService.createGrant(
+                                request = GrantCreateRequest(
+                                    granterType = SourceContentEnum.CREATURES,
+                                    granterContentId = myCharacter.body()?.id ?: "",
+                                    grantedType = SourceContentEnum.CLASS,
+                                    grantedContentId = getApiClassId(character.characterClass?:1)
+                                )
+                            )
+                            val characterContentId = content.body()?.id?:""
+                            val abilitiesValues = getTypicalAbilityScores(character.characterClass?:100)
+
+                            // Strength
+                            createAbilityAndSkills(
+                                AbilityTypeEnum.STRENGTH,
+                                abilitiesValues,
+                                authorId,
+                                characterContentId,
+                                skillToAbilityMap
+                            )
+
+                            // Dexterity
+                            createAbilityAndSkills(
+                                AbilityTypeEnum.DEXTERITY,
+                                abilitiesValues,
+                                authorId,
+                                characterContentId,
+                                skillToAbilityMap
+                            )
+
+                            // Constitution
+                            createAbilityAndSkills(
+                                AbilityTypeEnum.CONSTITUTION,
+                                abilitiesValues,
+                                authorId,
+                                characterContentId,
+                                skillToAbilityMap
+                            )
+
+                            // Intelligence
+                            createAbilityAndSkills(
+                                AbilityTypeEnum.INTELLIGENCE,
+                                abilitiesValues,
+                                authorId,
+                                characterContentId,
+                                skillToAbilityMap
+                            )
+
+                            // Wisdom
+                            createAbilityAndSkills(
+                                AbilityTypeEnum.WISDOM,
+                                abilitiesValues,
+                                authorId,
+                                characterContentId,
+                                skillToAbilityMap
+                            )
+
+                            // Charisma
+                            createAbilityAndSkills(
+                                AbilityTypeEnum.CHARISMA,
+                                abilitiesValues,
+                                authorId,
+                                characterContentId,
+                                skillToAbilityMap
+                            )
+
+                            val background = RetrofitInstance.backgroundService.getAllBackgrounds().firstOrNull()
+                                val backgroundGrant = RetrofitInstance.grantService.createGrant(
+                                    GrantCreateRequest(
+                                        granterType = SourceContentEnum.CREATURES,
+                                        granterContentId = characterContentId,
+                                        grantedType = SourceContentEnum.BACKGROUND,
+                                        grantedContentId = background?.id ?: ""
+                                    )
+                                )
+                        }
                     }
                 }
                 Resource.Success(Unit)
@@ -503,3 +584,212 @@ fun getAlignmentEnumById(alignmentId: Int): AlignmentEnum {
         else -> AlignmentEnum.TRUE_NEUTRAL
     }
 }
+
+fun getApiClassId(localClassId: Int): String {
+    return when (localClassId) {
+        1 -> "565ea329-1146-4064-a179-35554b744370" // Barbarian
+        2 -> "6833332a-964a-4cc6-b6d8-ee51f1461339" // Bard
+        3 -> "6f5f4700-c159-4a70-86c5-8b60e785bce8" // Cleric
+        4 -> "bdf292cf-a542-434a-98e5-2d93d6a8478f" // Druid
+        5 -> "ec38825a-5367-4a28-b578-21dd0e93a7f6" // Fighter
+        6 -> "8718b449-7f71-4d3a-abfd-9c6aabbc5e13" // Monk
+        7 -> "44f1d62f-4310-4063-a65c-a1c8533ed731" // Paladin
+        8 -> "97b308b0-e5f2-42ef-b47f-774a1ce4a1d9" // Ranger
+        9 -> "71df9e15-822a-4e28-93cc-5fd0af38957a" // Rogue
+        10 -> "41b30039-96be-4b40-9173-9df57722a26f" // Sorcerer
+        11 -> "c1c94b50-5dec-48c1-a7f2-7f3e7d4b94f1" // Warlock
+        12 -> "19d0f471-849a-43df-ae69-e9d80feb4e4e" // Wizard
+        else -> "565ea329-1146-4064-a179-35554b744370"
+    }
+}
+fun getTypicalAbilityScores(localClassId: Int): Map<AbilityTypeEnum, Int> {
+
+    return when (localClassId) {
+        1 -> mapOf( // Barbarian: STR, CON, DEX
+            AbilityTypeEnum.STRENGTH to 15,
+            AbilityTypeEnum.CONSTITUTION to 14,
+            AbilityTypeEnum.DEXTERITY to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.CHARISMA to 10,
+            AbilityTypeEnum.INTELLIGENCE to 8
+        )
+        2 -> mapOf( // Bard: CHA, DEX, CON
+            AbilityTypeEnum.CHARISMA to 15,
+            AbilityTypeEnum.DEXTERITY to 14,
+            AbilityTypeEnum.CONSTITUTION to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.STRENGTH to 8
+        )
+        3 -> mapOf( // Cleric: WIS, STR/DEX, CON
+            AbilityTypeEnum.WISDOM to 15,
+            AbilityTypeEnum.STRENGTH to 14,
+            AbilityTypeEnum.CONSTITUTION to 13,
+            AbilityTypeEnum.CHARISMA to 12,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.DEXTERITY to 8
+        )
+        4 -> mapOf( // Druid: WIS, CON, DEX
+            AbilityTypeEnum.WISDOM to 15,
+            AbilityTypeEnum.CONSTITUTION to 14,
+            AbilityTypeEnum.DEXTERITY to 13,
+            AbilityTypeEnum.INTELLIGENCE to 12,
+            AbilityTypeEnum.STRENGTH to 10,
+            AbilityTypeEnum.CHARISMA to 8
+        )
+        5 -> mapOf( // Fighter: STR/DEX, CON
+            AbilityTypeEnum.STRENGTH to 15,
+            AbilityTypeEnum.CONSTITUTION to 14,
+            AbilityTypeEnum.DEXTERITY to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.CHARISMA to 8
+        )
+        6 -> mapOf( // Monk: DEX, WIS, CON
+            AbilityTypeEnum.DEXTERITY to 15,
+            AbilityTypeEnum.WISDOM to 14,
+            AbilityTypeEnum.CONSTITUTION to 13,
+            AbilityTypeEnum.STRENGTH to 12,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.CHARISMA to 8
+        )
+        7 -> mapOf( // Paladin: STR, CHA, CON
+            AbilityTypeEnum.STRENGTH to 15,
+            AbilityTypeEnum.CHARISMA to 14,
+            AbilityTypeEnum.CONSTITUTION to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.DEXTERITY to 10,
+            AbilityTypeEnum.INTELLIGENCE to 8
+        )
+        8 -> mapOf( // Ranger: DEX, WIS, CON
+            AbilityTypeEnum.DEXTERITY to 15,
+            AbilityTypeEnum.WISDOM to 14,
+            AbilityTypeEnum.CONSTITUTION to 13,
+            AbilityTypeEnum.STRENGTH to 12,
+            AbilityTypeEnum.CHARISMA to 10,
+            AbilityTypeEnum.INTELLIGENCE to 8
+        )
+        9 -> mapOf( // Rogue: DEX, INT/CON
+            AbilityTypeEnum.DEXTERITY to 15,
+            AbilityTypeEnum.INTELLIGENCE to 14,
+            AbilityTypeEnum.CONSTITUTION to 13,
+            AbilityTypeEnum.CHARISMA to 12,
+            AbilityTypeEnum.WISDOM to 10,
+            AbilityTypeEnum.STRENGTH to 8
+        )
+        10 -> mapOf( // Sorcerer: CHA, CON, DEX
+            AbilityTypeEnum.CHARISMA to 15,
+            AbilityTypeEnum.CONSTITUTION to 14,
+            AbilityTypeEnum.DEXTERITY to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.STRENGTH to 8
+        )
+        11 -> mapOf( // Warlock: CHA, CON, DEX
+            AbilityTypeEnum.CHARISMA to 15,
+            AbilityTypeEnum.CONSTITUTION to 14,
+            AbilityTypeEnum.DEXTERITY to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.STRENGTH to 8
+        )
+        12 -> mapOf( // Wizard: INT, CON, DEX
+            AbilityTypeEnum.INTELLIGENCE to 15,
+            AbilityTypeEnum.CONSTITUTION to 14,
+            AbilityTypeEnum.DEXTERITY to 13,
+            AbilityTypeEnum.WISDOM to 12,
+            AbilityTypeEnum.CHARISMA to 10,
+            AbilityTypeEnum.STRENGTH to 8
+        )
+        else -> mapOf( // Default or "Commoner"
+            AbilityTypeEnum.STRENGTH to 10,
+            AbilityTypeEnum.DEXTERITY to 10,
+            AbilityTypeEnum.CONSTITUTION to 10,
+            AbilityTypeEnum.INTELLIGENCE to 10,
+            AbilityTypeEnum.WISDOM to 10,
+            AbilityTypeEnum.CHARISMA to 10
+        )
+    }
+}
+
+fun getAbilityModifier(abilityScore: Int? = 10): Int {
+    return (abilityScore?.minus(10))?.div(2) ?: 1
+}
+
+suspend fun createAbilityAndSkills(
+    abilityType: AbilityTypeEnum,
+    abilitiesValues: Map<AbilityTypeEnum, Int>,
+    authorId: String,
+    characterContentId: String,
+    skillMappings: Map<SkillTypeEnum, AbilityTypeEnum>
+) {
+    val abilityScore = abilitiesValues[abilityType] ?: 10
+    val abilityModifier = getAbilityModifier(abilityScore)
+
+    val abilityContentResponse = RetrofitInstance.contentService.createContent(
+        ContentCreateRequest(
+            sourceContentEnum = SourceContentEnum.ABILITIES,
+            visibilityEnum = VisibilityEnum.PUBLIC,
+            authorId = authorId
+        )
+    )
+
+    if (abilityContentResponse.isSuccessful) {
+        val abilityContentId = abilityContentResponse.body()?.id ?: return
+
+        val abilityResponse = RetrofitInstance.abilityService.createAbility(
+            AbilityCreateRequest(
+                contentId = abilityContentId,
+                abilityTypeEnum = abilityType,
+                modifier = abilityModifier,
+                value = abilityScore
+            )
+        )
+
+        if (abilityResponse.isSuccessful) {
+
+            skillMappings.filterValues { it == abilityType }.keys.forEach { skillType ->
+                RetrofitInstance.skillService.createSkill(
+                    SkillCreateRequest(
+                        skillTypeEnum = skillType,
+                        proficiencyLevelEnum = ProficiencyLevelEnum.NOT_PROFICIENT,
+                        abilityId = abilityContentId
+                    )
+                )
+            }
+
+            RetrofitInstance.grantService.createGrant(
+                GrantCreateRequest(
+                    granterType = SourceContentEnum.CREATURES,
+                    granterContentId = characterContentId,
+                    grantedType = SourceContentEnum.ABILITIES,
+                    grantedContentId = abilityContentId
+                )
+            )
+        }
+    }
+}
+val skillToAbilityMap = mapOf(
+    SkillTypeEnum.ATHLETICS to AbilityTypeEnum.STRENGTH,
+
+    SkillTypeEnum.ACROBATICS to AbilityTypeEnum.DEXTERITY,
+    SkillTypeEnum.SLEIGHT_OF_HAND to AbilityTypeEnum.DEXTERITY,
+    SkillTypeEnum.STEALTH to AbilityTypeEnum.DEXTERITY,
+
+    SkillTypeEnum.ARCANA to AbilityTypeEnum.INTELLIGENCE,
+    SkillTypeEnum.HISTORY to AbilityTypeEnum.INTELLIGENCE,
+    SkillTypeEnum.INVESTIGATION to AbilityTypeEnum.INTELLIGENCE,
+    SkillTypeEnum.NATURE to AbilityTypeEnum.INTELLIGENCE,
+    SkillTypeEnum.RELIGION to AbilityTypeEnum.INTELLIGENCE,
+
+    SkillTypeEnum.ANIMAL_HANDLING to AbilityTypeEnum.WISDOM,
+    SkillTypeEnum.INSIGHT to AbilityTypeEnum.WISDOM,
+    SkillTypeEnum.MEDICINE to AbilityTypeEnum.WISDOM,
+    SkillTypeEnum.PERCEPTION to AbilityTypeEnum.WISDOM,
+    SkillTypeEnum.SURVIVAL to AbilityTypeEnum.WISDOM,
+
+    SkillTypeEnum.DECEPTION to AbilityTypeEnum.CHARISMA,
+    SkillTypeEnum.INTIMIDATION to AbilityTypeEnum.CHARISMA,
+    SkillTypeEnum.PERFORMANCE to AbilityTypeEnum.CHARISMA,
+    SkillTypeEnum.PERSUASION to AbilityTypeEnum.CHARISMA
+)

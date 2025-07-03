@@ -14,18 +14,18 @@ import retrofit2.http.Path
 import java.util.UUID
 
 interface CreatureService {
-    @GET("creature")
+    @GET("creatures")
     suspend fun getAllCreatures(): List<CreatureResponse>
 
-    @GET("creature/{id}")
+    @GET("creatures/{id}")
     suspend fun getCreatureById(@Path("id") id: UUID): CreatureResponse
 
-    @PUT("creature")
+    @PUT("creatures")
     suspend fun updateCreature(@Body content: CreatureResponse): CreatureResponse
 
-    @POST("creature")
+    @POST("creatures")
     suspend fun createCreature(@Body request: CreatureCreateRequest): Response<CreatureResponse>
 
-    @DELETE("creature/{id}")
+    @DELETE("creatures/{id}")
     suspend fun deleteCreatureById(@Path("id") id: UUID)
 }

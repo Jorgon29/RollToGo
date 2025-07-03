@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -91,8 +92,11 @@ fun ActorCreationHomeScreen(
                         Button(
                             onClick = {
 
-                                if (currentStep?.hasNext() != false){
-                                    viewModel.buildCharacter(context)
+                                currentStep?.hasNext()?.let {
+                                    if (!it){
+                                        Log.d("createActor", context.toString())
+                                        viewModel.buildCharacter(context)
+                                    }
                                 }
 
                                 currentStep?.let {

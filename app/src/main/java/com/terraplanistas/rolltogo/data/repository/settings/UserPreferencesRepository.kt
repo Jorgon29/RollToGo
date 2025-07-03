@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.data.repository.settings
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
@@ -75,12 +76,13 @@ class UserPreferencesRepository(
     val userUuid: Flow<String> = datastore.data
         .catch {
             if (it is IOException){
+                Log.e("PreferencesRepo", "Error reading preferences: ${it.message}")
                 emit(emptyPreferences())
             } else {
                 throw it
             }
         }.map { preferences ->
-            preferences[USER_UUID]?: ""
+            preferences[USER_UUID]?: "holaFromRepo"
 
         }
 
