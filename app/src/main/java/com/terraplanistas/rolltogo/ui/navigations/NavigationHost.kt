@@ -57,7 +57,7 @@ fun NavigationHost() {
     }
 
     val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
-    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation")
+    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation")
 
     Scaffold(
         topBar = {

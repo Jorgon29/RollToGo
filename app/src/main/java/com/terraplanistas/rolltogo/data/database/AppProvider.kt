@@ -188,6 +188,8 @@ class AppProvider (context: Context){
         return charactersRepository
     }
 
+
+
     fun persistableUriFromPicker(context: Context, uri: Uri): Uri? {
         try {
             context.contentResolver.takePersistableUriPermission(
