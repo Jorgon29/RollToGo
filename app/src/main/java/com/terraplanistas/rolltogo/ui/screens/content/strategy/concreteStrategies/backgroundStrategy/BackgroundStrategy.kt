@@ -1,7 +1,9 @@
 package com.terraplanistas.rolltogo.ui.screens.content.strategy.concreteStrategies.backgroundStrategy
 
+import android.util.Log
 import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
 import com.terraplanistas.rolltogo.data.enums.ProficiencyTypeEnum
+import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
 import com.terraplanistas.rolltogo.ui.screens.content.strategy.ContentStrategy
 
@@ -18,29 +20,7 @@ class BackgroundStrategy : ContentStrategy {
         data: Map<String, Any>,
         repo: ContentCreationRepository
     ) {
-        try {
-
-            val proficiencyData = (data["proficiency_data"] as? List<Map<String, Any>>)?.map {
-                CreationProfitiency(
-                    name = it["name"] as String,
-                    type = ProficiencyLevelEnum.valueOf(it["type"] as String).toString(),
-                    ability = it["ability"] as String,
-                    proficiencyType = ProficiencyTypeEnum.valueOf(it["proficiency_type"] as String).toString())
-            } ?: emptyList()
-
-            println(
-                """
-                Guardando Background:
-                Nombre: ${data["name"]}
-                Descripción: ${data["description"]}
-                Proficiencias: $proficiencyData
-                Items IDs: ${data["item_ids"]}
-            """.trimIndent()
-            )
-
-        } catch (e: Exception) {
-
-        }
+      repo.createContent(data, SourceContentEnum.BACKGROUND)
     }
 
     override fun getDefaultData(): Map<String, Any> {

@@ -106,6 +106,16 @@ fun FeatureCreationScreen(
                     Text("Volver a foros")
                 }
             },
+            dismissButton = {
+                Button(
+                    onClick = { viewModel.continueWithDefaultData()  },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(109, 126, 168)
+                    )
+                ) {
+                    Text("Seguir creando!")
+                }
+            }
 
 
         )

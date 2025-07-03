@@ -17,18 +17,17 @@ fun FeaturesSelectionSection(
     selectedFeatureIds: List<String>,
     onFeatureSelected: (FeatureUI) -> Unit
 ) {
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
+    Column {
         Text(
             "Rasgos Especiales",
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        LazyColumn {
+        // Cambiar a Column regular
+        Column {
             if (features.isNotEmpty()) {
-                items(features) { feature ->
+                features.forEach { feature ->
                     FeatureItem(
                         feature = feature,
                         isSelected = selectedFeatureIds.contains(feature.id),
@@ -36,13 +35,11 @@ fun FeaturesSelectionSection(
                     )
                 }
             } else {
-                item {
-                    Text(
-                        "No hay rasgos especiales disponibles.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+                Text(
+                    "No hay rasgos especiales disponibles.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(16.dp)
+                )
             }
         }
     }

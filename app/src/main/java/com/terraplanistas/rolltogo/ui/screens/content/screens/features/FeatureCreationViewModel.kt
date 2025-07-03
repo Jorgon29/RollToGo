@@ -40,6 +40,13 @@ class FeatureCreationViewModel(
             isValid = currentStrategy.validateContent(currentStrategy.getDefaultData())
         )
     }
+    fun continueWithDefaultData() {
+        _uiState.value = ContentCreationState(
+            formData = currentStrategy.getDefaultData(),
+            isValid = currentStrategy.validateContent(currentStrategy.getDefaultData())
+        )
+        _isValid.value = false
+    }
 
     fun updateField(key: String, value: Any) {
         val newData = _uiState.value.formData.toMutableMap().apply {

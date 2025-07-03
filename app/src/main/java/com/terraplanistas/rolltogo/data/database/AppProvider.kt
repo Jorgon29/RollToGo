@@ -144,7 +144,8 @@ class AppProvider (context: Context){
             monstersDao = monstersDao,
             featuresDao = featuresDao,
             auth = firebaseAuth,
-            actionsDao = actionsDao
+            actionsDao = actionsDao,
+            proficienciesDao = proficienciesDao,
         )
 
     private val roomsRepository: RoomRepository = RoomRepositoryImpl(

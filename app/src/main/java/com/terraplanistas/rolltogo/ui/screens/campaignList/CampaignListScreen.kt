@@ -65,7 +65,6 @@ fun CampaignList(
                 title = campaign.name,
                 content = campaign.description,
                 onClick = { onCampaignSelected(campaign.id) },
-                onCreateCampaign = onCreateCampaign
             )
         }
     }

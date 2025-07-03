@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.ui.screens.content.screens.background
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -38,6 +39,12 @@ class BackgroundCreationViewModel(
 
     private val _availableFeatures = MutableStateFlow<List<FeatureUI>>(emptyList())
     val availableFeatures: StateFlow<List<FeatureUI>> = _availableFeatures.asStateFlow()
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+    private val _isValid = MutableStateFlow(false)
+    val isValid: StateFlow<Boolean> = _isValid.asStateFlow()
+    private val _isLoadin = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoadin.asStateFlow()
 
     init {
         resetToDefault()
@@ -49,101 +56,113 @@ class BackgroundCreationViewModel(
             formData = _strategy.getDefaultData()
         )
     }
- //Aberraci
+
+    fun continueWithDefaultData() {
+        _uiState.value = ContentCreationState(
+            formData = _strategy.getDefaultData()
+        )
+        _errorMessage.value = null
+        _isValid.value = false
+    }
+
+    fun clearError() {
+        _errorMessage.value = null
+    }
+
     private fun loadInitialData() {
         viewModelScope.launch {
             _availableProficiencies.value = listOf(
-                ProficiencyUI("Deception", "cha", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Intimidation", "cha", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Performance", "cha", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Persuasion", "cha", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Animal Handling", "wis", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Insight", "wis", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Medicine", "wis", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Perception", "wis", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Survival", "wis", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Arcana", "int", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("History", "int", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Investigation", "int", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Nature", "int", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Religion", "int", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Acrobatics", "dex", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Sleight of Hand", "dex", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Stealth", "dex", ProficiencyTypeEnum.SKILL),
-                ProficiencyUI("Athletics", "str", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Deception", "charisma", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Intimidation", "charisma", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Performance", "charisma", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Persuasion", "charisma", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Animal Handling", "wisdom", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Insight", "wisdom", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Medicine", "wisdom", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Perception", "wisdom", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Survival", "wisdom", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Arcana", "intelligence", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("History", "intelligence", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Investigation", "intelligence", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Nature", "intelligence", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Religion", "intelligence", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Acrobatics", "dexterity", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Sleight of Hand", "dexterity", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Stealth", "dexterity", ProficiencyTypeEnum.SKILL),
+                ProficiencyUI("Athletics", "strength", ProficiencyTypeEnum.SKILL),
 
                 // Tools
-                ProficiencyUI("Alchemist's supplies", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Brewer's supplies", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Calligrapher's supplies", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Carpenter's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Cartographer's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Cobbler's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Cook's utensils", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Glassblower's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Jeweler's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Leatherworker's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Mason's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Painter's supplies", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Potter's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Smith's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Tinker's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Weaver's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Woodcarver's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Dice set", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Dragonchess set", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Playing card set", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Three-Dragon Ante set", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Bagpipes", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Drum", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Dulcimer", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Flute", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Lute", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Lyre", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Horn", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Pan flute", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Shawm", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Viol", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Disguise kit", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Forgery kit", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Herbalism kit", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Navigator's tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Poisoner's kit", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Thieves' tools", "int", ProficiencyTypeEnum.TOOL),
-                ProficiencyUI("Vehicles (land or water)", "int", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Alchemist's supplies", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Brewer's supplies", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Calligrapher's supplies", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Carpenter's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Cartographer's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Cobbler's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Cook's utensils", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Glassblower's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Jeweler's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Leatherworker's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Mason's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Painter's supplies", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Potter's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Smith's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Tinker's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Weaver's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Woodcarver's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Dice set", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Dragonchess set", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Playing card set", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Three-Dragon Ante set", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Bagpipes", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Drum", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Dulcimer", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Flute", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Lute", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Lyre", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Horn", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Pan flute", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Shawm", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Viol", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Disguise kit", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Forgery kit", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Herbalism kit", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Navigator's tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Poisoner's kit", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Thieves' tools", "intelligence", ProficiencyTypeEnum.TOOL),
+                ProficiencyUI("Vehicles (land or water)", "intelligence", ProficiencyTypeEnum.TOOL),
 
                 // Weapons
-                ProficiencyUI("Battleaxe", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Flail", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Glaive", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Greataxe", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Greatsword", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Halberd", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Lance", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Longsword", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Maul", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Morningstar", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Pike", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Rapier", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Scimitar", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Shortsword", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Trident", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("War pick", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Warhammer", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Whip", "str", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Blowgun", "dex", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Crossbow, hand", "dex", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Crossbow, heavy", "dex", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Longbow", "dex", ProficiencyTypeEnum.WEAPON),
-                ProficiencyUI("Net", "dex", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Battleaxe", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Flail", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Glaive", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Greataxe", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Greatsword", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Halberd", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Lance", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Longsword", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Maul", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Morningstar", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Pike", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Rapier", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Scimitar", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Shortsword", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Trident", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("War pick", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Warhammer", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Whip", "strength", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Blowgun", "dexterity", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Crossbow, hand", "dexterity", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Crossbow, heavy", "dexterity", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Longbow", "dexterity", ProficiencyTypeEnum.WEAPON),
+                ProficiencyUI("Net", "dexterity", ProficiencyTypeEnum.WEAPON),
 
                 // Saving Throws
-                ProficiencyUI("Strength", "str", ProficiencyTypeEnum.SAVING_THROW),
-                ProficiencyUI("Dexterity", "dex", ProficiencyTypeEnum.SAVING_THROW),
-                ProficiencyUI("Constitution", "con", ProficiencyTypeEnum.SAVING_THROW),
-                ProficiencyUI("Intelligence", "int", ProficiencyTypeEnum.SAVING_THROW),
-                ProficiencyUI("Wisdom", "wis", ProficiencyTypeEnum.SAVING_THROW),
-                ProficiencyUI("Charisma", "cha", ProficiencyTypeEnum.SAVING_THROW)
+                ProficiencyUI("Strength", "strength", ProficiencyTypeEnum.SAVING_THROW),
+                ProficiencyUI("Dexterity", "dexterity", ProficiencyTypeEnum.SAVING_THROW),
+                ProficiencyUI("Constitution", "constitution", ProficiencyTypeEnum.SAVING_THROW),
+                ProficiencyUI("Intelligence", "intelligence", ProficiencyTypeEnum.SAVING_THROW),
+                ProficiencyUI("Wisdom", "wisdom", ProficiencyTypeEnum.SAVING_THROW),
+                ProficiencyUI("Charisma", "charisma", ProficiencyTypeEnum.SAVING_THROW)
             )
 
             // Cargar features disponibles
@@ -202,8 +221,30 @@ class BackgroundCreationViewModel(
     }
 
     // Envío de datos
-    suspend fun submit() {
-        _strategy.sumbit(_uiState.value.formData, repo)
+     fun submit() {
+        if (_strategy.validateContent(_uiState.value.formData)) {
+            _isLoadin.value = true
+            _errorMessage.value = null
+            _isValid.value = false
+
+            viewModelScope.launch {
+                try {
+                    Log.d("","${uiState.value.formData}")
+                    _strategy.sumbit(uiState.value.formData, repo)
+                    _isValid.value = true
+
+                } catch (e: Exception) {
+                    _errorMessage.value = "Error al crear el feature "
+                    Log.e("FeatureCreation", "Error creating feature", e)
+                } finally {
+
+                    _isLoadin.value = false
+
+                }
+            }
+        }
+
+
     }
 
     companion object {
