@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 
 @Entity(
     tableName = "invocations",
-    foreignKeys = [
-        ForeignKey(
-            entity = CreaturesEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class InvocationEntity(
     @PrimaryKey val id: String,

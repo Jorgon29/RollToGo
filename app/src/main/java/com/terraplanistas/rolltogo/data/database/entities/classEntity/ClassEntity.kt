@@ -9,14 +9,7 @@ import com.terraplanistas.rolltogo.data.database.entities.classEntity.ClassEntit
 
 @Entity(
     tableName = "class",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class ClassEntity(
     @PrimaryKey val id: String,

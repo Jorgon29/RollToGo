@@ -11,14 +11,7 @@ import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
 
 @Entity(
     tableName = "bonuses",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class BonusesEntity(
     @PrimaryKey val id: String,

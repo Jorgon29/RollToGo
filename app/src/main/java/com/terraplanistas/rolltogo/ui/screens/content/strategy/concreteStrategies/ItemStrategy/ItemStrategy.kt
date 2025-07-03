@@ -22,7 +22,7 @@ class ItemStrategy : ContentStrategy {
 
     }
 
-    override fun sumbit(data: Map<String, Any>, repo: ContentCreationRepository) {
+    override suspend fun sumbit(data: Map<String, Any>, repo: ContentCreationRepository) {
         repo.createContent(data, SourceContentEnum.ITEM)
 
     }

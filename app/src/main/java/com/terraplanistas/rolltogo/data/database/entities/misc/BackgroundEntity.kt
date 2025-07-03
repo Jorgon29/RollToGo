@@ -8,14 +8,7 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 
 @Entity(
     tableName = "background",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class BackgroundEntity(
     @PrimaryKey val id: String,

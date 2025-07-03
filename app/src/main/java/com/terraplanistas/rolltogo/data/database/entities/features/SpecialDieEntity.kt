@@ -7,14 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
         tableName = "special_die",
-    foreignKeys = [
-        ForeignKey(
-        entity = FeaturesEntity::class,
-        parentColumns = ["id"],
-        childColumns = ["feature_id"],
-        onDelete = CASCADE
-        )
-    ]
+
 )
 data class SpecialDieEntity(
     @PrimaryKey val id: String,

@@ -14,14 +14,7 @@ import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 import java.math.BigDecimal
 @Entity(
     tableName = "items",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class ItemEntity(
     @PrimaryKey val id: String,

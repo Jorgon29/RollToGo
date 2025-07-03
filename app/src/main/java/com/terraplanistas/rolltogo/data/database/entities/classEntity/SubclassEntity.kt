@@ -8,20 +8,7 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 
 @Entity(
     tableName = "subclass",
-    foreignKeys = [
-        ForeignKey(
-            entity = ClassEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["class_id"],
-            onDelete = CASCADE
-        ),
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class SubclassEntity(
     @PrimaryKey val id: String,

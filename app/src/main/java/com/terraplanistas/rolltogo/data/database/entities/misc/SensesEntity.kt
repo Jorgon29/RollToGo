@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.data.enums.SensesTypeEnum
 
 @Entity(
     tableName = "senses",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class SensesEntity(
     @PrimaryKey val id: String,

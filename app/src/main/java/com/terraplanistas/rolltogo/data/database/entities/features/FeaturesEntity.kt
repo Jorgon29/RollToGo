@@ -8,14 +8,7 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 
 @Entity(
     tableName = "features",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class FeaturesEntity(
     @PrimaryKey val id: String,

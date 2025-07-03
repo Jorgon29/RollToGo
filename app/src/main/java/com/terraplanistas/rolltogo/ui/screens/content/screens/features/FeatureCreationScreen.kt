@@ -21,8 +21,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -53,6 +55,7 @@ import androidx.navigation.NavHostController
 import com.terraplanistas.rolltogo.data.enums.ActionTypeEnum
 import com.terraplanistas.rolltogo.data.enums.BonusTypeEnum
 import com.terraplanistas.rolltogo.data.enums.DamageTypeEnum
+import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
 import com.terraplanistas.rolltogo.ui.screens.content.screens.features.components.ActionTypeDropdown
 import com.terraplanistas.rolltogo.ui.screens.content.screens.features.components.BonusSection
 import com.terraplanistas.rolltogo.ui.screens.content.screens.features.components.DamageSection
@@ -66,137 +69,193 @@ fun FeatureCreationScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
+    val loading = viewModel.loading.collectAsState() // Estado de si se está cargando la pantalla
+    val errorMessage by viewModel.errorMessage.collectAsState()
+    val isValid by viewModel.isValid.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(horizontal = 16.dp)
-            .background(Color(237, 238, 244))
-    ) {
-        //
-        Text(
-            text = "Crear una nueva feature",
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = Color(30, 38, 81)
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 24.dp),
-            textAlign = TextAlign.Center
+    if (errorMessage != null) {
+        AlertDialog(
+            onDismissRequest = { viewModel.clearError() },
+            title = { Text("Error") },
+            text = { Text(errorMessage!!) },
+            confirmButton = {
+                Button(
+                    onClick = { viewModel.clearError() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(109, 126, 168)
+                    )
+                ) {
+                    Text("Aceptar")
+                }
+            }
         )
+    }
+
+    if (isValid){
+        AlertDialog(
+            onDismissRequest = { viewModel.clearError() },
+            title = { Text("Creado con exito!") },
+            text = { Text("Su feature fue creada con exito") },
+            confirmButton = {
+                Button(
+                    onClick = { nav.navigate(ForumNavigation) },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(109, 126, 168)
+                    )
+                ) {
+                    Text("Volver a foros")
+                }
+            },
+
+
+        )
+
+    }
+
+    if (loading.value) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(72, 94, 146))
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = Color.White)
+        }
+    } else {
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp)
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(horizontal = 16.dp)
+                .background(Color(237, 238, 244))
         ) {
-            OutlinedTextField(
-                value = uiState.formData["name"].toString(),
-                onValueChange = { viewModel.updateField("name", it) },
-                label = {
-                    Text(
-                        "Nombre de la feature*",
-                        color = Color(72, 94, 146) // blue-500
-                    )
-                },
-                modifier = Modifier.fillMaxWidth(),
-                isError = uiState.formData["name"].toString().isEmpty(),
-                singleLine = true,
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color(237, 238, 244), // blue-50
-                    unfocusedContainerColor = Color(237, 238, 244), // blue-50
-                    focusedIndicatorColor = Color(109, 126, 168), // blue-400
-                    unfocusedIndicatorColor = Color(171, 181, 209) // blue-200
-                )
+            //
+            Text(
+                text = "Crear una nueva feature",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = Color(30, 38, 81)
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 24.dp),
+                textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = uiState.formData["description"].toString(),
-                onValueChange = { viewModel.updateField("description", it) },
-                label = {
-                    Text(
-                        "Descripción*",
-                        color = Color(72, 94, 146)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+            ) {
+                OutlinedTextField(
+                    value = uiState.formData["name"].toString(),
+                    onValueChange = { viewModel.updateField("name", it) },
+                    label = {
+                        Text(
+                            "Nombre de la feature*",
+                            color = Color(72, 94, 146) // blue-500
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    isError = uiState.formData["name"].toString().isEmpty(),
+                    singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color(237, 238, 244), // blue-50
+                        unfocusedContainerColor = Color(237, 238, 244), // blue-50
+                        focusedIndicatorColor = Color(109, 126, 168), // blue-400
+                        unfocusedIndicatorColor = Color(171, 181, 209) // blue-200
                     )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedTextField(
+                    value = uiState.formData["description"].toString(),
+                    onValueChange = { viewModel.updateField("description", it) },
+                    label = {
+                        Text(
+                            "Descripción*",
+                            color = Color(72, 94, 146)
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 100.dp),
+                    isError = uiState.formData["description"].toString().isEmpty(),
+                    maxLines = 5,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color(237, 238, 244),
+                        unfocusedContainerColor = Color(237, 238, 244),
+                        focusedIndicatorColor = Color(109, 126, 168),
+                        unfocusedIndicatorColor = Color(171, 181, 209)
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                FeatureToggles(
+                    isMagical = uiState.formData["is_magical"] as Boolean,
+                    isPassive = uiState.formData["is_passive"] as Boolean,
+                    onMagicalChanged = { viewModel.updateField("is_magical", it) },
+                    onPassiveChanged = { viewModel.updateField("is_passive", it) }
+                )
+
+                if (!(uiState.formData["is_passive"] as Boolean)) {
+                    Column {
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        ActionTypeDropdown(
+                            currentValue = uiState.formData["action_type"].toString(),
+                            onValueSelected = { viewModel.updateField("action_type", it) },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        DamageSection(
+                            damage = uiState.formData["damage"].toString(),
+                            damageType = uiState.formData["damage_type"].toString(),
+                            onDamageChanged = { viewModel.updateField("damage", it) },
+                            onDamageTypeSelected = { viewModel.updateField("damage_type", it) }
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        BonusSection(
+                            bonus = uiState.formData["bonus"].toString(),
+                            bonusType = uiState.formData["bonus_type"].toString(),
+                            onBonusChanged = { viewModel.updateField("bonus", it) },
+                            onBonusTypeChanged = { viewModel.updateField("bonus_type", it) }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Button(
+                onClick = {
+                    viewModel.submitContent()
+                    Log.d("Values saved", uiState.formData.toString())
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 100.dp),
-                isError = uiState.formData["description"].toString().isEmpty(),
-                maxLines = 5,
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color(237, 238, 244),
-                    unfocusedContainerColor = Color(237, 238, 244),
-                    focusedIndicatorColor = Color(109, 126, 168),
-                    unfocusedIndicatorColor = Color(171, 181, 209)
+                    .padding(vertical = 24.dp, horizontal = 8.dp),
+                enabled = uiState.isValid,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(109, 126, 168),
+                    disabledContainerColor = Color(171, 181, 209),
+                    contentColor = Color.White,
+                    disabledContentColor = Color.White.copy(alpha = 0.5f)
                 )
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            FeatureToggles(
-                isMagical = uiState.formData["is_magical"] as Boolean,
-                isPassive = uiState.formData["is_passive"] as Boolean,
-                onMagicalChanged = { viewModel.updateField("is_magical", it) },
-                onPassiveChanged = { viewModel.updateField("is_passive", it) }
-            )
-
-            if (!(uiState.formData["is_passive"] as Boolean)) {
-                Column {
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    ActionTypeDropdown(
-                        currentValue = uiState.formData["action_type"].toString(),
-                        onValueSelected = { viewModel.updateField("action_type", it) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    DamageSection(
-                        damage = uiState.formData["damage"].toString(),
-                        damageType = uiState.formData["damage_type"].toString(),
-                        onDamageChanged = { viewModel.updateField("damage", it) },
-                        onDamageTypeSelected = { viewModel.updateField("damage_type", it) }
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    BonusSection(
-                        bonus = uiState.formData["bonus"].toString(),
-                        bonusType = uiState.formData["bonus_type"].toString(),
-                        onBonusChanged = { viewModel.updateField("bonus", it) },
-                        onBonusTypeChanged = { viewModel.updateField("bonus_type", it) }
-                    )
-                }
+            ) {
+                Text("Crear feature", style = MaterialTheme.typography.labelLarge)
             }
         }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Button(
-            onClick = {
-                viewModel.submitContent()
-                Log.d("Values saved", uiState.formData.toString())
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 24.dp, horizontal = 8.dp),
-            enabled = uiState.isValid,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(109, 126, 168),
-                disabledContainerColor = Color(171, 181, 209),
-                contentColor = Color.White,
-                disabledContentColor = Color.White.copy(alpha = 0.5f)
-            )
-        ) {
-            Text("Crear feature", style = MaterialTheme.typography.labelLarge)
-        }
     }
+
 }

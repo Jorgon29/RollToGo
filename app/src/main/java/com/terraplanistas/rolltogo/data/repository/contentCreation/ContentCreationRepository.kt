@@ -5,7 +5,7 @@ import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import kotlinx.coroutines.flow.Flow
 
 interface ContentCreationRepository {
-    fun createContent(content: Map<String, Any>, type: SourceContentEnum)
+   suspend fun createContent(content: Map<String, Any>, type: SourceContentEnum)
 
     suspend fun getFeatures(): List<FeaturesEntity>
 }

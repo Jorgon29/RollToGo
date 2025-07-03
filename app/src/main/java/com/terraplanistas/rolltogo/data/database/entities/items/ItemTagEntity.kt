@@ -7,14 +7,7 @@ import androidx.room.ForeignKey.Companion.CASCADE
 @Entity(
     tableName = "item_tags",
     primaryKeys = ["items_id", "tag"],
-    foreignKeys = [
-        ForeignKey(
-            entity = ItemEntity::class,
-            childColumns = ["items_id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class ItemTagEntity(
     val items_id: String,

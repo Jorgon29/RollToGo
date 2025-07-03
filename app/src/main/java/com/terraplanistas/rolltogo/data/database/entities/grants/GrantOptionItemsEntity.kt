@@ -7,20 +7,7 @@ import com.terraplanistas.rolltogo.data.database.entities.ContentEntity
 
 @Entity(
     tableName = "grant_option_items",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["granted_content_id"],
-            onDelete = CASCADE
-        ),
-        ForeignKey(
-            entity = GrantOptionSetsEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["granter_option_set_id"],
-            onDelete = CASCADE
-        )
-    ],
+
     primaryKeys = ["granter_option_set_id", "granted_content_id"]
 )
 data class GrantOptionItemsEntity(

@@ -11,14 +11,7 @@ import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 
 @Entity(
     tableName = "spellcasting",
-    foreignKeys = [
-        ForeignKey(
-            entity = ClassEntity::class,
-            childColumns = ["class_id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class SpellcastingEntity(
     @PrimaryKey val id: String,

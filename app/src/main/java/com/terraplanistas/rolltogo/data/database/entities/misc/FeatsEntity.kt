@@ -9,14 +9,7 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.DomainFeats
 
 @Entity(
     tableName = "feats",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class FeatsEntity(
     @PrimaryKey val id: String,

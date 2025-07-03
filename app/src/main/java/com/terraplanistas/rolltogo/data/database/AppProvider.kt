@@ -57,7 +57,6 @@ import com.terraplanistas.rolltogo.data.repository.playstyleRepository.Playstyle
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepositoryImplementation
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepository
 import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreationRepositoryImpi
@@ -143,7 +142,9 @@ class AppProvider (context: Context){
             backgroundDao = backgroundDao,
             creaturesDao = creaturesDao,
             monstersDao = monstersDao,
-            featuresDao = featuresDao
+            featuresDao = featuresDao,
+            auth = firebaseAuth,
+            actionsDao = actionsDao
         )
 
     private val roomsRepository: RoomRepository = RoomRepositoryImpl(

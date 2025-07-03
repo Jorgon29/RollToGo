@@ -10,7 +10,7 @@ class FeatureStrategy: ContentStrategy {
                 && data["description"].toString().isNotEmpty()
     }
 
-    override fun sumbit(
+    override suspend fun sumbit(
         data: Map<String, Any>,
         repo: ContentCreationRepository
     ) {

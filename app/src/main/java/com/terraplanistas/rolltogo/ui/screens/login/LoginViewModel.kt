@@ -86,11 +86,12 @@ class LoginViewModel(
         }
     }
 
-    fun saveToken(token: String){
+    fun saveToken(token: String) {
         viewModelScope.launch {
             preference.saveAuthTokenKeyPreference(token)
         }
     }
+
     fun login(
         email: String,
         password: String
@@ -104,13 +105,12 @@ class LoginViewModel(
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         _loginStatus.value = true
-                        _loading.value = false
                         val user: FirebaseUser? = auth.currentUser
                         user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
                             if (tokenTask.isSuccessful) {
                                 try {
                                     val idToken: String? = tokenTask.result?.token
-                                    saveToken(idToken?: "")
+                                    saveToken(idToken ?: "")
 
                                     viewModelScope.launch {
                                         val response = RetrofitInstance.userService.createUser(
@@ -122,10 +122,12 @@ class LoginViewModel(
                                             )
                                         )
                                     }
-                                } catch (e: Exception){
+                                } catch (e: Exception) {
                                     _loginStatus.value = false
-                                    _error.value = "Error de red/API al procesar login: ${e.localizedMessage ?: "Error desconocido"}"
+                                    _error.value =
+                                        "Error de red/API al procesar login: ${e.localizedMessage ?: "Error desconocido"}"
                                 }
+                                _loading.value = false
 
 
                             } else {
@@ -217,13 +219,14 @@ class LoginViewModel(
                                     "Hubo un error al iniciar sesión automáticamente, por favor intente nuevamente"
                             }
                         }
-                }else{
+                } else {
                     Log.d(
                         "AutoLogin",
                         "Estado de autologin: ${isAutoLogin.value}, Usuario: ${savedUsername.value}, Contraseña: ${savedPassword.value}"
                     )
                     _loading.value = false
-                    _error.value = "No se ha iniciado sesión automáticamente, por favor inicie sesión manualmente"
+                    _error.value =
+                        "No se ha iniciado sesión automáticamente, por favor inicie sesión manualmente"
 
                 }
 

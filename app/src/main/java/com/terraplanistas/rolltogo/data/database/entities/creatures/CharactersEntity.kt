@@ -7,14 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "characters",
-    foreignKeys = [
-        ForeignKey(
-            entity = CreaturesEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class CharactersEntity(
     @PrimaryKey val id: String,

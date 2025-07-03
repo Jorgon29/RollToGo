@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
 
 @Entity(
     tableName = "effects",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class EffectsEntity(
     @PrimaryKey val id: String,

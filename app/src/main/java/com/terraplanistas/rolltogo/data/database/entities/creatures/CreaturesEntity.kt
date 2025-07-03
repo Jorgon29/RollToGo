@@ -14,26 +14,7 @@ import com.terraplanistas.rolltogo.helpers.typeConverter.EnumConverters
 
 @Entity(
     tableName = "creatures",
-    foreignKeys = [
-        ForeignKey(
-            entity = MonstersEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        ),
-        ForeignKey(
-            entity = CharactersEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        ),
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"]
-        ),
 
-    ]
 )
 data class CreaturesEntity(
     @PrimaryKey val id: String,

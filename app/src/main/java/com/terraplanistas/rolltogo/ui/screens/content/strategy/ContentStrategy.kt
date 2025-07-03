@@ -4,6 +4,6 @@ import com.terraplanistas.rolltogo.data.repository.contentCreation.ContentCreati
 
 interface ContentStrategy {
     fun validateContent(data: Map<String, Any>): Boolean
-    fun sumbit(data: Map<String, Any>, repo: ContentCreationRepository)
+    suspend fun sumbit(data: Map<String, Any>, repo: ContentCreationRepository)
     fun getDefaultData(): Map<String, Any>
 }

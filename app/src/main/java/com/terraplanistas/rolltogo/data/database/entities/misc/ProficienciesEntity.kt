@@ -9,14 +9,7 @@ import com.terraplanistas.rolltogo.data.enums.ProficiencyTypeEnum
 
 @Entity(
     tableName = "proficiencies",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class ProficienciesEntity(
     @PrimaryKey val id: String,

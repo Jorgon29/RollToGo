@@ -9,14 +9,7 @@ import com.terraplanistas.rolltogo.data.enums.RecoveryTypeEnum
 
 @Entity(
     tableName = "limited_usages",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class LimitedUsagesEntity(
     @PrimaryKey val id: String,

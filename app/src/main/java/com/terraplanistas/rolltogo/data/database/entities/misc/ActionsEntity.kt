@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.data.enums.ActionTypeEnum
 
 @Entity(
     tableName = "actions",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class ActionsEntity(
     @PrimaryKey val id: String,

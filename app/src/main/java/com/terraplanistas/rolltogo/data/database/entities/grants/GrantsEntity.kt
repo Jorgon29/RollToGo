@@ -13,18 +13,7 @@ import kotlin.uuid.Uuid
 
 @Entity(
     tableName = "grants",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["granter_content_id"],
-        ),
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["granted_content_id"],
-        )
-    ]
+
 )
 data class GrantsEntity(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),

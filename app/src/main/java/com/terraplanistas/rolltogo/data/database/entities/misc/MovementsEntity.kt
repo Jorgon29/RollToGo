@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.data.enums.RangeUnitEnum
 
 @Entity(
     tableName = "movements",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class MovementsEntity(
     @PrimaryKey val id: String,

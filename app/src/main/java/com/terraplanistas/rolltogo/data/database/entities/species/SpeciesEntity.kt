@@ -11,14 +11,7 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.DomainRace
 
 @Entity(
     tableName = "species",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class SpeciesEntity(
     @PrimaryKey val id: String,

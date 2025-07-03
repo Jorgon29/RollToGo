@@ -11,14 +11,7 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.DomainSkill
 
 @Entity(
     tableName = "skills",
-    foreignKeys = [
-        ForeignKey(
-            entity = AbilitiesEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["ability"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class SkillEntity(
     @PrimaryKey val id: String,

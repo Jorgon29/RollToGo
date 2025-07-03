@@ -11,20 +11,7 @@ import com.terraplanistas.rolltogo.data.enums.RoleEnum
     tableName = "room_participants",
     primaryKeys = ["user_id", "room_id"],
     indices = [Index(value = ["user_id", "room_id"], unique = true)],
-    foreignKeys = [
-        ForeignKey(
-            entity = UserEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["user_id"],
-            onDelete = CASCADE
-        ),
-        ForeignKey(
-            entity = RoomsEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["room_id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class RoomParticipantEntity(
     val user_id: String,

@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.data.database.entities.grants.GrantsEntity
 
 @Entity(
     tableName = "level_progressions",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class LevelProgressionsEntity(
     @PrimaryKey val id: String,

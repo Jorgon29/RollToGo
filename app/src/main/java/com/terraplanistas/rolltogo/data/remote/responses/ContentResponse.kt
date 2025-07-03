@@ -16,7 +16,7 @@ data class ContentResponse(
     val visibilityEnum: VisibilityEnum,
 
     @SerializedName("createdAt")
-    val createdAt: OffsetDateTime,
+    val createdAt: String,
 
     @SerializedName("grants")
     val grants: List<GrantResponse>?,

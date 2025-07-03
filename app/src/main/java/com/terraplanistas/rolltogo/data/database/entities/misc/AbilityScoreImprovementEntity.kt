@@ -9,14 +9,7 @@ import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
 
 @Entity(
     tableName = "ability_score_improvement",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class AbilityScoreImprovementEntity(
     @PrimaryKey val id: String,

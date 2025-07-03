@@ -9,14 +9,7 @@ import com.terraplanistas.rolltogo.data.model.room.RoomDomain
 
 @Entity(
     tableName = "rooms",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            childColumns = ["id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class RoomsEntity(
     @PrimaryKey val id: String,

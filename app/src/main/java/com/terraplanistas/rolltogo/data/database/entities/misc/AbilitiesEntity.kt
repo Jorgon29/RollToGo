@@ -10,14 +10,7 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.DomainAbility
 
 @Entity(
     tableName = "abilities",
-    foreignKeys = [
-        ForeignKey(
-            entity = ContentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class AbilitiesEntity(
     @PrimaryKey val id: String,

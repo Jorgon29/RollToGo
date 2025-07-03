@@ -8,14 +8,7 @@ import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
 
 @Entity(
     tableName = "subspecies",
-    foreignKeys = [
-        ForeignKey(
-            entity = SpeciesEntity::class,
-            childColumns = ["species_id"],
-            parentColumns = ["id"],
-            onDelete = CASCADE
-        )
-    ]
+
 )
 data class SubspeciesEntity(
     @PrimaryKey val id: String,

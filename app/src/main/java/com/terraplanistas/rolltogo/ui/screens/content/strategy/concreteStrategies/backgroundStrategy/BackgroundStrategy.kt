@@ -14,7 +14,7 @@ class BackgroundStrategy : ContentStrategy {
                 data["description"] is String
     }
 
-    override fun sumbit(
+    override suspend fun sumbit(
         data: Map<String, Any>,
         repo: ContentCreationRepository
     ) {

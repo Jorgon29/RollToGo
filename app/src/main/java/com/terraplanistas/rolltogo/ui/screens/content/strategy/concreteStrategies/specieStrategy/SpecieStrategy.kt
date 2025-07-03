@@ -8,7 +8,7 @@ class SpecieStrategy: ContentStrategy {
         TODO("Not yet implemented")
     }
 
-    override fun sumbit(
+    override suspend fun sumbit(
         data: Map<String, Any>,
         repo: ContentCreationRepository
     ) {
