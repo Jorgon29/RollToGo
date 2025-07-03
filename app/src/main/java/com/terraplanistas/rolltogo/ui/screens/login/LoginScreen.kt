@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.terraplanistas.rolltogo.ui.layout.boxes.basicTitle.BasicTitle
@@ -111,12 +112,17 @@ fun LoginScreen(
                 TextField(
                     value = email.value,
                     onValueChange = { email.value = it },
-                    placeholder = { Text("Ingrese su correo electrónico") },
+                    placeholder = { Text("Ingrese su correo electrónico",
+                        color = Color(0xFF5ACBD1).copy(alpha = 0.7f)) },
                     shape = RoundedCornerShape(50),
                     modifier = Modifier.fillMaxWidth(0.85f),
                     colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color(0xFF2D4661), //color que queramos
+                        focusedContainerColor = Color(0xFF213347), //color cuando se escribe
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
+                        unfocusedTextColor = Color(0xFF5ACBD1),
+                        focusedTextColor = Color(0xFF5ACBD1),
                         disabledIndicatorColor = Color.Transparent
                     )
                 )
@@ -126,13 +132,18 @@ fun LoginScreen(
                 TextField(
                     value = password.value,
                     onValueChange = { password.value = it },
-                    placeholder = { Text("Ingrese su contraseña") },
+                    placeholder = { Text("Ingrese su contraseña",
+                        color = Color(0xFF5ACBD1).copy(alpha = 0.7f)) },
                     shape = RoundedCornerShape(50),
                     modifier = Modifier.fillMaxWidth(0.85f),
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                     colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color(0xFF2D4661), //color que queramos
+                        focusedContainerColor = Color(0xFF213347), //color cuando se esc
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
+                        unfocusedTextColor = Color(0xFF5ACBD1),
+                        focusedTextColor = Color(0xFF5ACBD1),
                         disabledIndicatorColor = Color.Transparent
                     )
                 )
@@ -154,7 +165,15 @@ fun LoginScreen(
                     }
                 }
                 if (!error.value.isEmpty()) { // Si hay un error, se muestra el mensaje de error
-                    Text(error.value, color = Color.Red)
+                    Text(
+                        error.value,
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(45.dp))

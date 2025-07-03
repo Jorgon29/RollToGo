@@ -81,6 +81,7 @@ fun BasicTitle(title: String, modifier: Modifier = Modifier){
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.secondary,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             )
         }
 

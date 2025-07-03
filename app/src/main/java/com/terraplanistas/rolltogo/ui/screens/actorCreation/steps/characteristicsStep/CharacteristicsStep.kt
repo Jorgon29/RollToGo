@@ -41,6 +41,14 @@ class CharacteristicsStep(
         var faith = rememberSaveable { mutableStateOf("") }
         var eyes = rememberSaveable { mutableStateOf("") }
 
+        fun validateInput(newValue: String): String{
+            return if(newValue.isEmpty() || newValue.toDoubleOrNull()?.takeIf { it>=0 } != null)
+                newValue
+            else {
+                ""// la deja en 0
+            }
+        }
+
         LaunchedEffect(
             height.value,
             weight.value,
