@@ -17,7 +17,6 @@ import com.terraplanistas.rolltogo.data.database.dao.spells.SpellMaterialDao
 import com.terraplanistas.rolltogo.data.database.entities.creatures.CharactersEntity
 import com.terraplanistas.rolltogo.data.database.entities.grants.GrantsEntity
 import com.terraplanistas.rolltogo.data.database.entities.items.toDomainItem
-import com.terraplanistas.rolltogo.data.database.entities.misc.SkillEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainAbility
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainFeats
 import com.terraplanistas.rolltogo.data.database.entities.misc.toDomainSkill
@@ -25,9 +24,12 @@ import com.terraplanistas.rolltogo.data.database.entities.species.toDomainRace
 import com.terraplanistas.rolltogo.data.database.entities.spells.SpellMaterialEntity
 import com.terraplanistas.rolltogo.data.database.entities.spells.toDomainSpell
 import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
+import com.terraplanistas.rolltogo.data.enums.AlignmentEnum
 import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
+import com.terraplanistas.rolltogo.data.enums.CreatureSourceType
 import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
+import com.terraplanistas.rolltogo.data.enums.VisibilityEnum
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainAbility
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainFeats
@@ -41,13 +43,18 @@ import com.terraplanistas.rolltogo.data.model.creatures.character.toCreaturesEnt
 import com.terraplanistas.rolltogo.data.model.creatures.character.toItemEntity
 import com.terraplanistas.rolltogo.data.model.creatures.character.toSkillEntity
 import com.terraplanistas.rolltogo.data.model.creatures.character.toSpellEntity
+import com.terraplanistas.rolltogo.data.remote.RetrofitInstance
+import com.terraplanistas.rolltogo.data.remote.RetrofitInstance.characterService
+import com.terraplanistas.rolltogo.data.remote.dtos.CharacterCreateRequest
+import com.terraplanistas.rolltogo.data.remote.dtos.ContentCreateRequest
+import com.terraplanistas.rolltogo.data.remote.dtos.CreatureCreateRequest
 import com.terraplanistas.rolltogo.helpers.Resource
+import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationContext
 import kotlinx.coroutines.flow.flow
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -407,5 +414,92 @@ class CharacterRepositoryImpl(
                 return@withContext (Resource.Error("Error saving character: ${e.localizedMessage ?: "Unknown error"}"))
             }
         }
+    }
+
+    override suspend fun buildCharacter(character: ActorCreationContext, authorId: String): Resource<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+
+                val content = RetrofitInstance.contentService.createContent(
+                    request = ContentCreateRequest(
+                        sourceContentEnum = SourceContentEnum.CREATURES,
+                        visibilityEnum = VisibilityEnum.PUBLIC,
+                        authorId = authorId
+                    )
+                )
+
+                if (content.isSuccessful) {
+                    val creature = RetrofitInstance.creatureService.createCreature(
+                        request = CreatureCreateRequest(
+                            contentId = content.body()?.id ?: "",
+                            name = character.name ?: "",
+                            sizeEnum = getCreatureSizeForRaceById(character.race ?: 1),
+                            typeEnum = CreatureTypeEnum.HUMANOID,
+                            alignmentEnum = getAlignmentEnumById(character.alignment ?: 1),
+                            baseHp = 15,
+                            baseAc = 10,
+                            creatureSourceType = CreatureSourceType.CHARACTER
+                        )
+                    )
+                    if (creature.isSuccessful){
+                        val myCharacter = characterService.createCharacter(
+                            request = CharacterCreateRequest(
+                                creatureId = creature.body()?.id ?: "",
+                                race = character.race?: 1,
+                                characterClass = character.characterClass ?: 1,
+                                name = character.name ?: "",
+                                alignment = character.alignment?: 1,
+                                age = character.age,
+                                ideals = character.ideals,
+                                personality = character.personality,
+                                flaws = character.flaws,
+                                biography = character.biography,
+                                appearance = character.appearance,
+                                height = character.height,
+                                weight = character.weight,
+                                skinColor = character.skinColor,
+                                hairColor = character.hairColor,
+                                faith = character.faith,
+                                eyeColor = character.eyeColor,
+                                gender = character.gender
+                            )
+                        )
+                    }
+                }
+                Resource.Success(Unit)
+            } catch (e: Exception){
+                Resource.Error("Error building character")
+            }
+        }
+    }
+}
+
+fun getCreatureSizeForRaceById(raceId: Int): CreatureSizeEnum {
+    return when (raceId) {
+        1 -> CreatureSizeEnum.MEDIUM // Human
+        2 -> CreatureSizeEnum.MEDIUM // Elf
+        3 -> CreatureSizeEnum.MEDIUM // Dwarf
+        4 -> CreatureSizeEnum.SMALL   // Halfling
+        5 -> CreatureSizeEnum.MEDIUM // Dragonborn
+        6 -> CreatureSizeEnum.SMALL   // Gnome
+        7 -> CreatureSizeEnum.MEDIUM // Half-elf
+        8 -> CreatureSizeEnum.MEDIUM // Half-orc
+        9 -> CreatureSizeEnum.MEDIUM // Tiefling
+        else -> CreatureSizeEnum.MEDIUM
+    }
+}
+
+fun getAlignmentEnumById(alignmentId: Int): AlignmentEnum {
+    return when (alignmentId) {
+        1 -> AlignmentEnum.LAWFUL_GOOD
+        2 -> AlignmentEnum.NEUTRAL_GOOD
+        3 -> AlignmentEnum.CHAOTIC_GOOD
+        4 -> AlignmentEnum.LAWFUL_NEUTRAL
+        5 -> AlignmentEnum.TRUE_NEUTRAL
+        6 -> AlignmentEnum.CHAOTIC_NEUTRAL
+        7 -> AlignmentEnum.LAWFUL_EVIL
+        8 -> AlignmentEnum.NEUTRAL_EVIL
+        9 -> AlignmentEnum.CHAOTIC_EVIL
+        else -> AlignmentEnum.TRUE_NEUTRAL
     }
 }

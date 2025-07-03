@@ -3,6 +3,7 @@ package com.terraplanistas.rolltogo.ui.screens.actorCreation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
@@ -12,17 +13,26 @@ import com.terraplanistas.rolltogo.data.model.CharacterGender
 import com.terraplanistas.rolltogo.data.model.CharacterRace
 import com.terraplanistas.rolltogo.data.model.Playstyle
 import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentsRepository
+import com.terraplanistas.rolltogo.data.repository.characters.CharacterRepository
 import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
+import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ActorCreationViewModel(
     private val playstyleRepository: PlaystyleRepository,
     private val classesRepository: ClassesRepository,
     private val racesRepository: RaceRepository,
     private val alignmentsRepository: AlignmentsRepository,
-    private val gendersRepository: GendersRepository
+    private val gendersRepository: GendersRepository,
+    private val preferencesRepository: UserPreferencesRepository,
+    private val characterRepository: CharacterRepository
 ) : ViewModel() {
 
     private val playstyleToClassMap = mapOf(
@@ -46,6 +56,12 @@ class ActorCreationViewModel(
         10 to listOf(9, 2, 1),
         11 to listOf(9, 2, 7),
         12 to listOf(6, 2, 1)
+    )
+
+    val userId: StateFlow<String> = preferencesRepository.userUuid.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+        initialValue = ""
     )
 
 
@@ -85,6 +101,12 @@ class ActorCreationViewModel(
         return gendersRepository.getGenders()
     }
 
+    fun buildCharacter(character: ActorCreationContext){
+       viewModelScope.launch {
+           characterRepository.buildCharacter(character,userId.value)
+       }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -96,7 +118,9 @@ class ActorCreationViewModel(
                     application.appProvider.provideClassesRepository(),
                     application.appProvider.provideRacesRepository(),
                     application.appProvider.provideAlignmentRepository(),
-                    application.appProvider.provideGendersRepository()
+                    application.appProvider.provideGendersRepository(),
+                    application.appProvider.provideUserPreferenceRepository(),
+                    application.appProvider.provideCharactersRepository()
                 )
             }
         }

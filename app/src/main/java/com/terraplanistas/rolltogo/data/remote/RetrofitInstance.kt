@@ -16,6 +16,7 @@ import com.terraplanistas.rolltogo.data.remote.services.AbilityService
 import com.terraplanistas.rolltogo.data.remote.services.ActionService
 import com.terraplanistas.rolltogo.data.remote.services.BackgroundService
 import com.terraplanistas.rolltogo.data.remote.services.ContentService
+import com.terraplanistas.rolltogo.data.remote.services.CreatureService
 import com.terraplanistas.rolltogo.data.remote.services.DamageService
 import com.terraplanistas.rolltogo.data.remote.services.EffectService
 import com.terraplanistas.rolltogo.data.remote.services.FeatService
@@ -99,6 +100,10 @@ object RetrofitInstance {
 
     val contentService: ContentService by lazy {
         localRetrofit.create(ContentService::class.java)
+    }
+
+    val creatureService: CreatureService by lazy {
+        localRetrofit.create(CreatureService::class.java)
     }
 
     val damageService: DamageService by lazy {

@@ -92,6 +92,12 @@ class LoginViewModel(
         }
     }
 
+    fun saveUuid(uuid: String){
+        viewModelScope.launch {
+            preference.saveUserUuid(uuid)
+        }
+    }
+
     fun login(
         email: String,
         password: String
@@ -111,7 +117,7 @@ class LoginViewModel(
                                 try {
                                     val idToken: String? = tokenTask.result?.token
                                     saveToken(idToken ?: "")
-
+                                    saveUuid(user.uid)
                                     viewModelScope.launch {
                                         val response = RetrofitInstance.userService.createUser(
                                             UserCreateRequest(

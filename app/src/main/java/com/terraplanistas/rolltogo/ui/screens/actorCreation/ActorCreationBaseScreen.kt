@@ -90,6 +90,11 @@ fun ActorCreationHomeScreen(
                         Spacer(Modifier.width(16.dp))
                         Button(
                             onClick = {
+
+                                if (currentStep?.hasNext() != false){
+                                    viewModel.buildCharacter(context)
+                                }
+
                                 currentStep?.let {
                                     if(currentStep!!.isDone()){
                                         if(currentStep!!.hasNext()){
