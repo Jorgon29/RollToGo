@@ -1,4 +1,3 @@
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -89,6 +88,7 @@ dependencies {
     implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.datastore.preferences.core.android)
 
+
     // Graphics
     implementation(libs.androidx.graphics)
 
@@ -101,6 +101,13 @@ dependencies {
 
     // Core
     implementation(libs.androidx.core.ktx)
+
+
+    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+
+    implementation("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")
+
 
     // Testing
     testImplementation(libs.junit)

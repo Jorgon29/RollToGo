@@ -34,6 +34,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
+import com.terraplanistas.rolltogo.data.remote.chat.pruebaChat.ChatTestScreen
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
 import com.terraplanistas.rolltogo.ui.screens.campaingCreation.CampaignCreationScreen
@@ -133,7 +134,7 @@ fun NavigationHost() {
         ) {
             composable<ForumNavigation> {
                 currentView = "forum"
-                ForumScreen(navController)
+                ChatTestScreen()
             }
             composable<NewActorNavigation> {
                 currentView = "new_actor"
