@@ -158,7 +158,7 @@ fun CampaignCreationScreen(
 
         Button(
             onClick = {
-                //viewModel.createCampaign()
+                viewModel.createCampaign()
                 showSuccessDialog = true
             },
             modifier = Modifier

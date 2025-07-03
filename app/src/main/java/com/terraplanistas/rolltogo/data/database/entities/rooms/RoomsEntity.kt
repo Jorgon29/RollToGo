@@ -14,6 +14,7 @@ import com.terraplanistas.rolltogo.data.model.room.RoomDomain
 data class RoomsEntity(
     @PrimaryKey val id: String,
     val name: String,
+    val ownerUserName: String,
     val description: String
 )
 
@@ -21,6 +22,7 @@ fun RoomsEntity.toDomain(): RoomDomain {
     return RoomDomain(
         id = id,
         name = name,
+        ownerUserName = ownerUserName,
         description = description
     )
 

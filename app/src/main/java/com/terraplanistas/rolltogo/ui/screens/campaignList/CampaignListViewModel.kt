@@ -1,9 +1,11 @@
 package com.terraplanistas.rolltogo.ui.screens.campaignList
 
+import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +16,7 @@ import com.terraplanistas.rolltogo.helpers.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class CampaignListViewModel(
  private val campaignListRepository: RoomRepository,
@@ -27,18 +30,20 @@ class CampaignListViewModel(
     private val _campaigns = MutableStateFlow<Resource<List<RoomDomain>>>(Resource.Loading)
     val campaigns: StateFlow<Resource<List<RoomDomain>>> = _campaigns.asStateFlow()
 
-    suspend fun loadMyCampaigns() {
-        campaignListRepository.getRoomsByPlayerId(uid.toString()).collect { resource ->
-            when (resource) {
-                is Resource.Success<*> -> {
-                    val data = resource.data as? List<RoomDomain?>
-                    _campaigns.value = Resource.Success(data?.filterNotNull() ?: emptyList())
+    fun loadMyCampaigns() {
+        viewModelScope.launch {
+            _campaigns.value = Resource.Loading
+            try {
+                campaignListRepository.getRoomsByPlayerId(uid.toString()).collect { roomList ->
+                    val nonNullRooms = roomList.filterNotNull()
+                    _campaigns.value = Resource.Success(nonNullRooms)
                 }
-                is Resource.Error -> _campaigns.value = Resource.Error(resource.message)
-                is Resource.Loading -> _campaigns.value = Resource.Loading
+            } catch (e: Exception) {
+                _campaigns.value = Resource.Error("Error: ${e.localizedMessage}")
             }
         }
     }
+
 
     companion object {
         val factory: ViewModelProvider.Factory = viewModelFactory {

@@ -13,18 +13,18 @@ import java.util.UUID
 
 interface SpellService {
 
-    @GET("api/spells")
+    @GET("spells")
     suspend fun getAllSpells(): List<SpellResponse>
 
-    @GET("api/spells/{id}")
+    @GET("spells/{id}")
     suspend fun getSpellById(@Path("id") id: UUID): SpellResponse
 
-    @POST("api/spells")
+    @POST("spells")
     suspend fun createSpell(@Body request: SpellCreateRequest): Response<SpellResponse>
 
-    @PUT("api/spells")
+    @PUT("spells")
     suspend fun updateSpell(@Body spell: SpellResponse): SpellResponse
 
-    @DELETE("api/spells/{id}")
+    @DELETE("spells/{id}")
     suspend fun deleteSpellById(@Path("id") id: UUID)
 }

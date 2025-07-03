@@ -37,6 +37,7 @@ import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.data.remote.chat.pruebaChat.ChatTestScreen
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
+import com.terraplanistas.rolltogo.ui.screens.campaignList.CampaignListScreen
 import com.terraplanistas.rolltogo.ui.screens.campaingCreation.CampaignCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.BiographyScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.FeatsScreen
@@ -157,8 +158,8 @@ fun NavigationHost() {
                 ItemsScreen(id = actorItemsListArgs.id)
             }
             composable<CampaignsNavigation> {
-                currentView = "campaigns"
-                Text("Campaigns Screen")
+                currentView = "campaigns_list"
+                CampaignListScreen(navController = navController)
             }
             composable<ActorSpellsListNavigation> { actorSpellsListArgs ->
                 currentView = "actor_spells"
