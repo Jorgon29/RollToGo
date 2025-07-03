@@ -8,10 +8,10 @@ import retrofit2.http.Path
 
 interface RaceService {
 
-    @GET("api/races")
+    @GET("races")
     suspend fun getAllRaces(): ApiListResponse<ApiReference>
 
 
-    @GET("api/races/{index}")
+    @GET("races/{index}")
     suspend fun getRaceDetails(@Path("index") index: String): RaceResponse
 }

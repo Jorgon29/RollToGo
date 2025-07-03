@@ -18,6 +18,9 @@ data class ContentResponse(
     @SerializedName("createdAt")
     val createdAt: String,
 
+    @SerializedName("author")
+    val author: UserResponse,
+
     @SerializedName("grants")
     val grants: List<GrantResponse>?,
 

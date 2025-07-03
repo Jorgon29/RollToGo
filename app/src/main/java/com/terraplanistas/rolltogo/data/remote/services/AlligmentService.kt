@@ -7,10 +7,10 @@ import retrofit2.http.Path
 
 interface AlignmentService {
 
-    @GET("api/alignments")
+    @GET("alignments")
     suspend fun getAllAlignments(): ApiListResponse<AlignmentResponse>
 
 
-    @GET("api/alignments/{index}")
+    @GET("alignments/{index}")
     suspend fun getAlignmentDetails(@Path("index") index: String): AlignmentResponse
 }

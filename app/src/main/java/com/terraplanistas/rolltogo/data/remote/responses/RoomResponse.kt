@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.data.remote.responses
 
 import com.google.gson.annotations.SerializedName
+import com.terraplanistas.rolltogo.data.database.entities.rooms.RoomsEntity
 
 data class RoomResponse(
     @SerializedName("id")
@@ -17,3 +18,12 @@ data class RoomResponse(
     @SerializedName("roomParticipants")
     val roomParticipants: List<RoomParticipantResponse>
 )
+
+fun RoomResponse.toEntity(): RoomsEntity {
+    return RoomsEntity(
+        id = id,
+        name = name,
+        ownerUserName = content.author.username,
+        description = description ?: ""
+    )
+}

@@ -13,17 +13,17 @@ import java.util.UUID
 
 interface RoomService {
 
-    @GET("api/room")
+    @GET("room")
     suspend fun getAllRooms(): List<RoomResponse>
 
-    @GET("api/room/{id}")
+    @GET("room/{id}")
     suspend fun getRoomById(@Path("id") id: UUID): RoomResponse
-    @POST("api/room")
+    @POST("room")
     suspend fun createRoom(@Body request: RoomCreateRequest): Response<RoomResponse>
 
-    @PUT("api/room")
+    @PUT("room")
     suspend fun updateRoom(@Body room: RoomResponse): RoomResponse
 
-    @DELETE("api/room/{id}")
+    @DELETE("room/{id}")
     suspend fun deleteRoomById(@Path("id") id: UUID)
 }
