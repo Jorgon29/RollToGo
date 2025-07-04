@@ -398,6 +398,35 @@ class ContentCreationRepositoryImpi(
 
     }
 
+    override suspend fun getBackgroundByContentId(id: String): BackgroundEntity? {
+        return backgroundDao.getBackgroundById(id).firstOrNull()
+    }
+
+    override suspend fun updateBackground(backGround: BackgroundEntity) {
+        val backGroundResponse = RetrofitInstance.backgroundService
+            .getBackgroundById(UUID.fromString(backGround.id))
+        backGroundResponse.let {
+            RetrofitInstance.backgroundService
+                .deleteBackgroundById(UUID.fromString(it.id))
+            backgroundDao.deleteBackground(backGround)
+
+            val backgroundCreation = RetrofitInstance.backgroundService
+                .createBackground(
+                    BackgroundCreateRequest(
+                        contentId = backGround.id,
+                        name = backGround.name,
+                        description = backGround.description
+                    )
+                ).body()
+            backgroundCreation.let {
+                backgroundDao.insertBackground(backGround)
+            }
+
+
+        }
+
+    }
+
     override suspend fun getFeatures(): List<FeaturesEntity> {
         return featuresDao.getAllFeatures().firstOrNull() ?: emptyList<FeaturesEntity>()
 

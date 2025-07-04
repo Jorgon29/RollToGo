@@ -37,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
+import com.terraplanistas.rolltogo.ui.screens.BackgroundForum.BackgroundForumScreen
 import com.terraplanistas.rolltogo.ui.screens.campaignDetails.CampaignChatScreen
 import com.terraplanistas.rolltogo.ui.screens.campaignList.CampaignListScreen
 import com.terraplanistas.rolltogo.ui.screens.campaingCreation.CampaignCreationScreen
@@ -183,10 +184,7 @@ fun NavigationHost() {
             }
             composable<FeatureList> {
                 currentView = "Feature List"
-                FeatureForumScreen(
-
-                )
-
+                FeatureForumScreen()
             }
             composable<AccountNavigation> {
                 ProfileScreen(nav = navController)
@@ -210,6 +208,9 @@ fun NavigationHost() {
                 CampaignCreationScreen(
                     navController = navController
                 )
+            }
+            composable<BackgroundList> {
+                BackgroundForumScreen()
             }
         }
     }

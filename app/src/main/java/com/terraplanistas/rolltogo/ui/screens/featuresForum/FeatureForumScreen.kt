@@ -57,7 +57,9 @@ fun FeatureForumScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val showEditor by viewModel.showEditDialog.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().
+    background(Color(72, 94, 146))
+    ) {
         if (isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else if (features.isEmpty()) {

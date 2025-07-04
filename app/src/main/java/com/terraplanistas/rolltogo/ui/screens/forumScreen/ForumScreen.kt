@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.R
 import com.terraplanistas.rolltogo.ui.layout.boxes.cateogoryBox.CategoryBox
+import com.terraplanistas.rolltogo.ui.navigations.BackgroundList
 import com.terraplanistas.rolltogo.ui.navigations.FeatureList
 import com.terraplanistas.rolltogo.ui.navigations.SearchCharactersNavigation
 import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen
@@ -32,8 +33,8 @@ fun ForumScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             CategoryBox(
-                title = stringResource(R.string.content_creation),
-                onClick = {}
+                title = "Backgrounds",
+                onClick = {navController.navigate(BackgroundList)}
             )
         })
 }
