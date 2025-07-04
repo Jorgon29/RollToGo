@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -33,7 +34,7 @@ fun RoomCard(
                 elevation = 6.dp,
                 shape = RoundedCornerShape(12.dp)
             )
-            .background(MaterialTheme.colorScheme.surface)
+            .background(color = Color(109,126,168))
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primary,
@@ -42,6 +43,10 @@ fun RoomCard(
             .fillMaxWidth()
             .heightIn(min = 100.dp)
             .clickable { onClick() }
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
     ) {
         Column(
             modifier = Modifier
@@ -50,13 +55,14 @@ fun RoomCard(
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color(255, 255, 255, 255)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Dueño: $ownerUsername",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = Color(255,255,255)
             )
             description?.let {
                 Spacer(modifier = Modifier.height(8.dp))

@@ -73,9 +73,6 @@ class ChatManager {
     private fun subscribe(roomId: String) {
         topicSubscription?.dispose() // Cancelar suscripción previa si existe
 
-
-
-
         topicSubscription = stompClient?.topic("/room-chat/$roomId")
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())

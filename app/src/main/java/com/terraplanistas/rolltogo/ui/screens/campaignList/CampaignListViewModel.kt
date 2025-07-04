@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+
 class CampaignListViewModel(
  private val campaignListRepository: RoomRepository,
 
@@ -29,6 +30,40 @@ class CampaignListViewModel(
 
     private val _campaigns = MutableStateFlow<Resource<List<RoomDomain>>>(Resource.Loading)
     val campaigns: StateFlow<Resource<List<RoomDomain>>> = _campaigns.asStateFlow()
+    private val _showJoin = MutableStateFlow(false)
+    val showJoin = _showJoin.asStateFlow()
+
+    private val _joinCode = MutableStateFlow("")
+    val joinCode = _joinCode.asStateFlow()
+
+    private val _showJoinDialog = MutableStateFlow(false)
+    val showJoinDialog = _showJoinDialog.asStateFlow()
+
+    fun updateJoinCode(code: String) {
+        _joinCode.value = code
+    }
+
+    fun showJoinDialog(show: Boolean) {
+        _showJoinDialog.value = show
+    }
+
+    fun joinCampaign() {
+        viewModelScope.launch {
+            try {
+
+                campaignListRepository.addRoomParticipant(roomId =  _joinCode.value, userId = uid )
+                loadMyCampaigns()
+
+                switchIsShowing(true)
+                showJoinDialog(false)
+                _joinCode.value = ""
+            } catch (e: Exception) {
+            }
+            loadMyCampaigns()
+
+        }
+    }
+
 
     fun loadMyCampaigns() {
         viewModelScope.launch {
@@ -42,6 +77,10 @@ class CampaignListViewModel(
                 _campaigns.value = Resource.Error("Error: ${e.localizedMessage}")
             }
         }
+    }
+
+    fun switchIsShowing(value: Boolean){
+        _showJoin.value = value
     }
 
 
