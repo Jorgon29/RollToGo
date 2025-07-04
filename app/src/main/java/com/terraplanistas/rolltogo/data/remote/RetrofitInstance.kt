@@ -1,21 +1,17 @@
 package com.terraplanistas.rolltogo.data.remote
 
-import android.content.ClipData
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.remote.services.UserService
 import com.terraplanistas.rolltogo.data.remote.interceptors.AuthInterceptor
-import com.terraplanistas.rolltogo.data.remote.responses.AlignmentService
 import com.terraplanistas.rolltogo.data.remote.responses.CharacterService
 import com.terraplanistas.rolltogo.data.remote.responses.ClassService
-import com.terraplanistas.rolltogo.data.remote.responses.GenderService
 import com.terraplanistas.rolltogo.data.remote.responses.MonsterService
-import com.terraplanistas.rolltogo.data.remote.responses.PlaystyleService
-import com.terraplanistas.rolltogo.data.remote.responses.RaceService
 import com.terraplanistas.rolltogo.data.remote.services.AbilityScoreImprovementService
 import com.terraplanistas.rolltogo.data.remote.services.AbilityService
 import com.terraplanistas.rolltogo.data.remote.services.ActionService
 import com.terraplanistas.rolltogo.data.remote.services.BackgroundService
 import com.terraplanistas.rolltogo.data.remote.services.ContentService
+import com.terraplanistas.rolltogo.data.remote.services.CreatureService
 import com.terraplanistas.rolltogo.data.remote.services.DamageService
 import com.terraplanistas.rolltogo.data.remote.services.EffectService
 import com.terraplanistas.rolltogo.data.remote.services.FeatService
@@ -36,6 +32,7 @@ import com.terraplanistas.rolltogo.data.remote.services.RoomService
 import com.terraplanistas.rolltogo.data.remote.services.SenseService
 import com.terraplanistas.rolltogo.data.remote.services.SkillService
 import com.terraplanistas.rolltogo.data.remote.services.SpecialDieService
+import com.terraplanistas.rolltogo.data.remote.services.SpeciesService
 import com.terraplanistas.rolltogo.data.remote.services.SpellMaterialService
 import com.terraplanistas.rolltogo.data.remote.services.SpellService
 import com.terraplanistas.rolltogo.data.remote.services.SpellcastingService
@@ -99,6 +96,14 @@ object RetrofitInstance {
 
     val contentService: ContentService by lazy {
         localRetrofit.create(ContentService::class.java)
+    }
+
+    val speciesService: SpeciesService by lazy {
+        localRetrofit.create(SpeciesService::class.java)
+    }
+
+    val creatureService: CreatureService by lazy {
+        localRetrofit.create(CreatureService::class.java)
     }
 
     val damageService: DamageService by lazy {

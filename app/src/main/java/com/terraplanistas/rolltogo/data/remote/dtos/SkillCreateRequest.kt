@@ -5,8 +5,6 @@ import com.terraplanistas.rolltogo.data.enums.ProficiencyLevelEnum
 import com.terraplanistas.rolltogo.data.enums.SkillTypeEnum
 
 data class SkillCreateRequest(
-    @SerializedName("contentId")
-    val contentId: String,
     @SerializedName("skillTypeEnum")
     val skillTypeEnum: SkillTypeEnum,
     @SerializedName("proficiencyLevelEnum")

@@ -1,8 +1,10 @@
 package com.terraplanistas.rolltogo.ui.screens.actorCreation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.terraplanistas.rolltogo.RollToGoApp
@@ -12,17 +14,27 @@ import com.terraplanistas.rolltogo.data.model.CharacterGender
 import com.terraplanistas.rolltogo.data.model.CharacterRace
 import com.terraplanistas.rolltogo.data.model.Playstyle
 import com.terraplanistas.rolltogo.data.repository.alignments.AlignmentsRepository
+import com.terraplanistas.rolltogo.data.repository.characters.CharacterRepository
 import com.terraplanistas.rolltogo.data.repository.classes.ClassesRepository
 import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
+import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
+import com.terraplanistas.rolltogo.helpers.Resource
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ActorCreationViewModel(
     private val playstyleRepository: PlaystyleRepository,
     private val classesRepository: ClassesRepository,
     private val racesRepository: RaceRepository,
     private val alignmentsRepository: AlignmentsRepository,
-    private val gendersRepository: GendersRepository
+    private val gendersRepository: GendersRepository,
+    private val preferencesRepository: UserPreferencesRepository,
+    private val characterRepository: CharacterRepository
 ) : ViewModel() {
 
     private val playstyleToClassMap = mapOf(
@@ -48,6 +60,22 @@ class ActorCreationViewModel(
         12 to listOf(6, 2, 1)
     )
 
+    private val _id: MutableStateFlow<String> = MutableStateFlow("")
+    val id: StateFlow<String> = _id
+
+    val userId: StateFlow<String> = preferencesRepository.userUuid.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+        initialValue = ""
+    )
+
+    init {
+        viewModelScope.launch {
+            userId.collect { id ->
+                Log.d("ViewModelUserID", "userId StateFlow value changed to: '$id'")
+            }
+        }
+    }
 
     fun getPlaystyles(): List<Playstyle> {
         return playstyleRepository.getPlaystyles()
@@ -85,6 +113,24 @@ class ActorCreationViewModel(
         return gendersRepository.getGenders()
     }
 
+    fun buildCharacter(character: ActorCreationContext){
+       viewModelScope.launch {
+           val newCharacter = characterRepository.buildCharacter(character, userId.value)
+           Log.d("buildCharacter", newCharacter.toString())
+           when (newCharacter) {
+               is Resource.Success -> {
+                   Log.d("buildCharacter", newCharacter.data)
+                   _id.value = newCharacter.data
+               }
+               is Resource.Error -> {
+                   println("Error building character: ${newCharacter.message}")
+               }
+               is Resource.Loading -> {
+               }
+           }
+       }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -96,7 +142,9 @@ class ActorCreationViewModel(
                     application.appProvider.provideClassesRepository(),
                     application.appProvider.provideRacesRepository(),
                     application.appProvider.provideAlignmentRepository(),
-                    application.appProvider.provideGendersRepository()
+                    application.appProvider.provideGendersRepository(),
+                    application.appProvider.provideUserPreferenceRepository(),
+                    application.appProvider.provideCharactersRepository()
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.data.repository.settings
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
@@ -22,11 +23,18 @@ class UserPreferencesRepository(
         val AUTH_TOKEN_KEY = stringPreferencesKey("auth_token_key")
         val ROOM_ID = stringPreferencesKey("room_id")
         val ROOM_NAME = stringPreferencesKey("room_name")
+        val USER_UUID = stringPreferencesKey("user_uuid")
     }
 
     suspend fun savePreference(testPreference: Boolean) {
         datastore.edit { preferences ->
             preferences[TEST_PREFERENCE] = testPreference
+        }
+    }
+
+    suspend fun saveUserUuid(uuid: String){
+        datastore.edit { preference ->
+            preference[USER_UUID] = uuid
         }
     }
 
@@ -65,6 +73,19 @@ class UserPreferencesRepository(
             }
         }.map { preferences ->
             preferences[AUTH_TOKEN_KEY]?: ""
+        }
+
+    val userUuid: Flow<String> = datastore.data
+        .catch {
+            if (it is IOException){
+                Log.e("PreferencesRepo", "Error reading preferences: ${it.message}")
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }.map { preferences ->
+            preferences[USER_UUID]?: "holaFromRepo"
+
         }
 
     // Recupera la contraseña encriptada desde las preferencias y la desencripta antes de devolverla

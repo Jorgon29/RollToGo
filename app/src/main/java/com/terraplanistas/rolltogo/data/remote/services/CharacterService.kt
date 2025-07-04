@@ -17,7 +17,7 @@ interface CharacterService {
     suspend fun getAllCharacters(): List<CharacterResponse>
 
     @GET("characters/{id}")
-    suspend fun getCharacterById(@Path("id") id: UUID): CharacterResponse
+    suspend fun getCharacterById(@Path("id") id: String): CharacterResponse
 
     @POST("characters")
     suspend fun createCharacter(@Body request: CharacterCreateRequest): Response<CharacterResponse>
