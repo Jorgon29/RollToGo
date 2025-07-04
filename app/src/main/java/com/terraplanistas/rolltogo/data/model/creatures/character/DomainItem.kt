@@ -26,11 +26,19 @@ fun DomainItem.toItemEntity(): ItemEntity {
         name = this.name,
         description = this.description,
         item_type_enum = this.item_type_enum,
+        weight1 = (itemData["weight"] as? BigDecimal)?.toDouble() ?: 0.0,
         rarity_enum = this.rarity_enum,
         weight = this.weight,
         cost_value = this.cost_value,
         cost_unit = this.cost_unit,
         attunement_required = this.attunement_required,
-        is_magical = this.it_magical
+        is_magical = this.it_magical,
+        contentId = contentId,
+        itemType = itemData["item_type"].toString(),
+        rarity = itemData["rarity"].toString(),
+        costValue = (itemData["cost_value"] as? BigDecimal)?.toDouble() ?: 0.0,
+        costUnit = itemData["cost_unit"].toString(),
+        requiresAttunement = itemData["attunment"] as? Boolean ?: false,
+        isMagical = itemData["is_magical"] as? Boolean ?: false
     )
 }

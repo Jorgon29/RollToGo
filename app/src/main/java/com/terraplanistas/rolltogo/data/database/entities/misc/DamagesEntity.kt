@@ -25,5 +25,8 @@ data class DamagesEntity(
     val damage_type_enum: DamageTypeEnum,
     val repeat: Boolean,
     val repetition_value: Int,
-    val repetition_unit: DurationUnitEnum
+    val repetition_unit: DurationUnitEnum,
+    val itemId: Any,
+    val damageDice: String,
+    val damageType: String
 )

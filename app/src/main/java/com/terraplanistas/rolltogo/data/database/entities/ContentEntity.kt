@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import androidx.transition.Visibility
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.ClassEntity
 import com.terraplanistas.rolltogo.data.database.entities.classEntity.SubclassEntity
 import com.terraplanistas.rolltogo.data.database.entities.features.FeaturesEntity
@@ -178,5 +177,10 @@ data class ContentEntity(
     val source_content_enum: SourceContentEnum,
     val visibility_enum: VisibilityEnum,
     val created_at: String,
-    val author_id: String
+    val author_id: String,
+    val name: String,
+    val description: String,
+    val source: String,
+    val isHomebrew: Boolean,
+    val isPublic: Boolean
 )

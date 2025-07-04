@@ -18,5 +18,7 @@ import androidx.room.ForeignKey.Companion.CASCADE
 )
 data class ItemTagEntity(
     val items_id: String,
-    val tag: String
+    val tag: String,
+    val id: Int,
+    val itemId: Any
 )
