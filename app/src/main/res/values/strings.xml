@@ -127,4 +127,8 @@
 
     <string name="content_creation">Crear contenido</string>
 
+    <!-- Campaign creation -->
+    <string name="room_chat">Chat</string>
+    <string name="room_character_selection">Selección de Personaje</string>
+
 </resources>

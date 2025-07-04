@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.data.model.room.RoomDomain
 import com.terraplanistas.rolltogo.helpers.Resource
 import com.terraplanistas.rolltogo.ui.layout.boxes.roomCard.RoomCard
-import com.terraplanistas.rolltogo.ui.navigations.CampaingNavigation
+import com.terraplanistas.rolltogo.ui.navigations.CampaignChatNavigation
 
 @Composable
 fun CampaignListScreen(
@@ -41,9 +41,6 @@ fun CampaignListScreen(
     val joinCode by viewModel.joinCode.collectAsState()
     val campaigns = viewModel.campaigns.collectAsState().value
 
-    val navigate: (String) -> Unit = { id ->
-        navController.navigate(CampaingNavigation(id))
-    }
 
     LaunchedEffect(Unit) {
         viewModel.loadMyCampaigns()
@@ -110,7 +107,7 @@ fun CampaignListScreen(
         CampaignListContent(
             campaigns = campaigns,
             onJoinCampaign = { viewModel.showJoinDialog(true) },
-            onEnterCampaign = navigate
+            navController = navController
         )
     }
 }
@@ -119,7 +116,7 @@ fun CampaignListScreen(
 fun CampaignListContent(
     campaigns: Resource<List<RoomDomain>>,
     onJoinCampaign: () -> Unit,
-    onEnterCampaign: (String) -> Unit
+    navController: NavController
 ) {
     when (campaigns) {
         is Resource.Loading -> {
@@ -148,8 +145,8 @@ fun CampaignListContent(
                 } else {
                     CampaignList(
                         campaigns = campaignList,
-                        onCampaignSelected = onEnterCampaign
-                        )
+                        navController = navController
+                    )
                 }
 
                 Box(
@@ -182,7 +179,7 @@ fun CampaignListContent(
 @Composable
 fun CampaignList(
     campaigns: List<RoomDomain>,
-    onCampaignSelected: (String) -> Unit
+    navController: NavController
 ) {
     LazyColumn(
         contentPadding = PaddingValues(8.dp),
@@ -193,7 +190,15 @@ fun CampaignList(
                 name = campaign.name,
                 description = campaign.description,
                 ownerUsername = campaign.ownerUserName,
-                onClick = { onCampaignSelected(campaign.id) }
+                onClick = {
+                    Log.d("CampaignListScreen", "Navigating to campaign chat for ${campaign.id}")
+                    navController.navigate(
+                        CampaignChatNavigation(
+                            roomId = campaign.id,
+                            title = campaign.name
+                        )
+                    )
+                }
             )
         }
     }

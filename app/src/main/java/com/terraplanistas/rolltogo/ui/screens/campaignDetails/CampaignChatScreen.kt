@@ -55,14 +55,13 @@ fun CampaignChatScreen(
         factory = CampaignChatViewModel.factory
     ),
     roomId: String,
-    auth: FirebaseAuth = FirebaseAuth.getInstance(),
     title: String? = null,
 ) {
 
     val message by campaignChatViewModel.textState.collectAsState()
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    val senderId = auth.currentUser?.uid
+    val senderId = campaignChatViewModel.auth.currentUser?.uid
 
     LaunchedEffect(roomId) {
         if (!campaignChatViewModel.isConnected) {

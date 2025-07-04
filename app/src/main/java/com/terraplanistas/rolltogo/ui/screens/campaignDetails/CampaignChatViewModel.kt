@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.remote.chat.ChatManager.ChatMessageRequest
@@ -27,6 +28,8 @@ import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 
 class CampaignChatViewModel(
+
+    val auth: FirebaseAuth
 
 ): ViewModel() {
     private var stompClient: StompClient? = null
@@ -147,6 +150,7 @@ class CampaignChatViewModel(
                 val aplication = this[APPLICATION_KEY] as? RollToGoApp
                     ?: throw IllegalStateException("Application is not RollToGoApp")
                 CampaignChatViewModel(
+                    auth = aplication.fireBaseAuth
                 )
 
             }

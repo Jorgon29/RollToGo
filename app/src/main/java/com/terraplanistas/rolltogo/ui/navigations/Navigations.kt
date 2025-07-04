@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.ui.navigations
 
+import android.icu.text.CaseMap
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -49,6 +50,15 @@ object CampaingsList
 
 @Serializable
 object CampaignCreation
+
+@Serializable
+data class CampaignChatNavigation(
+    val roomId: String,
+    val title: String
+)
+
+@Serializable
+object CampaignCharacterSelectionNavigation
 
 @Serializable
 data class CampaingNavigation(val id: String)
