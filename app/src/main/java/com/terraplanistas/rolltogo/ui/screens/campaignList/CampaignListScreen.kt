@@ -93,7 +93,7 @@ fun CampaignListScreen(
                 },
                 dismissButton = {
                     Button(
-                        onClick = { viewModel.joinCampaign() },
+                        onClick = { viewModel.showJoinDialog(false) },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(109, 126, 168)
                         )

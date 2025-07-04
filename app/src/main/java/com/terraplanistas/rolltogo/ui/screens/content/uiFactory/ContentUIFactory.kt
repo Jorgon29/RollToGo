@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
 import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
+import com.terraplanistas.rolltogo.ui.screens.DefaultBuildingScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.item.ItemCreationViewModel
 import com.terraplanistas.rolltogo.ui.screens.content.screens.background.BackgroundContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.content.screens.creatures.CreatureContentCreationScreen
@@ -22,23 +23,15 @@ object ContentUIFactory {
             SourceContentEnum.ITEM -> {
                 { ItemContentCreationScreen( nav = nav) }
             }
-            SourceContentEnum.SPELLS -> {
-                { SpellContentCreationScreen(nav =  nav) }
-            }
             SourceContentEnum.BACKGROUND -> {
                 { BackgroundContentCreationScreen( nav = nav) }
             }
-            SourceContentEnum.SPECIES -> {
-                { SpecieContentCreationScreen( nav =  nav) }
-            }
-            SourceContentEnum.CREATURES -> {
-                { CreatureContentCreationScreen( nav =  nav) }
-            }
+
             SourceContentEnum.FEATURES ->{
                 { FeatureCreationScreen(nav = nav) }
             }
             else -> {
-                { nav.navigate(ForumNavigation)}
+                { DefaultBuildingScreen(nav = nav)}
             }
 
         }

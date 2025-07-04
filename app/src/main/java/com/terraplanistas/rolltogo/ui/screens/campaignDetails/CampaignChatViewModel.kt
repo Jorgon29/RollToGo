@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.terraplanistas.rolltogo.RollToGoApp
 import com.terraplanistas.rolltogo.data.remote.chat.ChatManager.ChatMessageRequest
 import com.terraplanistas.rolltogo.data.remote.responses.ChatMessageResponse
+import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.ui.screens.campaignList.CampaignListViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -29,7 +30,9 @@ import ua.naiksoftware.stomp.dto.LifecycleEvent
 
 class CampaignChatViewModel(
 
-    val auth: FirebaseAuth
+    val auth: FirebaseAuth,
+    val preference: UserPreferencesRepository
+
 
 ): ViewModel() {
     private var stompClient: StompClient? = null
@@ -48,6 +51,8 @@ class CampaignChatViewModel(
         _textState.value = newMessage
     }
 
+
+    @SuppressLint("CheckResult")
     fun connect(roomId: String, onConnected: () -> Unit = {}) {
         if (isConnected) {
             Log.d("STOMP", "Ya conectado, evitando reconexión.")
@@ -150,7 +155,8 @@ class CampaignChatViewModel(
                 val aplication = this[APPLICATION_KEY] as? RollToGoApp
                     ?: throw IllegalStateException("Application is not RollToGoApp")
                 CampaignChatViewModel(
-                    auth = aplication.fireBaseAuth
+                    auth = aplication.fireBaseAuth,
+                    preference = aplication.appProvider.provideUserPreferenceRepository()
                 )
 
             }

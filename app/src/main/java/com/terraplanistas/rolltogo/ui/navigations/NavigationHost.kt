@@ -37,7 +37,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
-import com.terraplanistas.rolltogo.ui.layout.bars.RoomBar.RoomBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.screens.campaignDetails.CampaignChatScreen
 import com.terraplanistas.rolltogo.ui.screens.campaignList.CampaignListScreen
 import com.terraplanistas.rolltogo.ui.screens.campaingCreation.CampaignCreationScreen
@@ -63,8 +62,7 @@ fun NavigationHost() {
     }
 
     val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
-    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation","Feature List")
-    val roomViews = listOf("campaign_chat","campaign_character_selection")
+    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation","Feature List","campaign_chat")
 
     Scaffold(
         topBar = {
@@ -115,9 +113,7 @@ fun NavigationHost() {
             if(currentView in baseViews){
                 HomeBottomNavigationBar(navController) { }
             }
-            if (currentView in roomViews) {
-                RoomBottomNavigationBar(navController)
-            }
+
 
         },
         floatingActionButton = {
@@ -189,9 +185,7 @@ fun NavigationHost() {
             }
             composable<FeatureList> {
                 currentView = "Feature List"
-                FeatureForumScreen(
-                )
-
+                FeatureForumScreen()
             }
             composable<AccountNavigation> {
                 ProfileScreen(nav = navController)

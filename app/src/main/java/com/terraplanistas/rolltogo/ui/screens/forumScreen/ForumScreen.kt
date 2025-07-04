@@ -27,13 +27,9 @@ fun ForumScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             CategoryBox(
                 title = "Features",
-                onClick = {navController.navigate(FeatureList)}
+                onClick = { navController.navigate(FeatureList) }
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            CategoryBox(
-                title = stringResource(R.string.content_creation),
-                onClick = {}
-            )
         })
 }

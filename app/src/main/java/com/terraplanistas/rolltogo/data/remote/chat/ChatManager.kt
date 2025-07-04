@@ -22,6 +22,7 @@ class ChatManager {
 
     var onError: ((String) -> Unit)? = null
 
+    @SuppressLint("CheckResult")
     fun connect(roomId: String, onConnected: () -> Unit = {}) {
         if (isConnected) {
             Log.d("STOMP", "Ya conectado, evitando reconexión.")
