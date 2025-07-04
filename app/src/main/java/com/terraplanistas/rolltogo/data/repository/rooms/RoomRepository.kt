@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RoomRepository {
 
-    fun getRoomsByPlayerId(playerId: String): Flow<List<RoomDomain?>>
+    suspend fun getRoomsByPlayerId(playerId: String): Flow<List<RoomDomain?>>
     suspend fun createRoom(room: RoomsEntity)
     suspend fun createRoomParticipant(roomParticipant: RoomParticipantEntity)
     suspend fun addRoomParticipant(roomId: String, userId: String?)

@@ -25,7 +25,8 @@ fun RoomCard(
     name: String,
     description: String?,
     ownerUsername: String,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    roomId: String
 ) {
     Box(
         modifier = Modifier
@@ -34,7 +35,7 @@ fun RoomCard(
                 elevation = 6.dp,
                 shape = RoundedCornerShape(12.dp)
             )
-            .background(color = Color(109,126,168))
+            .background(color = Color(109, 126, 168))
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primary,
@@ -62,7 +63,7 @@ fun RoomCard(
             Text(
                 text = "Dueño: $ownerUsername",
                 style = MaterialTheme.typography.bodySmall,
-                color = Color(255,255,255)
+                color = Color(255, 255, 255)
             )
             description?.let {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -71,6 +72,9 @@ fun RoomCard(
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(roomId)
+
         }
     }
 }

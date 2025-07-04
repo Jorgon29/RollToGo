@@ -195,10 +195,11 @@ fun CampaignList(
                     navController.navigate(
                         CampaignChatNavigation(
                             roomId = campaign.id,
-                            title = campaign.name
+                            title = campaign.name,
                         )
                     )
-                }
+                },
+                roomId = campaign.id
             )
         }
     }
