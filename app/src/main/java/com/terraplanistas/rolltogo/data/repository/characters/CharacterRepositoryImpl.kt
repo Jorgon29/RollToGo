@@ -1,5 +1,10 @@
 package com.terraplanistas.rolltogo.data.repository.characters
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import android.util.Log
 import com.terraplanistas.rolltogo.data.database.dao.classDao.ClassDao
 import com.terraplanistas.rolltogo.data.database.dao.classDao.SpellcastingDao
 import com.terraplanistas.rolltogo.data.database.dao.creatures.CharactersDao
@@ -53,6 +58,10 @@ import com.terraplanistas.rolltogo.data.remote.dtos.ContentCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.CreatureCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.GrantCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.SkillCreateRequest
+import com.terraplanistas.rolltogo.data.remote.responses.FeatureResponse
+import com.terraplanistas.rolltogo.data.remote.responses.GrantResponse
+import com.terraplanistas.rolltogo.data.remote.responses.toDomain
+import com.terraplanistas.rolltogo.data.remote.services.ClassResponse
 import com.terraplanistas.rolltogo.helpers.Resource
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.ActorCreationContext
 import kotlinx.coroutines.flow.flow
@@ -60,6 +69,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -77,8 +88,20 @@ class CharacterRepositoryImpl(
     private val spellcastingDao: SpellcastingDao,
     private val spellMaterialDao: SpellMaterialDao,
     private val backgroundDao: BackgroundDao,
-    private val abilitiesDao: AbilitiesDao
+    private val abilitiesDao: AbilitiesDao,
+    private val context: Context
 ) : CharacterRepository {
+
+
+        fun isInternetAvailable(): Boolean {
+            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+        }
+
 
     private suspend fun buildDomainCharacter(charEntity: CharactersEntity): DomainCharacter? {
         val creatureEntity = creaturesDao.getCreatureById(charEntity.id).firstOrNull()
@@ -206,23 +229,42 @@ class CharacterRepositoryImpl(
 
     override fun getCharacterById(id: String): Flow<Resource<DomainCharacter>> = flow {
         emit(Resource.Loading)
-
-        try {
-            val domainCharacter = withContext(Dispatchers.IO) {
-                charactersDao.getCharacterById(id).firstOrNull()?.let { charEntity ->
-                    buildDomainCharacter(charEntity)
-                }
-            }
-
-            if (domainCharacter != null) {
-                emit(Resource.Success(domainCharacter))
-            } else {
-                emit(Resource.Error("Character with ID $id not found."))
-            }
-        } catch (e: Exception) {
-            emit(Resource.Error("Error fetching character: ${e.localizedMessage ?: "Unknown error"}"))
+        val localCharacterFlow = charactersDao.getCharacterById(id)
+        val cachedDomainCharacter = localCharacterFlow.firstOrNull()?.let { charEntity ->
+            buildDomainCharacter(charEntity)
         }
-    }
+
+        if (cachedDomainCharacter != null) {
+            emit(Resource.Success(cachedDomainCharacter))
+            if (isInternetAvailable()) {
+                println("Internet available, attempting to refresh character from API.")
+                try {
+                    loadCharacterFromApi(id).collect { apiDomainCharacter ->
+                        emit(Resource.Success(apiDomainCharacter))
+                    }
+                } catch (e: Exception) {
+                    println("Failed to refresh character from API: ${e.localizedMessage}")
+                }
+            } else {
+                println("No internet, serving cached character.")
+            }
+        } else {
+            if (isInternetAvailable()) {
+                println("No local character found, fetching from API.")
+                try {
+                    loadCharacterFromApi(id).collect { apiDomainCharacter ->
+                        emit(Resource.Success(apiDomainCharacter))
+                    }
+                } catch (e: Exception) {
+                    emit(Resource.Error("Failed to load character from network: ${e.localizedMessage ?: "Unknown network error"}"))
+                }
+            } else {
+                emit(Resource.Error("No local character found and no internet connection to fetch."))
+            }
+        }
+    }.catch { e ->
+        emit(Resource.Error("An unexpected error occurred: ${e.localizedMessage ?: "Unknown error"}"))
+    }.flowOn(Dispatchers.IO)
 
     override fun searchCharacters(query: String): Flow<Resource<List<DomainCharacter>>> = flow {
         emit(Resource.Loading)
@@ -421,10 +463,12 @@ class CharacterRepositoryImpl(
         }
     }
 
-    override suspend fun buildCharacter(character: ActorCreationContext, authorId: String): Resource<Unit> {
+    override suspend fun buildCharacter(character: ActorCreationContext, authorId: String): Resource<String> {
         return withContext(Dispatchers.IO) {
             try {
 
+
+                var correctId = "hola"
                 val content = RetrofitInstance.contentService.createContent(
                     request = ContentCreateRequest(
                         sourceContentEnum = SourceContentEnum.CREATURES,
@@ -434,6 +478,8 @@ class CharacterRepositoryImpl(
                 )
 
                 if (content.isSuccessful) {
+                    correctId = content.body()?.id ?: "hola"
+                    Log.d("buildCharacter", correctId)
                     val creature = RetrofitInstance.creatureService.createCreature(
                         request = CreatureCreateRequest(
                             contentId = content.body()?.id ?: "",
@@ -547,13 +593,123 @@ class CharacterRepositoryImpl(
                         }
                     }
                 }
-                Resource.Success(Unit)
+                Log.d("buildCharacter", correctId)
+                Resource.Success(correctId)
             } catch (e: Exception){
                 Resource.Error("Error building character")
             }
         }
     }
-}
+
+    fun loadCharacterFromApi(id: String): Flow<DomainCharacter> {
+        return flow {
+
+            val character = characterService.getCharacterById(id)
+            val background = RetrofitInstance.backgroundService.getAllBackgrounds()
+            if (character == null || character.creature?.content == null) {
+                println("Character or character content not found for ID: $id")
+                return@flow
+            }
+
+            val grants: List<GrantResponse> = character.creature.content.grants ?: emptyList()
+
+            var thisClass: ClassResponse? = null
+            var thisItems: MutableList<DomainItem> = mutableListOf()
+            var thisAbilities: MutableList<DomainAbility> = mutableListOf()
+            var thisSkills: MutableList<DomainSkill> = mutableListOf()
+            var thisFeats: MutableList<DomainFeats> = mutableListOf()
+            var thisFeatures: MutableList<FeatureResponse> = mutableListOf()
+            var thisSpells: MutableList<DomainSpell> = mutableListOf()
+            var thisRace: DomainRace? = null
+
+            val dummyRace = DomainRace(
+                id = UUID.randomUUID().toString(),
+                name = "Human",
+                description = "A versatile and ambitious race.",
+                size = CreatureSizeEnum.MEDIUM,
+                type = CreatureTypeEnum.HUMANOID,
+                languages = "common, elvish"
+            )
+
+            grants.forEach { grant ->
+
+                try {
+                    when (grant.grantedType) {
+                        SourceContentEnum.CLASS -> {
+                            val fetchedClass = RetrofitInstance.classService.getClassById(UUID.fromString(grant.grantedContent.id))
+                            fetchedClass?.let { thisClass = it }
+                        }
+                        SourceContentEnum.ITEM -> {
+                            val fetchedItem = RetrofitInstance.itemService.getItemById(UUID.fromString(grant.grantedContent.id))
+                            fetchedItem?.let { thisItems.add(it.toDomain(grant.id)) }
+                        }
+                        SourceContentEnum.ABILITIES -> {
+                            val fetchedAbility = RetrofitInstance.abilityService.getAbilityById(UUID.fromString(grant.grantedContent.id))
+                            fetchedAbility?.let { thisAbilities.add(it.toDomain(grant.id)) }
+                        }
+                        SourceContentEnum.SKILLS -> {
+                            val fetchedSkill = RetrofitInstance.skillService.getSkillById(UUID.fromString(grant.grantedContent.id))
+                            fetchedSkill?.let { thisSkills.add(it.toDomain()) }
+                        }
+                        SourceContentEnum.FEATS -> {
+                            val fetchedFeat = RetrofitInstance.featService.getFeatById(UUID.fromString(grant.grantedContent.id))
+                            fetchedFeat?.let { thisFeats.add(it.toDomain(grant.id)) }
+                        }
+                        SourceContentEnum.FEATURES -> {
+                            val fetchedFeature = RetrofitInstance.featureService.getFeatureById(UUID.fromString(grant.grantedContent.id))
+                            fetchedFeature?.let { thisFeatures.add(it) }
+                        }
+                        SourceContentEnum.SPELLS -> {
+                            val fetchedSpell = RetrofitInstance.spellService.getSpellById(UUID.fromString(grant.grantedContent.id))
+                            fetchedSpell?.let { thisSpells.add(it.toDomain(grant.id)) }
+                        }
+                        SourceContentEnum.SPECIES -> {
+                            val fetchedSpecies = RetrofitInstance.speciesService.getSpeciesById(UUID.fromString(grant.grantedContent.id))
+                            fetchedSpecies?.let { thisRace = it.toDomain() }
+                        }else -> {  }
+                    }
+                } catch (e: Exception) {
+
+                    println("Error fetching grant for type ${grant.grantedType} with ID ${grant.grantedContent.id}: ${e.message}")
+                }
+            }
+
+            emit(
+                DomainCharacter(
+                    id = id,
+                    skills = thisSkills,
+                    level = 1,
+                    flaws = character?.flaws?:"",
+                    biography = character?.biography?:"",
+                    appearance = character?.appearance?:"",
+                    ideals = character?.ideals?:"",
+                    age = character?.age?:"",
+                    height = character?.height?:"",
+                    weight = character?.weight?:"",
+                    personality = character?.personality?:"",
+                    gender = character.gender.toString(),
+                    skin = character?.skinColor?:"",
+                    hair = character?.hairColor?:"",
+                    faith = character?.faith?:"",
+                    eyes = character?.eyeColor?:"",
+                    items = thisItems,
+                    feats = thisFeats,
+                    backgroundTitle = background.firstOrNull()?.name ?: "",
+                    backgroundDescription = background.firstOrNull()?.description ?: "",
+                    race = thisRace?: dummyRace,
+                    hp = character.creature.baseHp,
+                    ac = character.creature.baseAc,
+                    spellcastingAbility = AbilityTypeEnum.INTELLIGENCE,
+                    spells = thisSpells,
+                    name = character.name?: "",
+                    characterClass = thisClass?.name?:"",
+                    alignment = getAlignmentEnumById(character.alignment?:1),
+                    abilities = thisAbilities
+                )
+            )
+        }
+    }
+
 
 fun getCreatureSizeForRaceById(raceId: Int): CreatureSizeEnum {
     return when (raceId) {
@@ -793,3 +949,4 @@ val skillToAbilityMap = mapOf(
     SkillTypeEnum.PERFORMANCE to AbilityTypeEnum.CHARISMA,
     SkillTypeEnum.PERSUASION to AbilityTypeEnum.CHARISMA
 )
+}

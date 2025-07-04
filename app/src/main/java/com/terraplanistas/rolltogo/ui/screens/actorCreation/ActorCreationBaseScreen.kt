@@ -16,6 +16,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.R
@@ -36,17 +38,20 @@ import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.playstyleStep.
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.raceStep.RaceStep
 import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun ActorCreationHomeScreen(
     navController: NavController,
-    viewModel: ActorCreationViewModel = viewModel( factory = ActorCreationViewModel.Factory)
+    viewModel: ActorCreationViewModel = viewModel( factory = ActorCreationViewModel.Factory),
+    goToCharacterScreen: (String) -> Unit
 ) {
     val context = remember { ActorCreationContext() }
     val snackbarHostState = remember { SnackbarHostState() }
     val incompleteData: String = stringResource(R.string.actor_creation_incomplete_fields)
     val coroutineScope = rememberCoroutineScope()
+    val id = viewModel.id.collectAsStateWithLifecycle()
 
     var currentStep by remember { mutableStateOf<ActorCreationStep?>(null) }
 
@@ -57,6 +62,13 @@ fun ActorCreationHomeScreen(
         val step2 = ClassStep(viewModel, step3, snackbarHostState)
         val step1 = PlaystyleStep(viewModel, step2, snackbarHostState)
         currentStep = step1
+    }
+
+    LaunchedEffect(id.value) {
+        Log.d("buildCharacter", id.value)
+        if(id.value.isNotBlank()){
+            goToCharacterScreen(id.value)
+        }
     }
         BaseHomeScreen(
             navController = navController,
@@ -103,8 +115,6 @@ fun ActorCreationHomeScreen(
                                     if(currentStep!!.isDone()){
                                         if(currentStep!!.hasNext()){
                                             currentStep = currentStep!!.getNext()
-                                        } else {
-
                                         }
                                     } else {
                                         coroutineScope.launch {

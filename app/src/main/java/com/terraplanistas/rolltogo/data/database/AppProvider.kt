@@ -129,7 +129,8 @@ class AppProvider (context: Context){
         spellcastingDao = spellcastingDao,
         spellMaterialDao = spellMaterialDao,
         backgroundDao = backgroundDao,
-        abilitiesDao
+        abilitiesDao,
+        context = context
     )
     private val contentCreationRepository: ContentCreationRepository =
         ContentCreationRepositoryImpi(
@@ -188,8 +189,6 @@ class AppProvider (context: Context){
     fun provideCharactersRepository(): CharacterRepository {
         return charactersRepository
     }
-
-
 
     fun persistableUriFromPicker(context: Context, uri: Uri): Uri? {
         try {

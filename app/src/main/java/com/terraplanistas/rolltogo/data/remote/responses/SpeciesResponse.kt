@@ -2,6 +2,8 @@ package com.terraplanistas.rolltogo.data.remote.responses
 import com.google.gson.annotations.SerializedName
 import com.terraplanistas.rolltogo.data.enums.CreatureSizeEnum
 import com.terraplanistas.rolltogo.data.enums.CreatureTypeEnum
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainRace
+
 data class SpeciesResponse(
     @SerializedName("id")
     val id: String,
@@ -27,3 +29,14 @@ data class SpeciesResponse(
     @SerializedName("subspecies")
     val subspecies: List<SubspeciesResponse>?
 )
+
+fun SpeciesResponse.toDomain(): DomainRace{
+    return DomainRace(
+        id = id,
+        name = name,
+        description = description?:"",
+        languages = languages?:"",
+        size = sizeEnum,
+        type = creatureTypeEnum
+    )
+}

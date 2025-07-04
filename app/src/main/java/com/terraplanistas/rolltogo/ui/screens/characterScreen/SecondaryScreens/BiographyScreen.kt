@@ -35,7 +35,7 @@ fun BiographyScreen(id: String,viewModel: CharacterScreenViewModel = viewModel(f
     val characterResource by viewModel.characterResource.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadDummyCharacter()
+        viewModel.loadCharacter(id)
     }
 
     Column(

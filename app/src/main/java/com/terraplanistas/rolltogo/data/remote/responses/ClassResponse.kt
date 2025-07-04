@@ -1,6 +1,7 @@
 package com.terraplanistas.rolltogo.data.remote.services
 
 import com.google.gson.annotations.SerializedName
+import com.terraplanistas.rolltogo.data.model.creatures.character.DomainClass
 import com.terraplanistas.rolltogo.data.remote.responses.ContentResponse
 import com.terraplanistas.rolltogo.data.remote.responses.SpellcastingResponse
 import com.terraplanistas.rolltogo.data.remote.responses.SubclassResponse
@@ -33,3 +34,12 @@ data class ClassResponse(
     @SerializedName("subclasses")
     val subclasses: List<SubclassResponse>?
 )
+
+fun ClassResponse.toDomain(grantId: String): DomainClass{
+    return DomainClass(
+        id = id,
+        name = name,
+        description = description?: "",
+        grantId = grantId
+    )
+}

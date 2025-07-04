@@ -46,7 +46,7 @@ fun SpellsScreen(id: String,viewModel: CharacterScreenViewModel = viewModel(fact
     val characterResource by viewModel.characterResource.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadDummyCharacter()
+        viewModel.loadCharacter(id)
     }
 
     Column(

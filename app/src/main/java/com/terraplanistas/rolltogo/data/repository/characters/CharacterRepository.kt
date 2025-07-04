@@ -10,5 +10,5 @@ interface CharacterRepository {
     fun searchCharacters(query: String): Flow<Resource<List<DomainCharacter>>>?
     suspend fun deleteCharacter(characterId: String): Resource<Unit>
     suspend fun saveCharacter(character: DomainCharacter): Resource<Unit>
-    suspend fun buildCharacter(character: ActorCreationContext, authorId: String): Resource<Unit>
+    suspend fun buildCharacter(character: ActorCreationContext, authorId: String): Resource<String>
 }

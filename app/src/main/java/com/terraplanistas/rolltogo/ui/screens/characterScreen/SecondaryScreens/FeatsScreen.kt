@@ -44,7 +44,7 @@ fun FeatsScreen(id: String,viewModel: CharacterScreenViewModel = viewModel(facto
     val characterResource by viewModel.characterResource.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadDummyCharacter()
+        viewModel.loadCharacter(id)
     }
 
     Column(

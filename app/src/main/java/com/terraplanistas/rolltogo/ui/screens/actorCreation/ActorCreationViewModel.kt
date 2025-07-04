@@ -20,6 +20,8 @@ import com.terraplanistas.rolltogo.data.repository.genders.GendersRepository
 import com.terraplanistas.rolltogo.data.repository.playstyleRepository.PlaystyleRepository
 import com.terraplanistas.rolltogo.data.repository.races.RaceRepository
 import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
+import com.terraplanistas.rolltogo.helpers.Resource
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -57,6 +59,9 @@ class ActorCreationViewModel(
         11 to listOf(9, 2, 7),
         12 to listOf(6, 2, 1)
     )
+
+    private val _id: MutableStateFlow<String> = MutableStateFlow("")
+    val id: StateFlow<String> = _id
 
     val userId: StateFlow<String> = preferencesRepository.userUuid.stateIn(
         scope = viewModelScope,
@@ -110,7 +115,19 @@ class ActorCreationViewModel(
 
     fun buildCharacter(character: ActorCreationContext){
        viewModelScope.launch {
-           characterRepository.buildCharacter(character, userId?.value ?: "hola")
+           val newCharacter = characterRepository.buildCharacter(character, userId.value)
+           Log.d("buildCharacter", newCharacter.toString())
+           when (newCharacter) {
+               is Resource.Success -> {
+                   Log.d("buildCharacter", newCharacter.data)
+                   _id.value = newCharacter.data
+               }
+               is Resource.Error -> {
+                   println("Error building character: ${newCharacter.message}")
+               }
+               is Resource.Loading -> {
+               }
+           }
        }
     }
 

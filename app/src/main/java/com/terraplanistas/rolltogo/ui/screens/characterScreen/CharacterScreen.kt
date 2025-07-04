@@ -1,5 +1,6 @@
 package com.terraplanistas.rolltogo.ui.screens.characterScreen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import com.terraplanistas.rolltogo.data.model.creatures.character.DomainCharacter
@@ -35,7 +36,8 @@ fun CharacterScreen(
     val characterResource by viewModel.characterResource.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadDummyCharacter()
+        Log.d("buildCharacter", characterId)
+        viewModel.loadCharacter(characterId)
     }
     navController?.let {
             Column(
