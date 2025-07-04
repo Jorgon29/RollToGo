@@ -20,6 +20,8 @@ class UserPreferencesRepository(
         val USERNAME_PREFERENCE = stringPreferencesKey("username_preference")
         val PASSWORD_PREFERENCE = stringPreferencesKey("password_preference")
         val AUTH_TOKEN_KEY = stringPreferencesKey("auth_token_key")
+        val ROOM_ID = stringPreferencesKey("room_id")
+        val ROOM_NAME = stringPreferencesKey("room_name")
     }
 
     suspend fun savePreference(testPreference: Boolean) {
@@ -111,6 +113,41 @@ class UserPreferencesRepository(
         }.map { preferences ->
             preferences[LOGIN_PREFERENCE] ?: false
         }
+
+    suspend fun saveRoomId(roomId: String) {
+        datastore.edit { preferences ->
+            preferences[ROOM_ID] = roomId
+        }
+    }
+
+    val roomId: Flow<String> = datastore.data
+        .catch {
+            if (it is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }.map { preferences ->
+            preferences[ROOM_ID] ?: ""
+        }
+
+    suspend fun saveRoomName(roomName: String) {
+        datastore.edit { preferences ->
+            preferences[ROOM_NAME] = roomName
+        }
+    }
+
+    val roomName: Flow<String> = datastore.data
+        .catch {
+            if (it is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }.map { preferences ->
+            preferences[ROOM_NAME] ?: ""
+        }
+
 
 
 }

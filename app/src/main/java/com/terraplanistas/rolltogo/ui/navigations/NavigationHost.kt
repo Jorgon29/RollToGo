@@ -63,7 +63,7 @@ fun NavigationHost() {
     }
 
     val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
-    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation","Feature List")
+    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation","Feature List","campaign_chat")
 
     Scaffold(
         topBar = {
@@ -212,6 +212,16 @@ fun NavigationHost() {
             composable<BackgroundList> {
                 BackgroundForumScreen()
             }
+            composable<CampaignChatNavigation> { campaignChatArgs ->
+                currentView = "campaign_chat"
+                val roomId = navBackStackEntry?.arguments?.getString("roomId") ?: "holaf"
+                val title = navBackStackEntry?.arguments?.getString("title") ?: "holaf"
+                CampaignChatScreen(
+                    roomId = roomId,
+                    title = title
+                )
+            }
+
         }
     }
 }

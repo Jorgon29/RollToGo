@@ -43,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.terraplanistas.rolltogo.data.remote.chat.ChatManager
 import com.terraplanistas.rolltogo.data.remote.responses.ChatMessageResponse
+import com.terraplanistas.rolltogo.data.repository.settings.UserPreferencesRepository
 import com.terraplanistas.rolltogo.ui.layout.boxes.basicTitle.BasicTitle
 import java.time.LocalTime
 import java.time.OffsetDateTime
@@ -52,23 +53,27 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun CampaignChatScreen(
     campaignChatViewModel: CampaignChatViewModel = viewModel(
-        factory = CampaignChatViewModel.factory
+        factory = CampaignChatViewModel.factory,
+
     ),
     roomId: String,
-    auth: FirebaseAuth = FirebaseAuth.getInstance(),
     title: String? = null,
 ) {
+
+    Log.d("",roomId)
 
     val message by campaignChatViewModel.textState.collectAsState()
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    val senderId = auth.currentUser?.uid
+    val senderId = campaignChatViewModel.auth.currentUser?.uid
 
     LaunchedEffect(roomId) {
         if (!campaignChatViewModel.isConnected) {
+
             campaignChatViewModel.connect(roomId) {
                 campaignChatViewModel.isConnected = true
             }
+
         }
     }
 
@@ -83,18 +88,24 @@ fun CampaignChatScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.radialGradient(listOf<Color>(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.surfaceContainer),
+                Brush.radialGradient(
+                    listOf<Color>(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.surfaceContainer
+                    ),
                     radius = 1300f
-                )),
+                )
+            ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        title?.let{
+        title?.let {
             BasicTitle(title)
         }
 
         LazyColumn(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
                 .fillMaxWidth()
                 .padding(8.dp),
             reverseLayout = true
@@ -124,7 +135,7 @@ fun CampaignChatScreen(
             keyboardActions = KeyboardActions(
                 onSend = {
                     if (campaignChatViewModel.isConnected && message.isNotBlank()) {
-                        campaignChatViewModel.sendMessage(roomId, senderId.toString(), message)
+                        campaignChatViewModel.sendMessage(roomId = roomId, senderId.toString(), message)
                         campaignChatViewModel.onMessageChange("")
                     }
                 }
@@ -138,7 +149,7 @@ fun CampaignChatScreen(
 
             Button(
                 onClick = {
-                    campaignChatViewModel.sendMessage(roomId, senderId.toString(), message)
+                    campaignChatViewModel.sendMessage(roomId = roomId, senderId.toString(), message)
                     campaignChatViewModel.onMessageChange("")
                 },
                 enabled = campaignChatViewModel.isConnected && message.isNotBlank(),
@@ -148,6 +159,7 @@ fun CampaignChatScreen(
             }
         }
     }
+
 
 }
 
