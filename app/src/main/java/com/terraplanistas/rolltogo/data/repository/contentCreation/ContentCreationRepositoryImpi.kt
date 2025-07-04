@@ -1,6 +1,8 @@
 package com.terraplanistas.rolltogo.data.repository.contentCreation
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.terraplanistas.rolltogo.data.database.dao.ContentDao
 import com.terraplanistas.rolltogo.data.database.dao.creatures.CreaturesDao
@@ -23,7 +25,6 @@ import com.terraplanistas.rolltogo.data.database.entities.misc.DamagesEntity
 import com.terraplanistas.rolltogo.data.database.entities.misc.ProficienciesEntity
 import com.terraplanistas.rolltogo.data.enums.AbilityTypeEnum
 import com.terraplanistas.rolltogo.data.enums.ActionTypeEnum
-import com.terraplanistas.rolltogo.data.enums.CastingTimeUnitEnum
 import com.terraplanistas.rolltogo.data.enums.DamageTypeEnum
 import com.terraplanistas.rolltogo.data.enums.DurationUnitEnum
 import com.terraplanistas.rolltogo.data.enums.ProficiencyTypeEnum
@@ -34,13 +35,17 @@ import com.terraplanistas.rolltogo.data.remote.dtos.ActionCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.BackgroundCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.ContentCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.DamageCreateRequest
-import com.terraplanistas.rolltogo.data.remote.dtos.EffectCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.FeatureCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.GrantCreateRequest
 import com.terraplanistas.rolltogo.data.remote.dtos.ProficiencyCreateRequest
 import com.terraplanistas.rolltogo.data.remote.responses.ContentResponse
+import com.terraplanistas.rolltogo.data.remote.responses.FeatureResponse
 import kotlinx.coroutines.flow.firstOrNull
-import kotlin.time.DurationUnit
+import java.sql.Time
+import java.time.LocalTime
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 class ContentCreationRepositoryImpi(
 
@@ -318,11 +323,11 @@ class ContentCreationRepositoryImpi(
                                             )
                                         ).body()
                                     profResponse?.let { response ->
-                                       val profEntity =  ProficienciesEntity(
-                                           id = response.id,
-                                           name = response.name,
-                                           proficiency_type_enum = response.proficiencyTypeEnum
-                                       )
+                                        val profEntity = ProficienciesEntity(
+                                            id = response.id,
+                                            name = response.name,
+                                            proficiency_type_enum = response.proficiencyTypeEnum
+                                        )
                                         proficienciesDao.insertProficiency(profEntity)
                                     }
                                     val backgroundToProficiencyGrant =
@@ -346,7 +351,6 @@ class ContentCreationRepositoryImpi(
                                         grantsDao.insertGrant(backgroundToProficiencyEntity)
 
                                     }
-
 
 
                                 }
@@ -399,4 +403,111 @@ class ContentCreationRepositoryImpi(
 
     }
 
+    override suspend fun getContentsByType(type: SourceContentEnum): List<ContentEntity> {
+        return contentDao.getAllContent().firstOrNull()?.filter { it.source_content_enum == type }
+            ?: emptyList()
+    }
+
+    override suspend fun getFeatureByContentId(contentId: String): FeaturesEntity? {
+        return featuresDao.getFeatureById(contentId).firstOrNull()
+    }
+
+    override suspend fun updateContent(content: ContentEntity) {
+        val contentResponse = RetrofitInstance.contentService
+            .getContentById(UUID.fromString(content.id))
+        contentResponse.let {
+            RetrofitInstance.contentService
+                .deleteContentById(UUID.fromString(it.id))
+            contentDao.deleteContent(ContentEntity(
+                id = it.id,
+                source_content_enum = it.sourceContentEnum,
+                visibility_enum = it.visibilityEnum,
+                created_at = it.createdAt,
+                author_id = it.author.id
+            ))
+
+            val newContent = RetrofitInstance.contentService
+                .createContent(
+                    ContentCreateRequest(
+                        sourceContentEnum = content.source_content_enum,
+                        visibilityEnum = content.visibility_enum,
+                        authorId = content.author_id
+                    )
+                ).body()
+            newContent.let { creationResponse ->
+                contentDao.insertContent(content)
+            }
+
+        }
+
+    }
+
+    override suspend fun updateFeature(feature: FeaturesEntity) {
+
+        val featureResponse = RetrofitInstance.featureService
+            .getFeatureById(UUID.fromString(feature.id))
+        featureResponse.let {
+            RetrofitInstance.featureService
+                .deleteFeatureById(UUID.fromString(it.id))
+            featuresDao.deleteFeature(
+                FeaturesEntity(
+                    id = it.id,
+                    name = it.name,
+                    description = it.description ?: "",
+                    is_magical = it.isMagic,
+                    is_passive = it.isPassive
+                )
+            )
+
+            val creationResponse = RetrofitInstance.featureService
+                .createFeature(
+                    FeatureCreateRequest(
+                        contentId = feature.id,
+                        name = feature.name,
+                        description = feature.description,
+                        isMagic = feature.is_magical,
+                        isPassive = feature.is_passive
+                    )
+                ).body()
+            creationResponse.let{ response ->
+                featuresDao.insertFeature(feature)
+
+            }
+
+        }
+
+
+
+
+    }
+
+    override suspend fun deleteContent(contentId: String) {
+        val contentResponse = RetrofitInstance.contentService
+            .getContentById(UUID.fromString(contentId))
+        contentResponse.let { contentResponse ->
+            val deleteResponse = RetrofitInstance.contentService
+                .deleteContentById(UUID.fromString(contentResponse.id))
+            contentDao.deleteContent(
+                ContentEntity(
+                    id = contentResponse.id,
+                    source_content_enum = contentResponse.sourceContentEnum,
+                    visibility_enum = contentResponse.visibilityEnum,
+                    created_at = contentResponse.createdAt,
+                    author_id = contentResponse.author.id
+                )
+            )
+
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun String.toLocalTime(): LocalTime{
+        return try{
+            val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+            OffsetDateTime.parse(this,formatter).toLocalTime()
+
+        }catch (e: Exception){
+           return LocalTime.now()
+        }
+    }
 }

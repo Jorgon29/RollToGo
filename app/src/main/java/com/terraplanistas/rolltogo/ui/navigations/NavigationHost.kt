@@ -44,6 +44,7 @@ import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.F
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.SpellsScreen
 import com.terraplanistas.rolltogo.ui.screens.content.ContentTypeSelectionScreen
 import com.terraplanistas.rolltogo.ui.screens.content.contentcreation.ContentCreationScreen
+import com.terraplanistas.rolltogo.ui.screens.featuresForum.FeatureForumScreen
 import com.terraplanistas.rolltogo.ui.screens.profile.ProfileScreen
 
 @Composable
@@ -59,7 +60,7 @@ fun NavigationHost() {
     }
 
     val characterViews = listOf<String>("actor","actor_items","actor_spells","actor_feats","actor_biography")
-    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation")
+    val baseViews = listOf("forum","new_actor","friends","search_characters", "account","content_creation","content_creation_Navigation", "campaigns_list", "campaign_creation","Feature List")
 
     Scaffold(
         topBar = {
@@ -135,7 +136,7 @@ fun NavigationHost() {
         ) {
             composable<ForumNavigation> {
                 currentView = "forum"
-                ChatTestScreen()
+                ForumScreen(navController)
             }
             composable<NewActorNavigation> {
                 currentView = "new_actor"
@@ -176,6 +177,13 @@ fun NavigationHost() {
             composable<LoginScreen>{
                 LoginScreen(nav = navController)
                 currentView = "login"
+            }
+            composable<FeatureList> {
+                currentView = "Feature List"
+                FeatureForumScreen(
+
+                )
+
             }
             composable<AccountNavigation> {
                 ProfileScreen(nav = navController)

@@ -58,3 +58,11 @@ object CampaignListNavigation
 
 @Serializable
 object CampaignCreationNavigation
+
+@Serializable
+object FeatureList
+
+@Serializable
+object BackgroundList
+
+

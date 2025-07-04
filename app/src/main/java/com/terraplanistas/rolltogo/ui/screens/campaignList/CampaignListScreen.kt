@@ -28,9 +28,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.data.model.room.RoomDomain
 import com.terraplanistas.rolltogo.helpers.Resource
-import com.terraplanistas.rolltogo.ui.layout.boxes.cateogoryBox.CategoryBox
 import com.terraplanistas.rolltogo.ui.layout.boxes.roomCard.RoomCard
-import com.terraplanistas.rolltogo.ui.navigations.ForumNavigation
+import com.terraplanistas.rolltogo.ui.navigations.CampaingNavigation
 
 @Composable
 fun CampaignListScreen(
@@ -41,6 +40,10 @@ fun CampaignListScreen(
     val showJoinDialog by viewModel.showJoinDialog.collectAsState()
     val joinCode by viewModel.joinCode.collectAsState()
     val campaigns = viewModel.campaigns.collectAsState().value
+
+    val navigate: (String) -> Unit = { id ->
+        navController.navigate(CampaingNavigation(id))
+    }
 
     LaunchedEffect(Unit) {
         viewModel.loadMyCampaigns()
@@ -66,7 +69,6 @@ fun CampaignListScreen(
             )
         }
 
-        // Diálogo para ingresar código
         if (showJoinDialog) {
             AlertDialog(
                 onDismissRequest = { viewModel.showJoinDialog(false) },
@@ -107,7 +109,8 @@ fun CampaignListScreen(
 
         CampaignListContent(
             campaigns = campaigns,
-            onJoinCampaign = { viewModel.showJoinDialog(true) }
+            onJoinCampaign = { viewModel.showJoinDialog(true) },
+            onEnterCampaign = navigate
         )
     }
 }
@@ -115,7 +118,8 @@ fun CampaignListScreen(
 @Composable
 fun CampaignListContent(
     campaigns: Resource<List<RoomDomain>>,
-    onJoinCampaign: () -> Unit
+    onJoinCampaign: () -> Unit,
+    onEnterCampaign: (String) -> Unit
 ) {
     when (campaigns) {
         is Resource.Loading -> {
@@ -142,10 +146,12 @@ fun CampaignListContent(
                         Text("No tienes campañas aún")
                     }
                 } else {
-                    CampaignList(campaigns = campaignList)
+                    CampaignList(
+                        campaigns = campaignList,
+                        onCampaignSelected = onEnterCampaign
+                        )
                 }
 
-                // Botón para unirse a campaña en la parte inferior
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -176,7 +182,7 @@ fun CampaignListContent(
 @Composable
 fun CampaignList(
     campaigns: List<RoomDomain>,
-    onCampaignSelected: (String) -> Unit = {}
+    onCampaignSelected: (String) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(8.dp),

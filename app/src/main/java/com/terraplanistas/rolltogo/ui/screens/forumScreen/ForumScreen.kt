@@ -9,19 +9,30 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.R
 import com.terraplanistas.rolltogo.ui.layout.boxes.cateogoryBox.CategoryBox
+import com.terraplanistas.rolltogo.ui.navigations.FeatureList
 import com.terraplanistas.rolltogo.ui.navigations.SearchCharactersNavigation
 import com.terraplanistas.rolltogo.ui.screens.baseHomeScreen.BaseHomeScreen
 
 @Composable
 fun ForumScreen(navController: NavController) {
 
-    BaseHomeScreen(navController, title = stringResource(R.string.bottom_navigation_forum),
+    BaseHomeScreen(
+        navController, title = stringResource(R.string.bottom_navigation_forum),
         content = {
-            CategoryBox(title = stringResource(R.string.characters), onClick = {navController.navigate(
-                SearchCharactersNavigation)})
+            CategoryBox(title = stringResource(R.string.characters), onClick = {
+                navController.navigate(
+                    SearchCharactersNavigation
+                )
+            })
             Spacer(modifier = Modifier.height(16.dp))
-            CategoryBox(title = stringResource(R.string.monsters))
-            CategoryBox(title = stringResource(R.string.content_creation),
+            CategoryBox(
+                title = "Features",
+                onClick = {navController.navigate(FeatureList)}
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            CategoryBox(
+                title = stringResource(R.string.content_creation),
                 onClick = {}
             )
         })
