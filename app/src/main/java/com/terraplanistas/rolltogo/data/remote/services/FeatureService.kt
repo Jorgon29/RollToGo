@@ -22,6 +22,7 @@ interface FeatureService {
     @POST("features")
     suspend fun createFeature(@Body request: FeatureCreateRequest): Response<FeatureResponse>
 
+
     @PUT("features")
     suspend fun updateFeature(@Body feature: FeatureResponse): FeatureResponse
 

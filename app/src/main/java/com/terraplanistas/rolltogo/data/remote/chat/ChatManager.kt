@@ -66,12 +66,14 @@ class ChatManager {
     }
 
     private fun subscribe(roomId: String) {
+
         topicSubscription?.dispose()
         messages.clear()
 
         val topicPath = "/topic/room-chat/$roomId"
 
         topicSubscription = stompClient?.topic(topicPath)
+
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe({ message ->
