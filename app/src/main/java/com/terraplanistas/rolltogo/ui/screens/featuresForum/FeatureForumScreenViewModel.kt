@@ -23,6 +23,8 @@ class FeatureForumScreenViewModel(
 
     private val _showDeleteDialog = MutableStateFlow(false)
     val showDeleteDialog: StateFlow<Boolean> = _showDeleteDialog.asStateFlow()
+    private val _showEditDialog =MutableStateFlow(false)
+    val showEditDialog: StateFlow<Boolean> = _showEditDialog.asStateFlow()
 
     private val _selectedFeature = MutableStateFlow<FeatureWithContent?>(null)
     val selectedFeature: StateFlow<FeatureWithContent?> = _selectedFeature.asStateFlow()
@@ -63,10 +65,13 @@ class FeatureForumScreenViewModel(
 
     fun selectFeatureForEdit(feature: FeatureWithContent) {
         _selectedFeature.value = feature
+        _showDeleteDialog.value = false
+        _showEditDialog.value = true
     }
 
     fun selectFeatureForDelete(feature: FeatureWithContent) {
         _selectedFeature.value = feature
+        _showEditDialog.value = false
         _showDeleteDialog.value = true
     }
 

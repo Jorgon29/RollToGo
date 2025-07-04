@@ -55,6 +55,7 @@ fun FeatureForumScreen(
     val showDeleteDialog by viewModel.showDeleteDialog.collectAsState()
     val selectedFeature by viewModel.selectedFeature.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val showEditor by viewModel.showEditDialog.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (isLoading) {
@@ -81,89 +82,91 @@ fun FeatureForumScreen(
         if (showDeleteDialog) {
             AlertDialog(
                 onDismissRequest = { viewModel.dismissDeleteDialog() }, // Usamos función del VM
-                title = { Text("Delete Feature") },
-                text = { Text("Are you sure you want to delete this feature?") },
+                title = { Text("Borrar la feature") },
+                text = { Text("Seguro que quiere borrar la feature?") },
                 confirmButton = {
                     Button(
                         onClick = { viewModel.deleteFeature() },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                     ) {
-                        Text("Delete")
+                        Text("Borrar")
                     }
                 },
                 dismissButton = {
                     Button(onClick = { viewModel.dismissDeleteDialog() }) {
-                        Text("Cancel")
+                        Text("Cancelar")
                     }
                 }
             )
         }
 
-        // Diálogo/Formulario de edición
         selectedFeature?.let { feature ->
             var name by remember { mutableStateOf(feature.feature.name) }
             var description by remember { mutableStateOf(feature.feature.description ?: "") }
             var isMagic by remember { mutableStateOf(feature.feature.is_magical) }
             var isPassive by remember { mutableStateOf(feature.feature.is_passive) }
 
-            AlertDialog(
-                onDismissRequest = { viewModel.dismissEditDialog() }, // Usamos función del VM
-                title = { Text("Edit Feature") },
-                text = {
-                    Column {
-                        OutlinedTextField(
-                            value = name,
-                            onValueChange = { name = it },
-                            label = { Text("Name") },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        OutlinedTextField(
-                            value = description,
-                            onValueChange = { description = it },
-                            label = { Text("Description") },
-                            modifier = Modifier.fillMaxWidth(),
-                            minLines = 3
-                        )
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(
-                                checked = isMagic,
-                                onCheckedChange = { isMagic = it }
+
+            if(showEditor){
+                AlertDialog(
+                    onDismissRequest = { viewModel.dismissEditDialog() }, // Usamos función del VM
+                    title = { Text("Edit Feature") },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = name,
+                                onValueChange = { name = it },
+                                label = { Text("Nombre") },
+                                modifier = Modifier.fillMaxWidth()
                             )
-                            Text("Is Magical", modifier = Modifier.padding(start = 8.dp))
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(
-                                checked = isPassive,
-                                onCheckedChange = { isPassive = it }
+                            OutlinedTextField(
+                                value = description,
+                                onValueChange = { description = it },
+                                label = { Text("Descripción") },
+                                modifier = Modifier.fillMaxWidth(),
+                                minLines = 3
                             )
-                            Text("Is Passive", modifier = Modifier.padding(start = 8.dp))
-                        }
-                    }
-                },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            val updated = feature.copy(
-                                feature = feature.feature.copy(
-                                    name = name,
-                                    description = description,
-                                    is_magical = isMagic,
-                                    is_passive = isPassive
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(
+                                    checked = isMagic,
+                                    onCheckedChange = { isMagic = it }
                                 )
-                            )
-                            viewModel.updateFeature(updated)
-                            viewModel.dismissEditDialog() // Usamos función del VM
+                                Text("Es magica", modifier = Modifier.padding(start = 8.dp))
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(
+                                    checked = isPassive,
+                                    onCheckedChange = { isPassive = it }
+                                )
+                                Text("Es pasiva", modifier = Modifier.padding(start = 8.dp))
+                            }
                         }
-                    ) {
-                        Text("Save")
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                val updated = feature.copy(
+                                    feature = feature.feature.copy(
+                                        name = name,
+                                        description = description,
+                                        is_magical = isMagic,
+                                        is_passive = isPassive
+                                    )
+                                )
+                                viewModel.updateFeature(updated)
+                                viewModel.dismissEditDialog() // Usamos función del VM
+                            }
+                        ) {
+                            Text("Guardar")
+                        }
+                    },
+                    dismissButton = {
+                        Button(onClick = { viewModel.dismissEditDialog() }) {
+                            Text("Cancelar")
+                        }
                     }
-                },
-                dismissButton = {
-                    Button(onClick = { viewModel.dismissEditDialog() }) {
-                        Text("Cancel")
-                    }
-                }
-            )
+                )
+            }
         }
     }
 }
@@ -207,7 +210,9 @@ private fun FeatureItem(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = if (feature.feature.is_magical) Color(0xFFBB86FC) else Color(0xFF03DAC6),
+                            color = if (feature.feature.is_magical) Color(0xFFBB86FC) else Color(
+                                0xFF03DAC6
+                            ),
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(horizontal = 12.dp, vertical = 6.dp)
@@ -223,7 +228,9 @@ private fun FeatureItem(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = if (feature.feature.is_passive) Color(0xFFCF6679) else Color(0xFF6200EE),
+                            color = if (feature.feature.is_passive) Color(0xFFCF6679) else Color(
+                                0xFF6200EE
+                            ),
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(horizontal = 12.dp, vertical = 6.dp)

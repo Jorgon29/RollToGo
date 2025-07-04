@@ -482,6 +482,7 @@ class ContentCreationRepositoryImpi(
     }
 
     override suspend fun deleteContent(contentId: String) {
+        Log.d("HOla", contentId)
         val contentResponse = RetrofitInstance.contentService
             .getContentById(UUID.fromString(contentId))
         contentResponse.let { contentResponse ->
