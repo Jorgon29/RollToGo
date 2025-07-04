@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.terraplanistas.rolltogo.R
+import com.terraplanistas.rolltogo.ui.navigations.ActorScreenNavigation
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.biographyStep.BiographyStep
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.characteristicsStep.CharacteristicsStep
 import com.terraplanistas.rolltogo.ui.screens.actorCreation.steps.classStep.ClassStep
@@ -45,7 +46,7 @@ import kotlinx.coroutines.launch
 fun ActorCreationHomeScreen(
     navController: NavController,
     viewModel: ActorCreationViewModel = viewModel( factory = ActorCreationViewModel.Factory),
-    goToCharacterScreen: (String) -> Unit
+    //goToCharacterScreen: (String) -> Unit
 ) {
     val context = remember { ActorCreationContext() }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -67,7 +68,7 @@ fun ActorCreationHomeScreen(
     LaunchedEffect(id.value) {
         Log.d("buildCharacter", id.value)
         if(id.value.isNotBlank()){
-            goToCharacterScreen(id.value)
+            navController.navigate(ActorScreenNavigation(id = id.value))
         }
     }
         BaseHomeScreen(

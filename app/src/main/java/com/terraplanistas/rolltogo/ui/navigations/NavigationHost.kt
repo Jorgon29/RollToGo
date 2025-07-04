@@ -137,15 +137,18 @@ fun NavigationHost() {
             }
             composable<NewActorNavigation> {
                 currentView = "new_actor"
-                ActorCreationHomeScreen(navController, goToCharacterScreen = {
+                ActorCreationHomeScreen(navController,
+                    /* goToCharacterScreen = {
                     id: String ->
                         navController.navigate(ActorScreenNavigation(id))
                         Log.d("buildCharacter", id)
-                })
+                }*/)
             }
             composable<ActorScreenNavigation> { actorScreenArgs ->
                 currentView = "actor"
-                CharacterScreen(navController, actorScreenArgs.id)
+                val actorID = actorScreenArgs.arguments?.getString("id") ?: ""
+                Log.d("sisisi",actorID)
+                CharacterScreen(navController, actorID)
             }
             composable<FriendsNavigation> {
                 currentView = "friends"

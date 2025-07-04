@@ -171,6 +171,36 @@ class LoginViewModel(
                     if (task.isSuccessful) {
                         _loading.value = false
                         _loginStatus.value = true
+                        val user: FirebaseUser? = auth.currentUser
+                        user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+                            if (tokenTask.isSuccessful) {
+                                try {
+                                    val idToken: String? = tokenTask.result?.token
+                                    saveToken(idToken ?: "")
+                                    saveUuid(user.uid)
+                                    viewModelScope.launch {
+                                        val response = RetrofitInstance.userService.createUser(
+                                            UserCreateRequest(
+                                                userImageUrl = null,
+                                                username = email,
+                                                email = email,
+                                                id = user.uid
+                                            )
+                                        )
+                                    }
+                                } catch (e: Exception) {
+                                    _loginStatus.value = false
+                                    _error.value =
+                                        "Error de red/API al procesar login: ${e.localizedMessage ?: "Error desconocido"}"
+                                }
+                                _loading.value = false
+
+
+                            } else {
+                                _error.value = "Error al obtener el token de usuario"
+                            }
+                        }
+
                     } else {
                         _loginStatus.value = false
                         val exception = task.exception
@@ -212,6 +242,35 @@ class LoginViewModel(
 
                                 _loginStatus.value = true
                                 _loading.value = false
+                                val user: FirebaseUser? = auth.currentUser
+                                user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+                                    if (tokenTask.isSuccessful) {
+                                        try {
+                                            val idToken: String? = tokenTask.result?.token
+                                            saveToken(idToken ?: "")
+                                            saveUuid(user.uid)
+                                            viewModelScope.launch {
+                                                val response = RetrofitInstance.userService.createUser(
+                                                    UserCreateRequest(
+                                                        userImageUrl = null,
+                                                        username = savedUsername.value,
+                                                        email = savedUsername.value,
+                                                        id = user.uid
+                                                    )
+                                                )
+                                            }
+                                        } catch (e: Exception) {
+                                            _loginStatus.value = false
+                                            _error.value =
+                                                "Error de red/API al procesar login: ${e.localizedMessage ?: "Error desconocido"}"
+                                        }
+                                        _loading.value = false
+
+
+                                    } else {
+                                        _error.value = "Error al obtener el token de usuario"
+                                    }
+                                }
 
 
                             } else if (task.exception != null) {
