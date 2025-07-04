@@ -1,3 +1,134 @@
 <resources>
+    <!-- General -->
     <string name="app_name">RollToGo!</string>
+    <string name="bottom_navigation_forum">Foro</string>
+    <string name="bottom_navigation_friends">Amigos</string>
+    <string name="bottom_navigation_campaigns">Campañas</string>
+    <string name="bottom_navigation_account">Cuenta</string>
+    <string name="plus_floating_button">Nuevo</string>
+    <string name="new_actor">Nuevo actor</string>
+    <string name="new_campaign">Nueva campaña</string>
+    <string name="placeholder_image">Imagen placeholder</string>
+    <string name="cancel">Cancelar</string>
+    <string name="next">Siguiente</string>
+    <string name="selected">Seleccionado</string>
+    <string name="extend_menu">Extender menú</string>
+    <string name="gender_masculine">Masculino</string>
+    <string name="gender_feminine">Femenino</string>
+    <string name="gender_other">Otro</string>
+    <string name="create">Crear</string>
+    <string name="characters">Personajes</string>
+    <string name="monsters">Monstruos</string>
+    <string name="add">Agregar</string>
+    <string name="see">Ver</string>
+
+        <!-- Friends -->
+    <string name="friends">Amigos</string>
+    <string name="add_friend">Agregar amigo</string>
+    <string name="block">Bloquear</string>
+    <string name="delete">Eliminar</string>
+    <string name="send_friend_request">Enviar solicitud</string>
+    <string name="username">Nombre de usuario</string>
+
+    <!-- Actor creation -->
+    <string name="actor_creation_incomplete_fields">Por favor provea toda la información solicitada</string>
+    <string name="actor_creation_playstyle_title">Estilo de juego</string>
+    <string name="actor_creation_playstyle_subtitle">¿Qué estilo de juego prefieres?</string>
+    <string name="actor_creation_playstyle_melee">Cuerpo a cuerpo</string>
+    <string name="actor_creation_playstyle_melee_description">Luchar en combate cuerpo a cuerpo</string>
+    <string name="actor_creation_playstyle_magic">Magia</string>
+    <string name="actor_creation_playstyle_magic_description">Usar magia ofensiva y poderosa</string>
+    <string name="actor_creation_playstyle_support">Soporte</string>
+    <string name="actor_creation_playstyle_support_description">Apoyar y proteger a tus aliados</string>
+    <string name="actor_creation_playstyle_versatile">Versástil</string>
+    <string name="actor_creation_playstyle_versatile_description">Ser táctico, versátil o sigiloso</string>
+    <string name="actor_creation_playstyle_balanced">Equilibrado</string>
+    <string name="actor_creation_playstyle_balanced_description">Quiero algo equilibrado</string>
+
+    <string name="actor_creation_class_title">Selección de clase</string>
+    <string name="actor_creation_class_subtitle">Clases sugeridas</string>
+    <string name="actor_creation_class_more_classes">Ver todas las clases</string>
+    <string name="actor_creation_class_barbarian">Bárbaro</string>
+    <string name="actor_creation_class_barbarian_description">Un guerrero feroz impulsado por una furia primordial.</string>
+    <string name="actor_creation_class_bard">Bardo</string>
+    <string name="actor_creation_class_bard_description">Un maestro de la música y la magia que inspira aliados y confunde enemigos.</string>
+    <string name="actor_creation_class_cleric">Clérigo</string>
+    <string name="actor_creation_class_cleric_description">Un devoto servidor de una deidad, canaliza magia divina para sanar o destruir.</string>
+    <string name="actor_creation_class_druid">Druida</string>
+    <string name="actor_creation_class_druid_description">Guardián de la naturaleza capaz de transformarse en animales y lanzar conjuros naturales.</string>
+    <string name="actor_creation_class_fighter">Guerrero</string>
+    <string name="actor_creation_class_fighter_description">Un experto en armas y combate, adaptable y resistente.</string>
+    <string name="actor_creation_class_monk">Monje</string>
+    <string name="actor_creation_class_monk_description">Un artista marcial que canaliza energía interior para hazañas sobrehumanas.</string>
+    <string name="actor_creation_class_paladin">Paladín</string>
+    <string name="actor_creation_class_paladin_description">Un campeón sagrado que combina armas con magia divina mediante juramentos poderosos.</string>
+    <string name="actor_creation_class_ranger">Explorador</string>
+    <string name="actor_creation_class_ranger_description">Un cazador y rastreador experto, maestro de la supervivencia y la magia natural.</string>
+    <string name="actor_creation_class_rogue">Pícaro</string>
+    <string name="actor_creation_class_rogue_description">Especialista en sigilo, engaño y ataques precisos y devastadores.</string>
+    <string name="actor_creation_class_sorcerer">Hechicero</string>
+    <string name="actor_creation_class_sorcerer_description">Un lanzador de conjuros innato con magia fluyendo por su sangre o alma.</string>
+    <string name="actor_creation_class_warlock">Brujo</string>
+    <string name="actor_creation_class_warlock_description">Un mago que ha hecho un pacto con una entidad sobrenatural para obtener poder.</string>
+    <string name="actor_creation_class_wizard">Mago</string>
+    <string name="actor_creation_class_wizard_description">Un estudioso de las artes arcanas con vasto conocimiento de hechizos.</string>
+
+    <string name="actor_creation_race_title">Selección de Especie</string>
+    <string name="actor_creation_race_subtitle">Especies sugeridas</string>
+    <string name="actor_creation_class_more_races">Ver todas las especies</string>
+    <string name="actor_creation_race_human">Humano</string>
+    <string name="actor_creation_race_human_description">Versátiles y adaptables, con un talento innato para cualquier camino.</string>
+    <string name="actor_creation_race_elf">Elfo</string>
+    <string name="actor_creation_race_elf_description">Gráciles y longevos, expertos en magia y arquería.</string>
+    <string name="actor_creation_race_dwarf">Enano</string>
+    <string name="actor_creation_race_dwarf_description">Fuertes y resistentes, conocidos por su lealtad y habilidades con la forja.</string>
+    <string name="actor_creation_race_halfling">Mediano</string>
+    <string name="actor_creation_race_halfling_description">Pequeños, valientes y con una gran dosis de suerte.</string>
+    <string name="actor_creation_race_dragonborn">Dracónico</string>
+    <string name="actor_creation_race_dragonborn_description">Descendientes de dragones, poderosos y orgullosos, con aliento elemental.</string>
+    <string name="actor_creation_race_gnome">Gnomo</string>
+    <string name="actor_creation_race_gnome_description">Ingeniosos y curiosos, expertos en magia y artilugios.</string>
+    <string name="actor_creation_race_halfelf">Semielfo</string>
+    <string name="actor_creation_race_halfelf_description">Híbridos de humanos y elfos, combinan lo mejor de ambos mundos.</string>
+    <string name="actor_creation_race_halforc">Semiorco</string>
+    <string name="actor_creation_race_halforc_description">Fieros y tenaces, canalizan su furia en el combate.</string>
+    <string name="actor_creation_race_tiefling">Tiflin</string>
+    <string name="actor_creation_race_tiefling_description">Con sangre infernal, misteriosos y poderosos en la magia oscura.</string>
+
+    <string name="actor_creation_biography_title">Biografía</string>
+    <string name="actor_creation_biography_subtitle">Datos sobre tu personaje (Si tienes dudas puedes preguntarle a tu DM)</string>
+    <string name="actor_creation_biography_name">Nombre</string>
+    <string name="actor_creation_biography_age">Edad (Años)</string>
+    <string name="actor_creation_biography_alignment">Alineamiento</string>
+    <string name="actor_creation_biography_gender">Género</string>
+    <string name="actor_creation_biography_ideals">Ideales</string>
+    <string name="actor_creation_biography_personality">Personalidad</string>
+    <string name="actor_creation_biography_flaws">Defectos</string>
+    <string name="actor_creation_biography_biography">Biografía</string>
+    <string name="actor_creation_biography_appearance">Apariencia</string>
+
+    <string name="actor_creation_characteristics_title">Rasgos</string>
+    <string name="actor_creation_characteristics_subtitle">Rasgos físicos comunes de la especie (Si tienes dudas puedes preguntar a tu DM)</string>
+    <string name="actor_creation_characteristics_height">Altura</string>
+    <string name="actor_creation_characteristics_weight">Peso</string>
+    <string name="actor_creation_characteristics_skin">Piel</string>
+    <string name="actor_creation_characteristics_hair">Cabello</string>
+    <string name="actor_creation_characteristics_faith">Fe</string>
+    <string name="actor_creation_characteristics_eyes">Ojos</string>
+
+    <!-- Actor screen -->
+    <string name="actor_screen_character">Personaje</string>
+    <string name="actor_screen_inventory">Inventario</string>
+    <string name="actor_screen_spells">Hechizos</string>
+    <string name="actor_screen_feats">Rasgos</string>
+    <string name="actor_screen_biography">Biografía</string>
+
+    <!-- Content creation -->
+
+    <string name="content_creation">Crear contenido</string>
+
+    <!-- Campaign creation -->
+    <string name="room_chat">Chat</string>
+    <string name="room_character_selection">Selección de Personaje</string>
+
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actor_creation_alignment_lawful_good">Legal Bueno</string>
+    <string name="actor_creation_alignment_lawful_good_description">Hace el bien dentro de los límites de la ley y el orden.</string>
+
+    <string name="actor_creation_alignment_neutral_good">Neutral Bueno</string>
+    <string name="actor_creation_alignment_neutral_good_description">Hace el bien sin preocuparse demasiado por las reglas.</string>
+
+    <string name="actor_creation_alignment_chaotic_good">Caótico Bueno</string>
+    <string name="actor_creation_alignment_chaotic_good_description">Hace el bien guiado por su conciencia, sin seguir reglas estrictas.</string>
+
+    <string name="actor_creation_alignment_lawful_neutral">Legal Neutral</string>
+    <string name="actor_creation_alignment_lawful_neutral_description">Sigue la ley, el orden y la tradición por encima del bien y el mal.</string>
+
+    <string name="actor_creation_alignment_true_neutral">Neutral Puro</string>
+    <string name="actor_creation_alignment_true_neutral_description">Busca el equilibrio, sin inclinarse hacia el bien, el mal, el caos ni la ley.</string>
+
+    <string name="actor_creation_alignment_chaotic_neutral">Caótico Neutral</string>
+    <string name="actor_creation_alignment_chaotic_neutral_description">Valora la libertad personal por encima de todo, sin comprometerse con el bien o el mal.</string>
+
+    <string name="actor_creation_alignment_lawful_evil">Legal Malvado</string>
+    <string name="actor_creation_alignment_lawful_evil_description">Usa el orden y las leyes para avanzar sus fines egoístas o crueles.</string>
+
+    <string name="actor_creation_alignment_neutral_evil">Neutral Malvado</string>
+    <string name="actor_creation_alignment_neutral_evil_description">Hace el mal por beneficio propio, sin necesidad de caos o estructura.</string>
+
+    <string name="actor_creation_alignment_chaotic_evil">Caótico Malvado</string>
+    <string name="actor_creation_alignment_chaotic_evil_description">Hace el mal por placer o destrucción, desafiando toda autoridad.</string>
+</resources>
