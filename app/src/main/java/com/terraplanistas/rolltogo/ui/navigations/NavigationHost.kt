@@ -1,5 +1,7 @@
 package com.terraplanistas.rolltogo.ui.navigations
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,10 +35,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import com.terraplanistas.rolltogo.data.enums.SourceContentEnum
-import com.terraplanistas.rolltogo.data.remote.chat.pruebaChat.ChatTestScreen
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.HomeBottomNavigationBar
 import com.terraplanistas.rolltogo.ui.layout.bars.HomeBottomNavigationBar.PlusButton
+import com.terraplanistas.rolltogo.ui.screens.campaignDetails.CampaignChatScreen
 import com.terraplanistas.rolltogo.ui.screens.campaignList.CampaignListScreen
 import com.terraplanistas.rolltogo.ui.screens.campaingCreation.CampaignCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.characterScreen.SecondaryScreens.BiographyScreen
@@ -46,6 +47,7 @@ import com.terraplanistas.rolltogo.ui.screens.content.ContentTypeSelectionScreen
 import com.terraplanistas.rolltogo.ui.screens.content.contentcreation.ContentCreationScreen
 import com.terraplanistas.rolltogo.ui.screens.profile.ProfileScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationHost() {
     val navController = rememberNavController()
@@ -135,7 +137,7 @@ fun NavigationHost() {
         ) {
             composable<ForumNavigation> {
                 currentView = "forum"
-                ChatTestScreen()
+                CampaignChatScreen(roomId = "3b557478-3880-401f-b31b-b23214f4f363", title = "Test")
             }
             composable<NewActorNavigation> {
                 currentView = "new_actor"

@@ -19,8 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CampaignListViewModel(
- private val campaignListRepository: RoomRepository,
-
+ private val campaignListRepository: RoomRepository
 ): ViewModel() {
 
 

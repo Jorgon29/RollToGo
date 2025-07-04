@@ -1,26 +1,49 @@
-package com.terraplanistas.rolltogo.data.remote.chat
+package com.terraplanistas.rolltogo.ui.screens.campaignDetails
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.gson.Gson
+import com.terraplanistas.rolltogo.RollToGoApp
+import com.terraplanistas.rolltogo.data.remote.chat.ChatManager.ChatMessageRequest
 import com.terraplanistas.rolltogo.data.remote.responses.ChatMessageResponse
+import com.terraplanistas.rolltogo.ui.screens.campaignList.CampaignListViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 
-class ChatManager {
+class CampaignChatViewModel(
 
+): ViewModel() {
     private var stompClient: StompClient? = null
     private var topicSubscription: Disposable? = null
     internal var isConnected = false
 
+    private val _textState = MutableStateFlow("Texto inicial")
+
+    val textState: StateFlow<String> = _textState
+
     val messages = mutableStateListOf<ChatMessageResponse>()
 
     var onError: ((String) -> Unit)? = null
+
+    fun onMessageChange(newMessage: String) {
+        _textState.value = newMessage
+    }
 
     fun connect(roomId: String, onConnected: () -> Unit = {}) {
         if (isConnected) {
@@ -105,6 +128,7 @@ class ChatManager {
         val message = ChatMessageRequest(roomId, sender, content)
         val json = Gson().toJson(message)
 
+
         stompClient?.send("/app/ws/$roomId", json)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
@@ -117,19 +141,17 @@ class ChatManager {
             })
     }
 
-    fun disconnect() {
-        topicSubscription?.dispose()
-        topicSubscription = null
-        stompClient?.disconnect()
-        stompClient = null
-        isConnected = false
-        Log.d("STOMP", "🔌 Desconectado")
-    }
+    companion object {
+        val factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val aplication = this[APPLICATION_KEY] as? RollToGoApp
+                    ?: throw IllegalStateException("Application is not RollToGoApp")
+                CampaignChatViewModel(
+                )
 
-    data class ChatMessageRequest(
-        val roomId: String,
-        val sender: String,
-        val content: String
-    )
+            }
+
+        }
+    }
 
 }
