@@ -138,9 +138,9 @@ fun NavigationHost() {
             composable<NewActorNavigation> {
                 currentView = "new_actor"
                 ActorCreationHomeScreen(navController, goToCharacterScreen = {
-                    id: String -> {
-                        navController.navigate(ActorScreenNavigation(id));
-                    }
+                    id: String ->
+                        navController.navigate(ActorScreenNavigation(id))
+                        Log.d("buildCharacter", id)
                 })
             }
             composable<ActorScreenNavigation> { actorScreenArgs ->
